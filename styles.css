@@ -62,7 +62,7 @@ a {
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(243, 241, 236, 0.94) 0%, rgba(243, 241, 236, 0.86) 38%, rgba(243, 241, 236, 0.2) 58%, rgba(243, 241, 236, 0) 78%),
+    linear-gradient(90deg, rgba(243, 241, 236, 0.44) 0%, rgba(243, 241, 236, 0.22) 38%, rgba(243, 241, 236, 0.04) 64%, rgba(243, 241, 236, 0) 82%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 22%);
 }
 
