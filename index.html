@@ -58,6 +58,112 @@
           </a>
         </div>
       </section>
+
+      <section class="approach" id="services" aria-labelledby="approach-heading" data-reveal>
+        <div class="approach__inner">
+          <p class="approach__eyebrow">
+            <span>What we do</span>
+            <span class="approach__eyebrow-meta">04 — Capabilities</span>
+          </p>
+
+          <h2 id="approach-heading" class="approach__title">
+            <span>A studio approach</span>
+            <span>to <em>creator-led</em> growth.</span>
+          </h2>
+
+          <div class="approach__rule" aria-hidden="true"></div>
+
+          <ol class="capabilities" role="list">
+            <li class="capability">
+              <span class="capability__index" aria-hidden="true">01</span>
+              <h3 class="capability__label">Match</h3>
+              <p class="capability__copy">
+                We pair brands with fit-first creators &mdash; selected by audience overlap,
+                voice and cultural relevance, not follower count.
+              </p>
+            </li>
+
+            <li class="capability">
+              <span class="capability__index" aria-hidden="true">02</span>
+              <h3 class="capability__label">Produce</h3>
+              <p class="capability__copy">
+                In-house creative direction, on-set production and paid-ready edits &mdash;
+                built to perform without losing the creator&rsquo;s voice.
+              </p>
+            </li>
+
+            <li class="capability">
+              <span class="capability__index" aria-hidden="true">03</span>
+              <h3 class="capability__label">Distribute</h3>
+              <p class="capability__copy">
+                Organic, whitelisted and paid channels orchestrated so a single asset earns
+                reach far beyond the original feed.
+              </p>
+            </li>
+
+            <li class="capability">
+              <span class="capability__index" aria-hidden="true">04</span>
+              <h3 class="capability__label">Measure</h3>
+              <p class="capability__copy">
+                Attribution, sales lift, brand equity. We close the loop with reporting that
+                proves contribution &mdash; not vanity.
+              </p>
+            </li>
+          </ol>
+
+          <a class="approach__link" href="#approach">
+            <span>Read our approach</span>
+            <span class="approach__link-arrow" aria-hidden="true">-></span>
+          </a>
+        </div>
+      </section>
     </main>
+
+    <script>
+      (() => {
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        // Hero parallax
+        const hero = document.querySelector(".hero");
+        const backdrop = document.querySelector(".hero__backdrop");
+        if (hero && backdrop && !reduce) {
+          let raf = 0;
+          const update = () => {
+            raf = 0;
+            const max = hero.offsetHeight;
+            const y = Math.max(0, Math.min(window.scrollY, max));
+            backdrop.style.setProperty("--hero-parallax", (y * 0.22).toFixed(1) + "px");
+          };
+          window.addEventListener(
+            "scroll",
+            () => {
+              if (!raf) raf = requestAnimationFrame(update);
+            },
+            { passive: true }
+          );
+          update();
+        }
+
+        // Section reveal
+        const targets = document.querySelectorAll("[data-reveal]");
+        if (!targets.length) return;
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach((el) => el.classList.add("is-visible"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-visible");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
+        );
+        targets.forEach((el) => io.observe(el));
+      })();
+    </script>
   </body>
 </html>
