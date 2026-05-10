@@ -1,13 +1,14 @@
 :root {
   --ink: #080d0d;
   --soft-ink: rgba(8, 13, 13, 0.86);
+  --muted-ink: rgba(8, 13, 13, 0.58);
   --line: rgba(8, 13, 13, 0.58);
   --veil: rgba(246, 244, 239, 0.18);
   --white: #f8f5ef;
+  --serif: "Instrument Serif", Georgia, "Times New Roman", Times, serif;
+  --sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-family:
-    "Helvetica Neue",
-    Helvetica,
-    Arial,
+    var(--sans),
     sans-serif;
   color: var(--ink);
   background: #e7e2db;
@@ -34,6 +35,28 @@ a {
   text-decoration: none;
 }
 
+a:focus-visible {
+  outline: 1px solid rgba(8, 13, 13, 0.84);
+  outline-offset: 5px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 10;
+  padding: 12px 16px;
+  color: var(--white);
+  background: var(--ink);
+  border-radius: 999px;
+  transform: translateY(-140%);
+  transition: transform 180ms ease;
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
 .site {
   min-height: 100vh;
 }
@@ -43,6 +66,7 @@ a {
   min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
+  background: #e8e1d7;
 }
 
 .hero__backdrop {
@@ -52,7 +76,8 @@ a {
   background-image: url("./assets/hero-reference.png");
   background-position: center;
   background-size: cover;
-  transform: scale(1.001);
+  transform: scale(1.025);
+  animation: heroDrift 18s ease-out forwards;
 }
 
 .hero::after {
@@ -62,8 +87,23 @@ a {
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(90deg, rgba(243, 241, 236, 0.44) 0%, rgba(243, 241, 236, 0.22) 38%, rgba(243, 241, 236, 0.04) 64%, rgba(243, 241, 236, 0) 82%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 22%);
+    radial-gradient(circle at 76% 22%, rgba(255, 218, 172, 0.2), transparent 30%),
+    linear-gradient(90deg, rgba(241, 238, 231, 0.56) 0%, rgba(241, 238, 231, 0.28) 36%, rgba(241, 238, 231, 0.05) 64%, rgba(241, 238, 231, 0) 82%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 25%),
+    linear-gradient(180deg, rgba(8, 13, 13, 0) 63%, rgba(8, 13, 13, 0.1) 100%);
+}
+
+.hero__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.16;
+  mix-blend-mode: multiply;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(8, 13, 13, 0.12) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px);
+  background-size: 4px 4px, 7px 7px;
 }
 
 .nav {
@@ -75,6 +115,9 @@ a {
   gap: 32px;
   width: 100%;
   padding: clamp(28px, 3.85vw, 58px) clamp(28px, 4vw, 76px) 0;
+  opacity: 0;
+  transform: translateY(-10px);
+  animation: fadeDown 760ms 120ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
 }
 
 .nav__brand {
@@ -95,6 +138,7 @@ a {
   justify-content: center;
   gap: clamp(42px, 4.8vw, 72px);
   font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 500;
   line-height: 1;
   color: var(--soft-ink);
 }
@@ -105,9 +149,29 @@ a {
     transform 180ms ease;
 }
 
+.nav__links a::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  margin-top: 7px;
+  background: currentColor;
+  opacity: 0;
+  transform: scaleX(0.2);
+  transform-origin: left;
+  transition:
+    opacity 180ms ease,
+    transform 220ms ease;
+}
+
 .nav__links a:hover {
-  opacity: 0.62;
+  opacity: 0.72;
   transform: translateY(-1px);
+}
+
+.nav__links a:hover::after {
+  opacity: 0.45;
+  transform: scaleX(1);
 }
 
 .button {
@@ -118,6 +182,7 @@ a {
   min-height: 46px;
   border-radius: 999px;
   font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 500;
   line-height: 1;
   white-space: nowrap;
   transition:
@@ -131,13 +196,19 @@ a {
   transform: translateY(-1px);
 }
 
+.button:active {
+  transform: translateY(0) scale(0.985);
+}
+
 .button--primary {
-  min-width: 230px;
-  min-height: 55px;
-  padding: 0 33px 1px;
+  min-width: 218px;
+  min-height: 54px;
+  padding: 0 28px 1px 31px;
   color: var(--white);
   background: var(--ink);
-  box-shadow: 0 18px 42px rgba(8, 13, 13, 0.16);
+  box-shadow:
+    0 18px 42px rgba(8, 13, 13, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12);
 }
 
 .button--primary:hover {
@@ -147,6 +218,12 @@ a {
 .button__arrow {
   font-size: 18px;
   line-height: 0;
+  transform: translateY(-1px);
+  transition: transform 180ms ease;
+}
+
+.button:hover .button__arrow {
+  transform: translate(4px, -1px);
 }
 
 .hero__content {
@@ -154,32 +231,74 @@ a {
   z-index: 1;
   width: min(780px, calc(100% - 48px));
   margin-left: clamp(30px, 6.15vw, 94px);
-  padding-top: clamp(110px, 15.2vh, 156px);
+  padding-top: clamp(96px, 13.4vh, 142px);
   padding-bottom: 80px;
+}
+
+.hero__kicker {
+  position: relative;
+  max-width: none;
+  margin: 0 0 22px;
+  padding-left: 66px;
+  color: var(--muted-ink);
+  font-size: clamp(12px, 0.9vw, 13px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 760ms 240ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
+}
+
+.hero__kicker::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 44px;
+  height: 1px;
+  background: rgba(8, 13, 13, 0.52);
 }
 
 .hero h1 {
   margin: 0;
   max-width: 780px;
-  font-weight: 700;
-  font-size: clamp(62px, 7.55vw, 116px);
+  font-weight: 800;
+  font-size: clamp(62px, 7.25vw, 112px);
   line-height: 0.84;
-  letter-spacing: 0;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
 }
 
 .hero h1 > span {
   display: block;
+  opacity: 0;
+  transform: translateY(22px);
+  animation: fadeUp 880ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
+}
+
+.hero h1 > span:nth-child(1) {
+  animation-delay: 330ms;
+}
+
+.hero h1 > span:nth-child(2) {
+  animation-delay: 430ms;
+}
+
+.hero h1 > span:nth-child(3) {
+  animation-delay: 530ms;
 }
 
 .hero h1 em {
   display: inline-block;
   margin-right: 0.08em;
-  font-family: Georgia, "Times New Roman", Times, serif;
+  font-family: var(--serif);
   font-style: italic;
   font-weight: 400;
-  font-size: 0.76em;
-  line-height: 0.8;
-  letter-spacing: -0.035em;
+  font-size: 0.82em;
+  line-height: 0.74;
+  letter-spacing: -0.055em;
 }
 
 .hero__mixed-line {
@@ -190,18 +309,69 @@ a {
 }
 
 .hero__rule {
-  width: 50px;
+  width: 74px;
   height: 1px;
   margin: clamp(42px, 5.2vh, 54px) 0 clamp(34px, 4.4vh, 44px);
-  background: var(--ink);
+  background: rgba(8, 13, 13, 0.62);
+  transform-origin: left;
+  transform: scaleX(0);
+  animation: drawLine 720ms 650ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
 }
 
-.hero p {
+.hero__copy {
   max-width: 466px;
   margin: 0 0 50px;
   color: var(--soft-ink);
-  font-size: clamp(16px, 1.2vw, 19px);
+  font-size: clamp(16px, 1.18vw, 18px);
+  font-weight: 400;
   line-height: 1.52;
+  text-wrap: pretty;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 760ms 760ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
+}
+
+.hero .button--primary {
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 760ms 890ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
+}
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeDown {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes drawLine {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes heroDrift {
+  to {
+    transform: scale(1.001);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 1ms !important;
+  }
 }
 
 @media (max-width: 900px) {
@@ -273,7 +443,7 @@ a {
     white-space: normal;
   }
 
-  .hero p {
+  .hero__copy {
     max-width: 330px;
     margin-bottom: 34px;
   }

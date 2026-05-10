@@ -8,12 +8,20 @@
       name="description"
       content="AJIONE connects ambitious brands with high-fit creators through curated, data-informed partnerships."
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&family=Instrument+Serif:ital@1&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <a class="skip-link" href="#main">Skip to content</a>
     <main class="site">
-      <section class="hero" aria-label="Creator partnerships">
+      <section class="hero" id="main" aria-label="Creator partnerships">
         <div class="hero__backdrop" aria-hidden="true"></div>
+        <div class="hero__grain" aria-hidden="true"></div>
 
         <header class="nav" aria-label="Main navigation">
           <a class="nav__brand" href="/" aria-label="AJIONE home">
@@ -29,6 +37,8 @@
         </header>
 
         <div class="hero__content">
+          <p class="hero__kicker">Creator growth studio</p>
+
           <h1>
             <span>Creator</span>
             <span>partnerships.</span>
@@ -37,13 +47,13 @@
 
           <div class="hero__rule" aria-hidden="true"></div>
 
-          <p>
-            We connect ambitious brands with high-fit creators through curated,
-            data-informed partnerships that deliver real impact.
+          <p class="hero__copy">
+            We connect ambitious brands with creators who move culture, shape
+            demand, and turn attention into measurable growth.
           </p>
 
           <a class="button button--primary" href="#partner">
-            <span>Partner With Us</span>
+            <span>Start a Partnership</span>
             <span class="button__arrow" aria-hidden="true">-></span>
           </a>
         </div>
