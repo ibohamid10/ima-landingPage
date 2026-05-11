@@ -38,26 +38,36 @@ const POINTS = {
 const PATH_A = `M ${POINTS.one.x} ${POINTS.one.y} C 280 78, 420 122, ${POINTS.two.x} ${POINTS.two.y}`;
 const PATH_B = `M ${POINTS.two.x} ${POINTS.two.y} C 780 78, 920 122, ${POINTS.three.x} ${POINTS.three.y}`;
 
-// PATH_GROWTH: gentle ramp-up, then accelerates upward (hockey stick).
-// Start tangent eases out of PATH_B's endpoint to avoid the kink at the junction.
-const PATH_GROWTH = `M ${POINTS.three.x} ${POINTS.three.y} C 1108 98, 1170 38, ${POINTS.growth.x} ${POINTS.growth.y}`;
+// PATH_GROWTH: bull-market zigzag — higher highs, higher lows, breakout to peak.
+// Sharp L-segments instead of a bezier for the trading-chart aesthetic.
+//   03 (1060,100) → peak1 (1092,76) → pullback1 (1110,86)
+//                 → peak2 (1148,50) → pullback2 (1166,60)
+//                 → peak3 (1196,28) → final breakout to (1216,18)
+const GROWTH_VERTICES = [
+  { x: POINTS.three.x, y: POINTS.three.y },
+  { x: 1092, y: 76 },
+  { x: 1110, y: 86 },
+  { x: 1148, y: 50 },
+  { x: 1166, y: 60 },
+  { x: 1196, y: 28 },
+  { x: POINTS.growth.x, y: POINTS.growth.y },
+];
 
-// Arrowhead: two strokes meeting at the path's end, oriented along the final tangent.
-// Final tangent ≈ direction from control point (1170, 38) to end (1216, 18) = (46, -20).
-// We draw two short strokes back from the end point at ±25° from that tangent.
+const PATH_GROWTH = GROWTH_VERTICES.map((p, i) => `${i === 0 ? "M" : "L"} ${p.x} ${p.y}`).join(" ");
+
+// Arrowhead: two strokes meeting at the path's end, oriented along the final segment.
 const ARROWHEAD_PATH = (() => {
-  const end = POINTS.growth;
-  const cp = { x: 1170, y: 38 };
-  const dx = end.x - cp.x;
-  const dy = end.y - cp.y;
+  const end = GROWTH_VERTICES[GROWTH_VERTICES.length - 1];
+  const prev = GROWTH_VERTICES[GROWTH_VERTICES.length - 2];
+  const dx = end.x - prev.x;
+  const dy = end.y - prev.y;
   const len = Math.hypot(dx, dy);
   const ux = dx / len;
   const uy = dy / len;
-  const armLen = 12;
-  const angle = (28 * Math.PI) / 180;
+  const armLen = 11;
+  const angle = (32 * Math.PI) / 180;
   const cos = Math.cos(angle);
   const sin = Math.sin(angle);
-  // Two back-rotated unit vectors
   const a1x = -(ux * cos - uy * sin);
   const a1y = -(uy * cos + ux * sin);
   const a2x = -(ux * cos + uy * sin);
@@ -124,7 +134,7 @@ export default function Process() {
         scrollTrigger: {
           trigger: section,
           start: "top top",
-          end: "+=2200",
+          end: "+=2600",
           pin: true,
           scrub: 1.1,
           anticipatePin: 1,
@@ -207,32 +217,34 @@ export default function Process() {
 
       // ---- Phase C : Growth -----------------------------------------
 
+      // The bull-line zig-zag is longer than the smooth curve was — give it more
+      // timeline space so the user can feel each peak as they scroll.
       tl.to(
         ".process-light",
         {
           motionPath: { path: ".process-trace-growth", align: ".process-trace-growth", alignOrigin: [0.5, 0.5] },
-          duration: 0.8,
-          ease: "power2.in",
+          duration: 1,
+          ease: "none",
         },
         2.7
       );
-      tl.to(".process-trace-growth", { strokeDashoffset: 0, duration: 0.8, ease: "power2.in" }, 2.7);
+      tl.to(".process-trace-growth", { strokeDashoffset: 0, duration: 1, ease: "none" }, 2.7);
 
-      // Final title word "growth." darkens with the growth arrow
+      // Final title word "growth." darkens during the breakout
       tl.to(
         '.process-section__title-word[data-word="3"]',
-        { color: "#080d0d", duration: 0.5, ease: "power2.out" },
-        2.85
+        { color: "#080d0d", duration: 0.6, ease: "power2.out" },
+        3.0
       );
 
       // Arrowhead draws in just as the light reaches the tip
-      tl.to(".process-arrowhead", { strokeDashoffset: 0, duration: 0.18, ease: "power2.out" }, 3.36);
+      tl.to(".process-arrowhead", { strokeDashoffset: 0, duration: 0.18, ease: "power2.out" }, 3.62);
 
       // Light dissolves into the arrow head
-      tl.to(".process-light", { scale: 0.3, opacity: 0, duration: 0.18 }, 3.42);
+      tl.to(".process-light", { scale: 0.3, opacity: 0, duration: 0.18 }, 3.68);
 
       // Subtle after-glow halo across the section as everything settles
-      tl.to(".process-section__halo", { opacity: 0.7, duration: 0.4 }, 3.3);
+      tl.to(".process-section__halo", { opacity: 0.7, duration: 0.4 }, 3.55);
     }, section);
 
     return () => ctx.revert();
