@@ -864,6 +864,12 @@ a:focus-visible {
   color: rgba(8, 13, 13, 0.6);
 }
 
+.process-section__title-word {
+  display: inline-block;
+  color: rgba(8, 13, 13, 0.16);
+  will-change: color;
+}
+
 .process-stage {
   position: relative;
   width: 100%;

@@ -88,6 +88,11 @@ export default function Process() {
         gsap.set([".process-num", ".process-title", ".process-orb"], { opacity: 1 });
         gsap.set(".process-desc", { opacity: 1 });
         gsap.set(".process-light", { opacity: 0 });
+        // On mobile / reduced motion, reveal title at final color immediately
+        gsap.set('.process-section__title-word[data-word="0"]', { color: "rgba(8, 13, 13, 0.6)" });
+        gsap.set('.process-section__title-word[data-word="1"]', { color: "rgba(8, 13, 13, 0.6)" });
+        gsap.set('.process-section__title-word[data-word="2"]', { color: "#080d0d" });
+        gsap.set('.process-section__title-word[data-word="3"]', { color: "#080d0d" });
         return;
       }
 
@@ -129,11 +134,25 @@ export default function Process() {
 
       // ---- Phase A : 01 → 02 -----------------------------------------
 
+      // Title word "From" wakes as the journey starts
+      tl.to(
+        '.process-section__title-word[data-word="0"]',
+        { color: "rgba(8, 13, 13, 0.6)", duration: 0.3, ease: "power2.out" },
+        0.02
+      );
+
       // Step 01 wakes up
       tl.to(".process-num[data-i='0']", { opacity: 1, duration: 0.1 }, 0);
       tl.to(".process-title[data-i='0']", { opacity: 1, duration: 0.1 }, 0);
       tl.to(".process-orb[data-i='0']", { opacity: 1, scale: 1, duration: 0.12 }, 0);
       tl.to(".process-desc[data-i='0']", { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.04);
+
+      // Title word "insight" darkens as the light approaches 02
+      tl.to(
+        '.process-section__title-word[data-word="1"]',
+        { color: "rgba(8, 13, 13, 0.6)", duration: 0.35, ease: "power2.out" },
+        0.75
+      );
 
       // Light spawns at 01
       tl.to(".process-light", { opacity: 1, scale: 1, duration: 0.06 }, 0);
@@ -170,6 +189,13 @@ export default function Process() {
       );
       tl.to(".process-trace-b", { strokeDashoffset: 0, duration: 1 }, 1.35);
 
+      // Title word "to" darkens during the 02 → 03 stretch
+      tl.to(
+        '.process-section__title-word[data-word="2"]',
+        { color: "#080d0d", duration: 0.4, ease: "power2.out" },
+        1.6
+      );
+
       // Handoff to 03
       tl.to(".process-desc[data-i='1']", { opacity: 0, y: -10, duration: 0.18, ease: "power2.in" }, 2.22);
       tl.to(".process-num[data-i='2']", { opacity: 1, duration: 0.12 }, 2.3);
@@ -192,6 +218,13 @@ export default function Process() {
       );
       tl.to(".process-trace-growth", { strokeDashoffset: 0, duration: 0.8, ease: "power2.in" }, 2.7);
 
+      // Final title word "growth." darkens with the growth arrow
+      tl.to(
+        '.process-section__title-word[data-word="3"]',
+        { color: "#080d0d", duration: 0.5, ease: "power2.out" },
+        2.85
+      );
+
       // Arrowhead draws in just as the light reaches the tip
       tl.to(".process-arrowhead", { strokeDashoffset: 0, duration: 0.18, ease: "power2.out" }, 3.36);
 
@@ -213,7 +246,12 @@ export default function Process() {
         <header className="process-section__header">
           <p className="process-section__kicker">The journey</p>
           <h2 className="process-section__title">
-            <em>From insight</em> to growth.
+            <em>
+              <span className="process-section__title-word" data-word="0">From</span>{" "}
+              <span className="process-section__title-word" data-word="1">insight</span>
+            </em>{" "}
+            <span className="process-section__title-word" data-word="2">to</span>{" "}
+            <span className="process-section__title-word" data-word="3">growth.</span>
           </h2>
         </header>
 
