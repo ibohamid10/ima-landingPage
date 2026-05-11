@@ -59,151 +59,6 @@
         </div>
       </section>
 
-      <section class="network" id="services" aria-labelledby="network-heading" data-reveal>
-        <div class="network__inner">
-          <header class="network__header">
-            <div class="network__lead-col">
-              <p class="network__eyebrow">
-                <span>How we connect</span>
-                <span class="network__eyebrow-meta">02 — Network</span>
-              </p>
-
-              <h2 id="network-heading" class="network__title">
-                <span>Where the right</span>
-                <span><em>creators</em> meet</span>
-                <span>the right brands.</span>
-              </h2>
-            </div>
-
-            <p class="network__lead">
-              AJIONE is a connector &mdash; not a studio. We curate high-fit pairings between
-              cultural creators and ambitious brands, then step aside so the partnership can
-              lead.
-            </p>
-          </header>
-
-          <div class="bento">
-            <article class="tile tile--pairing">
-              <header class="tile__head">
-                <span class="tile__label">
-                  <span class="tile__pulse" aria-hidden="true"></span>
-                  Currently pairing
-                </span>
-                <span class="tile__counter" id="pairing-counter">01 / 06</span>
-              </header>
-
-              <div class="pairing">
-                <div class="pairing__row pairing__row--brand">
-                  <span class="pairing__role">Brand</span>
-                  <span class="pairing__name" data-role="brand">Maison Eyo</span>
-                </div>
-                <div class="pairing__cross" aria-hidden="true">&times;</div>
-                <div class="pairing__row pairing__row--creator">
-                  <span class="pairing__role">Creator</span>
-                  <span class="pairing__name" data-role="creator">@sofia.k</span>
-                </div>
-                <div class="pairing__meta" data-role="meta">
-                  Fashion &middot; Vienna &middot; 142K reach
-                </div>
-              </div>
-
-              <div class="pairing__dots" aria-hidden="true"></div>
-            </article>
-
-            <article class="tile tile--ticker">
-              <header class="tile__head">
-                <span class="tile__label">The network</span>
-                <span class="tile__counter">200+ creators &middot; 40+ brands</span>
-              </header>
-
-              <div class="ticker">
-                <div class="ticker__heads" aria-hidden="true">
-                  <span class="ticker__heading">Brands</span>
-                  <span class="ticker__heads-gap"></span>
-                  <span class="ticker__heading">Creators</span>
-                </div>
-
-                <div class="ticker__body" aria-hidden="true">
-                  <div class="ticker__col ticker__col--brand">
-                    <div class="ticker__track ticker__track--up">
-                      <ul class="ticker__list">
-                        <li>Maison Eyo</li>
-                        <li>Klar&auml; Skincare</li>
-                        <li>Halt Berlin</li>
-                        <li>Dunne Wear</li>
-                        <li>Ovum Coffee</li>
-                        <li>Plinth Studio</li>
-                        <li>Atlas Linen</li>
-                        <li>Nordwand Sport</li>
-                      </ul>
-                      <ul class="ticker__list" aria-hidden="true">
-                        <li>Maison Eyo</li>
-                        <li>Klar&auml; Skincare</li>
-                        <li>Halt Berlin</li>
-                        <li>Dunne Wear</li>
-                        <li>Ovum Coffee</li>
-                        <li>Plinth Studio</li>
-                        <li>Atlas Linen</li>
-                        <li>Nordwand Sport</li>
-                      </ul>
-                    </div>
-                  </div>
-
-                  <div class="ticker__divider" aria-hidden="true"></div>
-
-                  <div class="ticker__col ticker__col--creator">
-                    <div class="ticker__track ticker__track--down">
-                      <ul class="ticker__list">
-                        <li>@sofia.k</li>
-                        <li>@leo.m</li>
-                        <li>@noor.j</li>
-                        <li>@felix.r</li>
-                        <li>@mae.t</li>
-                        <li>@kira.w</li>
-                        <li>@jonas.eh</li>
-                        <li>@iva.p</li>
-                      </ul>
-                      <ul class="ticker__list" aria-hidden="true">
-                        <li>@sofia.k</li>
-                        <li>@leo.m</li>
-                        <li>@noor.j</li>
-                        <li>@felix.r</li>
-                        <li>@mae.t</li>
-                        <li>@kira.w</li>
-                        <li>@jonas.eh</li>
-                        <li>@iva.p</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </article>
-
-            <article class="tile tile--niches">
-              <span class="tile__label tile__label--inverse">Niches we connect</span>
-              <div class="marquee" aria-hidden="true">
-                <div class="marquee__track">
-                  <ul class="marquee__list">
-                    <li>Beauty</li><li>Fashion</li><li>Lifestyle</li><li>Wellness</li>
-                    <li>Food &amp; Drink</li><li>Travel</li><li>Hospitality</li>
-                    <li>Sport</li><li>Tech</li><li>Home &amp; Interior</li><li>Editorial</li>
-                  </ul>
-                  <ul class="marquee__list" aria-hidden="true">
-                    <li>Beauty</li><li>Fashion</li><li>Lifestyle</li><li>Wellness</li>
-                    <li>Food &amp; Drink</li><li>Travel</li><li>Hospitality</li>
-                    <li>Sport</li><li>Tech</li><li>Home &amp; Interior</li><li>Editorial</li>
-                  </ul>
-                </div>
-              </div>
-            </article>
-          </div>
-
-          <a class="network__link" href="#partner">
-            <span>Browse the network</span>
-            <span class="network__link-arrow" aria-hidden="true">-></span>
-          </a>
-        </div>
-      </section>
     </main>
 
     <script>
@@ -233,73 +88,23 @@
 
         // Section reveal
         const targets = document.querySelectorAll("[data-reveal]");
-        if (targets.length) {
-          if (!("IntersectionObserver" in window)) {
-            targets.forEach((el) => el.classList.add("is-visible"));
-          } else {
-            const io = new IntersectionObserver(
-              (entries) => {
-                entries.forEach((e) => {
-                  if (e.isIntersecting) {
-                    e.target.classList.add("is-visible");
-                    io.unobserve(e.target);
-                  }
-                });
-              },
-              { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
-            );
-            targets.forEach((el) => io.observe(el));
-          }
+        if (!targets.length) return;
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach((el) => el.classList.add("is-visible"));
+          return;
         }
-
-        // Pairing rotator
-        const pairings = [
-          { brand: "Maison Eyo", creator: "@sofia.k", meta: "Fashion · Vienna · 142K reach" },
-          { brand: "Klarä Skincare", creator: "@noor.j", meta: "Beauty · Berlin · 88K reach" },
-          { brand: "Halt Berlin", creator: "@leo.m", meta: "Hospitality · Berlin · 64K reach" },
-          { brand: "Ovum Coffee", creator: "@mae.t", meta: "Lifestyle · Hamburg · 121K reach" },
-          { brand: "Atlas Linen", creator: "@iva.p", meta: "Home · Vienna · 76K reach" },
-          { brand: "Nordwand Sport", creator: "@felix.r", meta: "Sport · Munich · 95K reach" }
-        ];
-
-        const pairingEl = document.querySelector(".pairing");
-        const counterEl = document.getElementById("pairing-counter");
-        const dotsEl = document.querySelector(".pairing__dots");
-
-        if (pairingEl && counterEl && dotsEl && pairings.length > 1) {
-          const brandEl = pairingEl.querySelector('[data-role="brand"]');
-          const creatorEl = pairingEl.querySelector('[data-role="creator"]');
-          const metaEl = pairingEl.querySelector('[data-role="meta"]');
-
-          pairings.forEach((_, i) => {
-            const dot = document.createElement("span");
-            dot.className = "pairing__dot" + (i === 0 ? " is-active" : "");
-            dotsEl.appendChild(dot);
-          });
-          const dots = dotsEl.querySelectorAll(".pairing__dot");
-
-          let i = 0;
-          const total = pairings.length;
-          const pad = (n) => String(n).padStart(2, "0");
-
-          const advance = () => {
-            pairingEl.classList.add("is-changing");
-            setTimeout(() => {
-              i = (i + 1) % total;
-              const p = pairings[i];
-              brandEl.textContent = p.brand;
-              creatorEl.textContent = p.creator;
-              metaEl.textContent = p.meta;
-              counterEl.textContent = pad(i + 1) + " / " + pad(total);
-              dots.forEach((d, j) => d.classList.toggle("is-active", i === j));
-              pairingEl.classList.remove("is-changing");
-            }, 380);
-          };
-
-          if (!reduce) {
-            setInterval(advance, 4400);
-          }
-        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((e) => {
+              if (e.isIntersecting) {
+                e.target.classList.add("is-visible");
+                io.unobserve(e.target);
+              }
+            });
+          },
+          { threshold: 0.18, rootMargin: "0px 0px -8% 0px" }
+        );
+        targets.forEach((el) => io.observe(el));
       })();
     </script>
   </body>
