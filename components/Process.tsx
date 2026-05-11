@@ -96,9 +96,10 @@ export default function Process() {
     const ctx = gsap.context(() => {
       if (reduceMotion || mobile) {
         gsap.set(
-          [".process-trace-a", ".process-trace-b", ".process-trace-growth", ".process-arrowhead"],
+          [".process-trace-a", ".process-trace-b", ".process-trace-growth"],
           { strokeDasharray: "none", strokeDashoffset: 0 }
         );
+        gsap.set(".process-arrowhead", { opacity: 1 });
         gsap.set([".process-num", ".process-title", ".process-orb"], { opacity: 1 });
         gsap.set(".process-desc", { opacity: 1 });
         gsap.set(".process-light", { opacity: 0 });
@@ -126,7 +127,6 @@ export default function Process() {
       setupPath(".process-trace-a");
       setupPath(".process-trace-b");
       setupPath(".process-trace-growth");
-      setupPath(".process-arrowhead");
 
       // Initial states
       gsap.set(".process-light", { opacity: 0, scale: 0.4, transformOrigin: "50% 50%" });
@@ -136,6 +136,10 @@ export default function Process() {
       gsap.set(".process-desc", { opacity: 0, y: 12 });
       gsap.set(".process-afterglow", { opacity: 0 });
       gsap.set(".process-ripple", { opacity: 0, scale: 1 });
+      // Arrowhead: opacity-based reveal instead of strokeDashoffset to avoid
+      // a sub-pixel rendering artifact at the chevron tip when the path is
+      // fully offset (strokeLinejoin: round leaves a tiny dot visible).
+      gsap.set(".process-arrowhead", { opacity: 0 });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -260,8 +264,8 @@ export default function Process() {
         3.0
       );
 
-      // Arrowhead draws in just as the light reaches the tip
-      tl.to(".process-arrowhead", { strokeDashoffset: 0, duration: 0.18, ease: "power2.out" }, 3.62);
+      // Arrowhead fades in just as the light reaches the tip
+      tl.to(".process-arrowhead", { opacity: 1, duration: 0.18, ease: "power2.out" }, 3.62);
 
       // Light dissolves into the arrow head
       tl.to(".process-light", { scale: 0.3, opacity: 0, duration: 0.18 }, 3.68);
