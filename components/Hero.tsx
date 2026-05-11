@@ -93,6 +93,8 @@ export default function Hero() {
         <motion.a
           className="button button--primary"
           href="#partner"
+          data-analytics-event="cta_start_partnership_click"
+          data-analytics-label="Hero start partnership"
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.76, delay: 0.89, ease: easeOut }}

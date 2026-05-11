@@ -77,10 +77,24 @@ export default function DatenschutzPage() {
         <div className="legal-block">
           <h2>Cookies und Tracking</h2>
           <p>
-            Diese Website verwendet nach aktuellem Stand keine Analyse-, Marketing-
-            oder Tracking-Cookies. Sollte sich dies ändern, wird diese
-            Datenschutzerklärung entsprechend angepasst und, soweit erforderlich, eine
-            Einwilligung eingeholt.
+            Diese Website nutzt Plausible Analytics zur datenschutzfreundlichen,
+            cookieless Reichweitenmessung. Dabei werden keine Tracking-Cookies gesetzt
+            und keine seitenübergreifenden Nutzerprofile erstellt.
+          </p>
+          <p>
+            Erfasst werden insbesondere Seitenaufrufe, Referrer, Kampagnenparameter
+            sowie ausgewählte Interaktionen wie Klicks auf Kontakt- oder
+            Call-to-Action-Elemente. Die Verarbeitung erfolgt zur Verbesserung der
+            Website und zur Auswertung der Wirksamkeit von Outreach-Kampagnen auf
+            Grundlage berechtigter Interessen gemäß Art. 6 Abs. 1 lit. f DSGVO.
+          </p>
+          <p>
+            Anbieter ist Plausible Insights OÜ, Västriku tn 2, 50403 Tartu, Estland.
+            Weitere Informationen finden Sie unter{" "}
+            <a href="https://plausible.io/data-policy" rel="noreferrer" target="_blank">
+              plausible.io/data-policy
+            </a>
+            .
           </p>
         </div>
 
