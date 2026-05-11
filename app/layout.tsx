@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
 import SmoothScroll from "@/components/SmoothScroll";
-import Preloader from "@/components/Preloader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,9 +13,52 @@ export const metadata: Metadata = {
 const umamiSrc = process.env.NEXT_PUBLIC_UMAMI_SRC;
 const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 
+// Synchronous head script: fires before first paint and adds a class to
+// <html> for returning visitors so CSS can hide the preloader instantly.
+// No React state -> no SSR/CSR mismatch and no flash of Hero before the
+// intro shows up.
+const INTRO_CHECK_SCRIPT = `
+try {
+  if (sessionStorage.getItem('ajione-intro-shown')) {
+    document.documentElement.classList.add('ajione-intro-seen');
+  } else {
+    document.documentElement.classList.add('ajione-intro-locked');
+  }
+} catch (e) {}
+`;
+
+// After-paint script: when the intro is showing, wait for the full
+// animation and then dismiss it. Also stores the session flag so the
+// next page navigation skips the intro entirely.
+const INTRO_DISMISS_SCRIPT = `
+(function () {
+  try {
+    var html = document.documentElement;
+    if (html.classList.contains('ajione-intro-seen')) return;
+    var el = document.getElementById('ajione-preloader');
+    if (!el) return;
+    window.setTimeout(function () {
+      try { sessionStorage.setItem('ajione-intro-shown', '1'); } catch (e) {}
+      el.classList.add('preloader--exit');
+      html.classList.remove('ajione-intro-locked');
+      window.setTimeout(function () {
+        el.parentNode && el.parentNode.removeChild(el);
+      }, 700);
+    }, 1300);
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
+      <head>
+        <script
+          // Runs before first paint so the .ajione-intro-* class is on
+          // <html> when CSS resolves -> no flash.
+          dangerouslySetInnerHTML={{ __html: INTRO_CHECK_SCRIPT }}
+        />
+      </head>
       <body>
         {umamiSrc && umamiWebsiteId ? (
           <Script
@@ -28,11 +70,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         ) : null}
         <AnalyticsEvents />
         <SmoothScroll />
-        <Preloader />
+
+        <div className="preloader" id="ajione-preloader" aria-hidden="true">
+          <div className="preloader__logo">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/ajione-logo.png" alt="" />
+          </div>
+          <span className="preloader__rule" aria-hidden="true" />
+        </div>
+
         <a className="skip-link" href="#main">
           Skip to content
         </a>
         <main className="site">{children}</main>
+
+        <script dangerouslySetInnerHTML={{ __html: INTRO_DISMISS_SCRIPT }} />
       </body>
     </html>
   );

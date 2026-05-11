@@ -1423,6 +1423,19 @@ a:focus-visible {
 
 /* ---------- Preloader ---------- */
 
+/* Lock body scroll while the intro plays. The .ajione-intro-locked class
+   is set synchronously in <head> for first-time visitors before paint. */
+.ajione-intro-locked,
+.ajione-intro-locked body {
+  overflow: hidden;
+}
+
+/* Returning visitor: skip the intro entirely. The class is set
+   synchronously in <head> so the preloader never paints. */
+.ajione-intro-seen .preloader {
+  display: none !important;
+}
+
 .preloader {
   position: fixed;
   inset: 0;
@@ -1434,11 +1447,21 @@ a:focus-visible {
   gap: 28px;
   background: #fafaf7;
   pointer-events: all;
+  opacity: 1;
+  transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.preloader--exit {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .preloader__logo {
   display: block;
   width: clamp(150px, 22vw, 230px);
+  opacity: 0;
+  transform: scale(0.94);
+  animation: preloaderLogoIn 0.95s cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
 }
 
 .preloader__logo img {
@@ -1447,12 +1470,35 @@ a:focus-visible {
   height: auto;
 }
 
+@keyframes preloaderLogoIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  55% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .preloader__rule {
   display: block;
   width: clamp(72px, 9vw, 120px);
   height: 1px;
   background: rgba(8, 13, 13, 0.6);
   transform-origin: left center;
+  transform: scaleX(0);
+  animation: preloaderRuleDraw 0.95s 0.28s cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
+}
+
+@keyframes preloaderRuleDraw {
+  to {
+    transform: scaleX(1);
+  }
 }
 
 /* ---------- Footer ---------- */

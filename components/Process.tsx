@@ -328,11 +328,13 @@ export default function Process() {
               </text>
             ))}
 
-            {/* Base traces (faint) — butt caps so endpoints don't render
-                as phantom dots against the dark background. */}
+            {/* Base traces (faint) — only the 01->02 and 02->03 stretch get a
+                pre-hint line. The growth segment intentionally has no base
+                trace so the breakout 'shoots out of nowhere' from orb 03
+                instead of following a pre-rendered path that would leave a
+                faint phantom dot at the arrow tip. */}
             <path d={PATH_A} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="butt" />
             <path d={PATH_B} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="butt" />
-            <path d={PATH_GROWTH} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.3" strokeLinecap="butt" />
 
             {/* Active traces (drawn by the scroll-scrubbed timeline) */}
             <path className="process-trace-a process-trace-active" d={PATH_A} />
