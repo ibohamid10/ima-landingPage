@@ -30,13 +30,42 @@ const STEPS = [
 const POINTS = {
   one: { x: 100, y: 100 },
   two: { x: 600, y: 100 },
-  three: { x: 1080, y: 100 },
-  growth: { x: 1212, y: 22 },
+  three: { x: 1060, y: 100 },
+  growth: { x: 1216, y: 18 },
 };
 
-const PATH_A = `M ${POINTS.one.x} ${POINTS.one.y} C 280 75, 420 125, ${POINTS.two.x} ${POINTS.two.y}`;
-const PATH_B = `M ${POINTS.two.x} ${POINTS.two.y} C 780 75, 920 125, ${POINTS.three.x} ${POINTS.three.y}`;
-const PATH_GROWTH = `M ${POINTS.three.x} ${POINTS.three.y} C 1132 78, 1172 46, ${POINTS.growth.x} ${POINTS.growth.y}`;
+// PATH_A ends with tangent pointing slightly up; PATH_B mirrors that for a smooth S.
+const PATH_A = `M ${POINTS.one.x} ${POINTS.one.y} C 280 78, 420 122, ${POINTS.two.x} ${POINTS.two.y}`;
+const PATH_B = `M ${POINTS.two.x} ${POINTS.two.y} C 780 78, 920 122, ${POINTS.three.x} ${POINTS.three.y}`;
+
+// PATH_GROWTH: gentle ramp-up, then accelerates upward (hockey stick).
+// Start tangent eases out of PATH_B's endpoint to avoid the kink at the junction.
+const PATH_GROWTH = `M ${POINTS.three.x} ${POINTS.three.y} C 1108 98, 1170 38, ${POINTS.growth.x} ${POINTS.growth.y}`;
+
+// Arrowhead: two strokes meeting at the path's end, oriented along the final tangent.
+// Final tangent ≈ direction from control point (1170, 38) to end (1216, 18) = (46, -20).
+// We draw two short strokes back from the end point at ±25° from that tangent.
+const ARROWHEAD_PATH = (() => {
+  const end = POINTS.growth;
+  const cp = { x: 1170, y: 38 };
+  const dx = end.x - cp.x;
+  const dy = end.y - cp.y;
+  const len = Math.hypot(dx, dy);
+  const ux = dx / len;
+  const uy = dy / len;
+  const armLen = 12;
+  const angle = (28 * Math.PI) / 180;
+  const cos = Math.cos(angle);
+  const sin = Math.sin(angle);
+  // Two back-rotated unit vectors
+  const a1x = -(ux * cos - uy * sin);
+  const a1y = -(uy * cos + ux * sin);
+  const a2x = -(ux * cos + uy * sin);
+  const a2y = -(uy * cos - ux * sin);
+  const p1 = { x: end.x + a1x * armLen, y: end.y + a1y * armLen };
+  const p2 = { x: end.x + a2x * armLen, y: end.y + a2y * armLen };
+  return `M ${p1.x.toFixed(1)} ${p1.y.toFixed(1)} L ${end.x} ${end.y} L ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`;
+})();
 
 export default function Process() {
   const sectionRef = useRef<HTMLElement>(null);
@@ -53,7 +82,7 @@ export default function Process() {
     const ctx = gsap.context(() => {
       if (reduceMotion || mobile) {
         gsap.set(
-          [".process-trace-a", ".process-trace-b", ".process-trace-growth"],
+          [".process-trace-a", ".process-trace-b", ".process-trace-growth", ".process-arrowhead"],
           { strokeDasharray: "none", strokeDashoffset: 0 }
         );
         gsap.set([".process-num", ".process-title", ".process-orb"], { opacity: 1 });
@@ -76,6 +105,7 @@ export default function Process() {
       setupPath(".process-trace-a");
       setupPath(".process-trace-b");
       setupPath(".process-trace-growth");
+      setupPath(".process-arrowhead");
 
       // Initial states
       gsap.set(".process-light", { opacity: 0, scale: 0.4, transformOrigin: "50% 50%" });
@@ -162,8 +192,11 @@ export default function Process() {
       );
       tl.to(".process-trace-growth", { strokeDashoffset: 0, duration: 0.8, ease: "power2.in" }, 2.7);
 
+      // Arrowhead draws in just as the light reaches the tip
+      tl.to(".process-arrowhead", { strokeDashoffset: 0, duration: 0.18, ease: "power2.out" }, 3.36);
+
       // Light dissolves into the arrow head
-      tl.to(".process-light", { scale: 0.3, opacity: 0, duration: 0.18 }, 3.4);
+      tl.to(".process-light", { scale: 0.3, opacity: 0, duration: 0.18 }, 3.42);
 
       // Subtle after-glow halo across the section as everything settles
       tl.to(".process-section__halo", { opacity: 0.7, duration: 0.4 }, 3.3);
@@ -192,17 +225,6 @@ export default function Process() {
             preserveAspectRatio="xMidYMid meet"
           >
             <defs>
-              <marker
-                id="growthArrowHead"
-                viewBox="0 0 12 12"
-                refX="6"
-                refY="6"
-                markerWidth="9"
-                markerHeight="9"
-                orient="auto-start-reverse"
-              >
-                <path d="M1 1 L11 6 L1 11 L4 6 Z" fill="rgba(8,13,13,0.78)" />
-              </marker>
               <radialGradient id="processLightGradient" cx="50%" cy="50%" r="50%">
                 <stop offset="0%" stopColor="#ffffff" stopOpacity="1" />
                 <stop offset="38%" stopColor="#fff0d6" stopOpacity="0.55" />
@@ -237,11 +259,8 @@ export default function Process() {
             {/* Active traces (drawn by the scroll-scrubbed timeline) */}
             <path className="process-trace-a process-trace-active" d={PATH_A} />
             <path className="process-trace-b process-trace-active" d={PATH_B} />
-            <path
-              className="process-trace-growth"
-              d={PATH_GROWTH}
-              markerEnd="url(#growthArrowHead)"
-            />
+            <path className="process-trace-growth" d={PATH_GROWTH} />
+            <path className="process-arrowhead" d={ARROWHEAD_PATH} />
 
             {/* Stationary orbs at each step */}
             {[POINTS.one, POINTS.two, POINTS.three].map((p, i) => (
