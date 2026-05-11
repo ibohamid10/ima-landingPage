@@ -10,7 +10,6 @@ import {
   useState,
 } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import Process from "./Process";
 
 type CardData = {
   num: string;
@@ -361,7 +360,6 @@ export default function Approach() {
         </div>
       </div>
 
-      <Process />
     </section>
   );
 }
