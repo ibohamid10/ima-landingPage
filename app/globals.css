@@ -996,7 +996,7 @@ a:focus-visible {
   gap: 32px;
   padding: 34px clamp(24px, 5.7vw, 88px);
   color: rgba(8, 13, 13, 0.72);
-  background: #f4f1ea;
+  background: #fafaf7;
   border-top: 1px solid rgba(8, 13, 13, 0.08);
 }
 

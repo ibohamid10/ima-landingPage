@@ -8,6 +8,7 @@ export default function Footer() {
 
       <nav className="footer__links" aria-label="Legal">
         <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutz</a>
       </nav>
     </footer>
   );
