@@ -148,7 +148,7 @@ export default function CTA() {
           <a
             ref={buttonRef}
             className="cta__button"
-            href="mailto:hello@ajione.com?subject=Partnership%20inquiry"
+            href="mailto:partnership@ajione.com?subject=Partnership%20inquiry"
             data-analytics-event="cta_partnership_click"
             data-analytics-label="CTA section start partnership"
           >
