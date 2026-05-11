@@ -67,16 +67,10 @@ export default function DatenschutzPage() {
         </div>
 
         <div className="legal-block">
-          <h2>Google Fonts</h2>
+          <h2>Lokale Schriftarten</h2>
           <p>
-            Diese Website bindet Schriftarten über Google Fonts ein. Beim Laden der
-            Schriften kann eine Verbindung zu Servern von Google hergestellt werden.
-            Dabei können technische Zugriffsdaten wie die IP-Adresse verarbeitet werden.
-          </p>
-          <p>
-            Anbieter ist Google Ireland Limited, Gordon House, Barrow Street, Dublin 4,
-            Irland. Weitere Informationen finden Sie in der Datenschutzerklärung von
-            Google.
+            Diese Website verwendet lokal eingebundene Schriftarten. Beim Laden der
+            Schriftarten wird keine Verbindung zu externen Font-Anbietern hergestellt.
           </p>
         </div>
 
