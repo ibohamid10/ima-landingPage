@@ -102,6 +102,8 @@ export default function Process() {
         gsap.set([".process-num", ".process-title", ".process-orb"], { opacity: 1 });
         gsap.set(".process-desc", { opacity: 1 });
         gsap.set(".process-light", { opacity: 0 });
+        gsap.set(".process-ripple", { opacity: 0 });
+        gsap.set(".process-afterglow", { opacity: 0.5 });
         // On mobile / reduced motion, reveal title at final color immediately
         gsap.set('.process-section__title-word[data-word="0"]', { color: "rgba(8, 13, 13, 0.6)" });
         gsap.set('.process-section__title-word[data-word="1"]', { color: "rgba(8, 13, 13, 0.6)" });
@@ -132,6 +134,8 @@ export default function Process() {
       gsap.set(".process-num", { opacity: 0.32 });
       gsap.set(".process-title", { opacity: 0.32 });
       gsap.set(".process-desc", { opacity: 0, y: 12 });
+      gsap.set(".process-afterglow", { opacity: 0 });
+      gsap.set(".process-ripple", { opacity: 0, scale: 1 });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -160,6 +164,11 @@ export default function Process() {
       tl.to(".process-title[data-i='0']", { opacity: 1, duration: 0.1 }, 0);
       tl.to(".process-orb[data-i='0']", { opacity: 1, scale: 1, duration: 0.12 }, 0);
       tl.to(".process-desc[data-i='0']", { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.04);
+
+      // 01 ignition ripple + persistent afterglow
+      tl.to('.process-ripple[data-i="0"]', { opacity: 0.45, duration: 0.04 }, 0.02);
+      tl.to('.process-ripple[data-i="0"]', { scale: 4, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.06);
+      tl.to('.process-afterglow[data-i="0"]', { opacity: 0.45, duration: 0.4, ease: "power2.out" }, 0.12);
 
       // Title word "insight" darkens as the light approaches 02
       tl.to(
@@ -191,6 +200,11 @@ export default function Process() {
       tl.to(".process-orb[data-i='1']", { scale: 1, duration: 0.14 }, 1.18);
       tl.to(".process-desc[data-i='1']", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 1.05);
 
+      // 02 arrival ripple + persistent afterglow
+      tl.to('.process-ripple[data-i="1"]', { opacity: 0.55, duration: 0.04 }, 1.04);
+      tl.to('.process-ripple[data-i="1"]', { scale: 4.5, opacity: 0, duration: 0.5, ease: "power2.out" }, 1.08);
+      tl.to('.process-afterglow[data-i="1"]', { opacity: 0.55, duration: 0.4, ease: "power2.out" }, 1.22);
+
       // ---- Phase B : 02 → 03 -----------------------------------------
 
       tl.to(
@@ -218,6 +232,11 @@ export default function Process() {
       tl.to(".process-orb[data-i='2']", { scale: 1.55, duration: 0.12 }, 2.36);
       tl.to(".process-orb[data-i='2']", { scale: 1, duration: 0.14 }, 2.48);
       tl.to(".process-desc[data-i='2']", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 2.34);
+
+      // 03 arrival ripple — the biggest one, then persistent afterglow
+      tl.to('.process-ripple[data-i="2"]', { opacity: 0.6, duration: 0.04 }, 2.34);
+      tl.to('.process-ripple[data-i="2"]', { scale: 5, opacity: 0, duration: 0.55, ease: "power2.out" }, 2.38);
+      tl.to('.process-afterglow[data-i="2"]', { opacity: 0.6, duration: 0.4, ease: "power2.out" }, 2.52);
 
       // ---- Phase C : Growth -----------------------------------------
 
@@ -315,6 +334,41 @@ export default function Process() {
             <path className="process-trace-b process-trace-active" d={PATH_B} />
             <path className="process-trace-growth" d={PATH_GROWTH} />
             <path className="process-arrowhead" d={ARROWHEAD_PATH} />
+
+            {/* Persistent after-glow halos — fade in after the light passes a step
+                and stay lit, so the user sees which steps have been completed. */}
+            {[POINTS.one, POINTS.two, POINTS.three].map((p, i) => (
+              <circle
+                key={`afterglow-${i}`}
+                className="process-afterglow"
+                data-i={i}
+                cx={p.x}
+                cy={p.y}
+                r="30"
+                fill="url(#processOrbGradient)"
+              />
+            ))}
+
+            {/* Sonar ripples — single ring per step that expands outward when the
+                light arrives, like an Apple Watch ping or a water droplet. */}
+            {[POINTS.one, POINTS.two, POINTS.three].map((p, i) => (
+              <g
+                key={`ripple-${i}`}
+                className="process-ripple"
+                data-i={i}
+                style={{ transformOrigin: `${p.x}px ${p.y}px` } as React.CSSProperties}
+              >
+                <circle
+                  cx={p.x}
+                  cy={p.y}
+                  r="8"
+                  fill="none"
+                  stroke="rgba(8, 13, 13, 0.32)"
+                  strokeWidth="1"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </g>
+            ))}
 
             {/* Stationary orbs at each step */}
             {[POINTS.one, POINTS.two, POINTS.three].map((p, i) => (

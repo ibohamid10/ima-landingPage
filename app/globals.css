@@ -950,6 +950,15 @@ a:focus-visible {
   will-change: opacity, transform;
 }
 
+.process-afterglow {
+  filter: blur(2px);
+  will-change: opacity;
+}
+
+.process-ripple {
+  will-change: transform, opacity;
+}
+
 /* Active step description — absolute-stacked, crossfading slot */
 .process-stage__desc {
   position: relative;
