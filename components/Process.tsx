@@ -31,25 +31,29 @@ const POINTS = {
   one: { x: 100, y: 100 },
   two: { x: 600, y: 100 },
   three: { x: 1060, y: 100 },
-  growth: { x: 1216, y: 18 },
+  growth: { x: 1218, y: 14 },
 };
 
 // PATH_A ends with tangent pointing slightly up; PATH_B mirrors that for a smooth S.
 const PATH_A = `M ${POINTS.one.x} ${POINTS.one.y} C 280 78, 420 122, ${POINTS.two.x} ${POINTS.two.y}`;
 const PATH_B = `M ${POINTS.two.x} ${POINTS.two.y} C 780 78, 920 122, ${POINTS.three.x} ${POINTS.three.y}`;
 
-// PATH_GROWTH: bull-market zigzag — higher highs, higher lows, breakout to peak.
-// Sharp L-segments instead of a bezier for the trading-chart aesthetic.
-//   03 (1060,100) → peak1 (1092,76) → pullback1 (1110,86)
-//                 → peak2 (1148,50) → pullback2 (1166,60)
-//                 → peak3 (1196,28) → final breakout to (1216,18)
+// PATH_GROWTH: bull-market zig-zag where every successive rise is steeper than
+// the previous one, every pullback is smaller, and the final breakout is the
+// single steepest segment — a proper trading-chart breakout, not a curve.
+//
+//   03 (1060,100)
+//     → peak1     (1095, 78)   gentle rise   (Δy = -22, ~32° up)
+//     → pullback1 (1118, 86)   small dip     (Δy = +8,  ~19° down)
+//     → peak2     (1158, 50)   bigger rise   (Δy = -36, ~42° up)
+//     → pullback2 (1180, 56)   tiny dip      (Δy = +6,  ~15° down)
+//     → breakout  (1218, 14)   STEEPEST      (Δy = -42, ~48° up)
 const GROWTH_VERTICES = [
   { x: POINTS.three.x, y: POINTS.three.y },
-  { x: 1092, y: 76 },
-  { x: 1110, y: 86 },
-  { x: 1148, y: 50 },
-  { x: 1166, y: 60 },
-  { x: 1196, y: 28 },
+  { x: 1095, y: 78 },
+  { x: 1118, y: 86 },
+  { x: 1158, y: 50 },
+  { x: 1180, y: 56 },
   { x: POINTS.growth.x, y: POINTS.growth.y },
 ];
 
