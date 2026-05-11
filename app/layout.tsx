@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Script from "next/script";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
+import SmoothScroll from "@/components/SmoothScroll";
+import Preloader from "@/components/Preloader";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,6 +27,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           />
         ) : null}
         <AnalyticsEvents />
+        <SmoothScroll />
+        <Preloader />
         <a className="skip-link" href="#main">
           Skip to content
         </a>
