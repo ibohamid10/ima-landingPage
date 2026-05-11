@@ -105,10 +105,10 @@ export default function Process() {
         gsap.set(".process-ripple", { opacity: 0 });
         gsap.set(".process-afterglow", { opacity: 0.5 });
         // On mobile / reduced motion, reveal title at final color immediately
-        gsap.set('.process-section__title-word[data-word="0"]', { color: "rgba(8, 13, 13, 0.6)" });
-        gsap.set('.process-section__title-word[data-word="1"]', { color: "rgba(8, 13, 13, 0.6)" });
-        gsap.set('.process-section__title-word[data-word="2"]', { color: "#080d0d" });
-        gsap.set('.process-section__title-word[data-word="3"]', { color: "#080d0d" });
+        gsap.set('.process-section__title-word[data-word="0"]', { color: "rgba(255, 255, 255, 0.55)" });
+        gsap.set('.process-section__title-word[data-word="1"]', { color: "rgba(255, 255, 255, 0.55)" });
+        gsap.set('.process-section__title-word[data-word="2"]', { color: "#ffffff" });
+        gsap.set('.process-section__title-word[data-word="3"]', { color: "#ffffff" });
         return;
       }
 
@@ -155,7 +155,7 @@ export default function Process() {
       // Title word "From" wakes as the journey starts
       tl.to(
         '.process-section__title-word[data-word="0"]',
-        { color: "rgba(8, 13, 13, 0.6)", duration: 0.3, ease: "power2.out" },
+        { color: "rgba(255, 255, 255, 0.55)", duration: 0.3, ease: "power2.out" },
         0.02
       );
 
@@ -170,10 +170,10 @@ export default function Process() {
       tl.to('.process-ripple[data-i="0"]', { scale: 4, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.06);
       tl.to('.process-afterglow[data-i="0"]', { opacity: 0.45, duration: 0.4, ease: "power2.out" }, 0.12);
 
-      // Title word "insight" darkens as the light approaches 02
+      // Title word "insight" lights up as the light approaches 02
       tl.to(
         '.process-section__title-word[data-word="1"]',
-        { color: "rgba(8, 13, 13, 0.6)", duration: 0.35, ease: "power2.out" },
+        { color: "rgba(255, 255, 255, 0.55)", duration: 0.35, ease: "power2.out" },
         0.75
       );
 
@@ -217,10 +217,10 @@ export default function Process() {
       );
       tl.to(".process-trace-b", { strokeDashoffset: 0, duration: 1 }, 1.35);
 
-      // Title word "to" darkens during the 02 → 03 stretch
+      // Title word "to" lights up during the 02 → 03 stretch
       tl.to(
         '.process-section__title-word[data-word="2"]',
-        { color: "#080d0d", duration: 0.4, ease: "power2.out" },
+        { color: "#ffffff", duration: 0.4, ease: "power2.out" },
         1.6
       );
 
@@ -253,10 +253,10 @@ export default function Process() {
       );
       tl.to(".process-trace-growth", { strokeDashoffset: 0, duration: 1, ease: "none" }, 2.7);
 
-      // Final title word "growth." darkens during the breakout
+      // Final title word "growth." lights up during the breakout
       tl.to(
         '.process-section__title-word[data-word="3"]',
-        { color: "#080d0d", duration: 0.6, ease: "power2.out" },
+        { color: "#ffffff", duration: 0.6, ease: "power2.out" },
         3.0
       );
 
@@ -325,9 +325,9 @@ export default function Process() {
             ))}
 
             {/* Base traces (faint) */}
-            <path d={PATH_A} fill="none" stroke="rgba(8,13,13,0.07)" strokeWidth="1.1" strokeLinecap="round" />
-            <path d={PATH_B} fill="none" stroke="rgba(8,13,13,0.07)" strokeWidth="1.1" strokeLinecap="round" />
-            <path d={PATH_GROWTH} fill="none" stroke="rgba(8,13,13,0.07)" strokeWidth="1.3" strokeLinecap="round" />
+            <path d={PATH_A} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="round" />
+            <path d={PATH_B} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="round" />
+            <path d={PATH_GROWTH} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.3" strokeLinecap="round" />
 
             {/* Active traces (drawn by the scroll-scrubbed timeline) */}
             <path className="process-trace-a process-trace-active" d={PATH_A} />
@@ -363,7 +363,7 @@ export default function Process() {
                   cy={p.y}
                   r="8"
                   fill="none"
-                  stroke="rgba(8, 13, 13, 0.32)"
+                  stroke="rgba(255, 232, 196, 0.42)"
                   strokeWidth="1"
                   vectorEffect="non-scaling-stroke"
                 />

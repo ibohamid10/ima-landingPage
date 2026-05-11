@@ -822,10 +822,11 @@ a:focus-visible {
   overflow: hidden;
   isolation: isolate;
   background:
-    radial-gradient(circle at 50% 30%, rgba(255, 255, 255, 0.8), transparent 42%),
-    radial-gradient(circle at 12% 80%, rgba(244, 242, 238, 0.5), transparent 36%),
-    radial-gradient(circle at 88% 78%, rgba(244, 242, 238, 0.4), transparent 32%),
-    #fafaf7;
+    radial-gradient(circle at 50% 42%, rgba(34, 30, 26, 0.55), transparent 50%),
+    radial-gradient(circle at 12% 82%, rgba(28, 24, 20, 0.4), transparent 40%),
+    radial-gradient(circle at 88% 16%, rgba(28, 24, 20, 0.3), transparent 40%),
+    #0a0a0a;
+  color: rgba(255, 255, 255, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -839,7 +840,8 @@ a:focus-visible {
   pointer-events: none;
   opacity: 0;
   background:
-    radial-gradient(ellipse 50% 40% at 92% 12%, rgba(8, 13, 13, 0.05), transparent 70%);
+    radial-gradient(ellipse 60% 50% at 50% 48%, rgba(255, 232, 196, 0.08), transparent 70%),
+    radial-gradient(ellipse 40% 30% at 92% 18%, rgba(255, 232, 196, 0.05), transparent 70%);
   transition: opacity 600ms ease;
 }
 
@@ -863,7 +865,7 @@ a:focus-visible {
 
 .process-section__kicker {
   margin: 0;
-  color: rgba(8, 13, 13, 0.55);
+  color: rgba(255, 255, 255, 0.5);
   font-size: 11px;
   font-weight: 600;
   letter-spacing: 0.34em;
@@ -878,19 +880,19 @@ a:focus-visible {
   font-weight: 700;
   line-height: 1.05;
   letter-spacing: -0.045em;
-  color: var(--ink);
+  color: #ffffff;
 }
 
 .process-section__title em {
   font-family: var(--mono);
   font-style: normal;
   font-weight: 500;
-  color: rgba(8, 13, 13, 0.6);
+  color: rgba(255, 255, 255, 0.55);
 }
 
 .process-section__title-word {
   display: inline-block;
-  color: rgba(8, 13, 13, 0.16);
+  color: rgba(255, 255, 255, 0.18);
   will-change: color;
 }
 
@@ -917,7 +919,7 @@ a:focus-visible {
   font-family: var(--mono);
   font-style: normal;
   font-size: 18px;
-  fill: rgba(8, 13, 13, 0.85);
+  fill: rgba(255, 255, 255, 0.85);
   letter-spacing: -0.02em;
 }
 
@@ -925,7 +927,7 @@ a:focus-visible {
   font-family: var(--sans);
   font-size: 26px;
   font-weight: 700;
-  fill: var(--ink);
+  fill: #ffffff;
   letter-spacing: -0.045em;
 }
 
@@ -933,11 +935,11 @@ a:focus-visible {
 .process-trace-growth,
 .process-arrowhead {
   fill: none;
-  stroke: #080d0d;
+  stroke: #ffffff;
   stroke-width: 1.4;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 1px 2px rgba(8, 13, 13, 0.08));
+  filter: drop-shadow(0 0 6px rgba(255, 232, 196, 0.35));
 }
 
 .process-light {
@@ -973,7 +975,7 @@ a:focus-visible {
   margin: 0;
   font-size: clamp(14px, 1.05vw, 16px);
   line-height: 1.6;
-  color: rgba(8, 13, 13, 0.72);
+  color: rgba(255, 255, 255, 0.7);
   text-wrap: pretty;
   text-align: center;
   will-change: opacity, transform;
@@ -983,6 +985,132 @@ a:focus-visible {
 .process-desc__num,
 .process-desc__title {
   display: none;
+}
+
+/* ---------- Footer ---------- */
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  padding: 34px clamp(24px, 5.7vw, 88px);
+  color: rgba(8, 13, 13, 0.72);
+  background: #f4f1ea;
+  border-top: 1px solid rgba(8, 13, 13, 0.08);
+}
+
+.footer__brand {
+  display: inline-flex;
+  width: 128px;
+}
+
+.footer__brand img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.footer__links {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.footer__links a {
+  transition: opacity 180ms ease;
+}
+
+.footer__links a:hover {
+  opacity: 0.62;
+}
+
+/* ---------- Legal ---------- */
+
+.legal-page {
+  min-height: 100vh;
+  padding: clamp(28px, 4vw, 64px) clamp(24px, 6vw, 96px) clamp(72px, 9vw, 132px);
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.82), transparent 32%),
+    radial-gradient(circle at 12% 76%, rgba(227, 220, 211, 0.46), transparent 34%),
+    #f6f3ee;
+}
+
+.legal-page__brand {
+  display: inline-flex;
+  width: clamp(142px, 13vw, 206px);
+  margin-bottom: clamp(72px, 9vw, 132px);
+}
+
+.legal-page__brand img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.legal-page__content {
+  width: min(920px, 100%);
+}
+
+.legal-page h1 {
+  margin: 0 0 clamp(48px, 6vw, 76px);
+  font-size: clamp(56px, 8vw, 112px);
+  font-weight: 800;
+  line-height: 0.86;
+  letter-spacing: -0.055em;
+}
+
+.legal-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 52px);
+}
+
+.legal-block {
+  padding: 30px 0;
+  border-top: 1px solid rgba(8, 13, 13, 0.12);
+}
+
+.legal-block h2 {
+  margin: 0 0 18px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: rgba(8, 13, 13, 0.6);
+}
+
+.legal-block p {
+  max-width: 760px;
+  margin: 0;
+  color: rgba(8, 13, 13, 0.82);
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.64;
+}
+
+.legal-block p + p {
+  margin-top: 16px;
+}
+
+.legal-block a {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.legal-page__note {
+  max-width: 720px;
+  margin: 36px 0 0;
+  color: rgba(8, 13, 13, 0.58);
+  font-size: 14px;
+  line-height: 1.6;
 }
 
 /* ---------- Reduced motion ---------- */
@@ -1099,6 +1227,15 @@ a:focus-visible {
     display: block;
   }
 
+  .footer {
+    padding: 30px 24px;
+  }
+
+  .legal-grid {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
   .process-section__inner {
     text-align: left;
     gap: 40px;
@@ -1133,7 +1270,7 @@ a:focus-visible {
     align-items: start;
     text-align: left;
     padding: 22px 0 22px 8px;
-    border-top: 1px solid rgba(8, 13, 13, 0.08);
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
     opacity: 1 !important;
     transform: none !important;
   }
@@ -1150,7 +1287,7 @@ a:focus-visible {
     font-style: normal;
     font-weight: 500;
     font-size: 18px;
-    color: rgba(8, 13, 13, 0.55);
+    color: rgba(255, 255, 255, 0.5);
     line-height: 1.4;
     padding-top: 2px;
   }
@@ -1163,7 +1300,7 @@ a:focus-visible {
     font-weight: 700;
     font-size: 24px;
     line-height: 1;
-    color: var(--ink);
+    color: #ffffff;
     letter-spacing: -0.045em;
   }
 
@@ -1172,7 +1309,11 @@ a:focus-visible {
     grid-row: 2;
     font-size: 14px;
     line-height: 1.55;
-    color: rgba(8, 13, 13, 0.7);
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .process-desc {
+    border-top-color: rgba(255, 255, 255, 0.08) !important;
   }
 }
 
@@ -1257,5 +1398,24 @@ a:focus-visible {
 
   .process-section {
     padding: 64px 20px 76px;
+  }
+
+  .footer {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 28px 20px;
+  }
+
+  .footer__brand {
+    width: 112px;
+  }
+
+  .legal-page {
+    padding: 28px 20px 72px;
+  }
+
+  .legal-page__brand {
+    width: 142px;
+    margin-bottom: 72px;
   }
 }

@@ -88,7 +88,7 @@ function getVariant(index: number, active: number): { name: "active" | "near" | 
 export default function Approach() {
   const prefersReduced = useReducedMotion() ?? false;
 
-  const [activeIndex, setActiveIndex] = useState(1);
+  const [activeIndex, setActiveIndex] = useState(0);
   const [offset, setOffset] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
