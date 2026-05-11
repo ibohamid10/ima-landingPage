@@ -75,59 +75,59 @@
             meaningful.
           </p>
 
-          <div class="approach__note">
-            <span class="approach__spark" aria-hidden="true">✧</span>
-            <span class="approach__note-line" aria-hidden="true"></span>
-            <p>No marketplace. No mass outreach. Partnerships built with taste, data and trust.</p>
-          </div>
         </div>
 
-        <div class="approach__cards" aria-label="Partnership method cards">
+        <div class="approach__cards" aria-label="Partnership method cards" data-carousel>
           <button class="approach__arrow approach__arrow--left" type="button" aria-label="Previous approach card">
             <span aria-hidden="true">←</span>
           </button>
 
-          <article class="method-card method-card--soft">
-            <span class="method-card__num">01</span>
-            <h3>Brand Fit</h3>
-            <div class="method-card__rule" aria-hidden="true"></div>
-            <p>We ensure alignment with your identity, values and long-term vision.</p>
-            <div class="method-card__mark method-card__mark--line" aria-hidden="true"></div>
-          </article>
+          <div class="approach__card-viewport">
+            <div class="approach__card-track">
+              <article class="method-card method-card--soft" data-card>
+                <span class="method-card__num">01</span>
+                <h3>Brand Fit</h3>
+                <div class="method-card__rule" aria-hidden="true"></div>
+                <p>We ensure alignment with your identity, values and long-term vision.</p>
+                <div class="method-card__mark method-card__mark--line" aria-hidden="true"></div>
+              </article>
 
-          <article class="method-card method-card--active">
-            <span class="method-card__num">02</span>
-            <h3>Audience Context</h3>
-            <div class="method-card__rule" aria-hidden="true"></div>
-            <p>We deep-dive into audience insight to drive relevance and real impact.</p>
-            <div class="method-card__mark method-card__mark--loop" aria-hidden="true"></div>
-          </article>
+              <article class="method-card method-card--active" data-card>
+                <span class="method-card__num">02</span>
+                <h3>Audience Context</h3>
+                <div class="method-card__rule" aria-hidden="true"></div>
+                <p>We deep-dive into audience insight to drive relevance and real impact.</p>
+                <div class="method-card__mark method-card__mark--loop" aria-hidden="true"></div>
+              </article>
 
-          <article class="method-card method-card--soft">
-            <span class="method-card__num">03</span>
-            <h3>Creator Relevance</h3>
-            <div class="method-card__rule" aria-hidden="true"></div>
-            <p>We identify creators whose content, style and voice resonate authentically.</p>
-            <div class="method-card__mark method-card__mark--arc" aria-hidden="true"></div>
-          </article>
+              <article class="method-card method-card--soft" data-card>
+                <span class="method-card__num">03</span>
+                <h3>Creator Relevance</h3>
+                <div class="method-card__rule" aria-hidden="true"></div>
+                <p>We identify creators whose content, style and voice resonate authentically.</p>
+                <div class="method-card__mark method-card__mark--arc" aria-hidden="true"></div>
+              </article>
 
-          <article class="method-card method-card--ghost" aria-hidden="true">
-            <span class="method-card__num">04</span>
-            <h3>Cultural Signal</h3>
-            <div class="method-card__rule" aria-hidden="true"></div>
-            <p>We build into the relationships that audiences already care about.</p>
-          </article>
+              <article class="method-card method-card--soft" data-card>
+                <span class="method-card__num">04</span>
+                <h3>Cultural Signal</h3>
+                <div class="method-card__rule" aria-hidden="true"></div>
+                <p>We build into relationships audiences already care about.</p>
+                <div class="method-card__mark method-card__mark--loop" aria-hidden="true"></div>
+              </article>
+            </div>
+          </div>
 
           <button class="approach__arrow approach__arrow--right" type="button" aria-label="Next approach card">
             <span aria-hidden="true">→</span>
           </button>
         </div>
 
-        <div class="approach__dots" aria-hidden="true">
-          <span class="is-active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
+        <div class="approach__dots" aria-label="Choose approach card">
+          <button class="is-active" type="button" aria-label="Show Brand Fit" aria-current="true"></button>
+          <button type="button" aria-label="Show Audience Context"></button>
+          <button type="button" aria-label="Show Creator Relevance"></button>
+          <button type="button" aria-label="Show Cultural Signal"></button>
         </div>
 
         <div class="process" aria-label="Creator partnership process">
@@ -192,6 +192,46 @@
             { passive: true }
           );
           update();
+        }
+
+        // Approach carousel
+        const carousel = document.querySelector("[data-carousel]");
+        if (carousel) {
+          const viewport = carousel.querySelector(".approach__card-viewport");
+          const track = carousel.querySelector(".approach__card-track");
+          const cards = Array.from(carousel.querySelectorAll("[data-card]"));
+          const dots = Array.from(document.querySelectorAll(".approach__dots button"));
+          const previous = carousel.querySelector(".approach__arrow--left");
+          const next = carousel.querySelector(".approach__arrow--right");
+          let activeIndex = 1;
+
+          const setActive = (index) => {
+            if (!cards.length || !track || !viewport) return;
+            activeIndex = (index + cards.length) % cards.length;
+            const activeCard = cards[activeIndex];
+            const offset =
+              viewport.clientWidth / 2 - (activeCard.offsetLeft + activeCard.offsetWidth / 2);
+            track.style.setProperty("--card-offset", `${offset.toFixed(1)}px`);
+
+            cards.forEach((card, cardIndex) => {
+              const isActive = cardIndex === activeIndex;
+              card.classList.toggle("method-card--active", isActive);
+              card.classList.toggle("method-card--soft", !isActive);
+              card.setAttribute("aria-hidden", isActive ? "false" : "true");
+            });
+
+            dots.forEach((dot, dotIndex) => {
+              const isActive = dotIndex === activeIndex;
+              dot.classList.toggle("is-active", isActive);
+              dot.setAttribute("aria-current", isActive ? "true" : "false");
+            });
+          };
+
+          previous?.addEventListener("click", () => setActive(activeIndex - 1));
+          next?.addEventListener("click", () => setActive(activeIndex + 1));
+          dots.forEach((dot, index) => dot.addEventListener("click", () => setActive(index)));
+          window.addEventListener("resize", () => setActive(activeIndex), { passive: true });
+          setActive(activeIndex);
         }
 
         // Section reveal
