@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
   --ink: #080d0d;
   --soft-ink: rgba(8, 13, 13, 0.86);
@@ -7,15 +11,6 @@
   --white: #f8f5ef;
   --serif: "Instrument Serif", Georgia, "Times New Roman", Times, serif;
   --sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-family:
-    var(--sans),
-    sans-serif;
-  color: var(--ink);
-  background: #e7e2db;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 html {
@@ -27,6 +22,8 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
+  font-family: var(--sans);
+  color: var(--ink);
   background: #e7e2db;
 }
 
@@ -61,6 +58,8 @@ a:focus-visible {
   min-height: 100vh;
 }
 
+/* ---------- Hero ---------- */
+
 .hero {
   position: relative;
   min-height: 100svh;
@@ -73,10 +72,10 @@ a:focus-visible {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background-image: url("./assets/hero-reference.png");
+  background-image: url("/hero-reference.png");
   background-position: center;
   background-size: cover;
-  transform: scale(1.045) translate3d(0, var(--hero-parallax, 0px), 0);
+  transform: scale(1.045);
   will-change: transform;
 }
 
@@ -115,9 +114,6 @@ a:focus-visible {
   gap: 32px;
   width: 100%;
   padding: clamp(28px, 3.85vw, 58px) clamp(28px, 4vw, 76px) 0;
-  opacity: 0;
-  transform: translateY(-10px);
-  animation: fadeDown 760ms 120ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
 }
 
 .nav__brand {
@@ -246,9 +242,6 @@ a:focus-visible {
   line-height: 1;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(14px);
-  animation: fadeUp 760ms 240ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
 }
 
 .hero__kicker::before {
@@ -273,21 +266,6 @@ a:focus-visible {
 
 .hero h1 > span {
   display: block;
-  opacity: 0;
-  transform: translateY(22px);
-  animation: fadeUp 880ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
-}
-
-.hero h1 > span:nth-child(1) {
-  animation-delay: 330ms;
-}
-
-.hero h1 > span:nth-child(2) {
-  animation-delay: 430ms;
-}
-
-.hero h1 > span:nth-child(3) {
-  animation-delay: 530ms;
 }
 
 .hero h1 em {
@@ -314,8 +292,6 @@ a:focus-visible {
   margin: clamp(42px, 5.2vh, 54px) 0 clamp(34px, 4.4vh, 44px);
   background: rgba(8, 13, 13, 0.62);
   transform-origin: left;
-  transform: scaleX(0);
-  animation: drawLine 720ms 650ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
 }
 
 .hero__copy {
@@ -326,16 +302,9 @@ a:focus-visible {
   font-weight: 400;
   line-height: 1.52;
   text-wrap: pretty;
-  opacity: 0;
-  transform: translateY(16px);
-  animation: fadeUp 760ms 760ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
 }
 
-.hero .button--primary {
-  opacity: 0;
-  transform: translateY(14px);
-  animation: fadeUp 760ms 890ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
-}
+/* ---------- Hero scroll cue ---------- */
 
 .hero__scroll-cue {
   position: absolute;
@@ -353,20 +322,12 @@ a:focus-visible {
   letter-spacing: 0.32em;
   line-height: 1;
   text-transform: uppercase;
-  transform: translate(-50%, 0);
-  opacity: 0;
-  animation: fadeUp 760ms 1100ms cubic-bezier(0.2, 0.75, 0.18, 1) forwards;
-  transition:
-    color 200ms ease,
-    transform 280ms cubic-bezier(0.2, 0.75, 0.18, 1);
+  transform: translateX(-50%);
+  transition: color 200ms ease;
 }
 
 .hero__scroll-cue:hover {
   color: rgba(8, 13, 13, 0.92);
-}
-
-.hero__scroll-cue:hover .hero__scroll-line::after {
-  animation-duration: 1100ms;
 }
 
 .hero__scroll-line {
@@ -396,6 +357,8 @@ a:focus-visible {
   }
 }
 
+/* ---------- Approach ---------- */
+
 .approach {
   position: relative;
   min-height: 100svh;
@@ -417,16 +380,14 @@ a:focus-visible {
   height: clamp(120px, 14vh, 200px);
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, #e8e1d7 0%, rgba(232, 225, 215, 0.7) 28%, rgba(246, 243, 238, 0.2) 70%, transparent 100%);
+  background: linear-gradient(180deg, #e8e1d7 0%, rgba(232, 225, 215, 0.7) 28%, rgba(246, 243, 238, 0.2) 70%, transparent 100%);
 }
 
 .approach__blend::after {
   content: "";
   position: absolute;
   inset: 0;
-  background:
-    radial-gradient(ellipse 70% 100% at 50% 0%, rgba(255, 218, 172, 0.16), transparent 70%);
+  background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(255, 218, 172, 0.16), transparent 70%);
 }
 
 .approach__wash {
@@ -458,24 +419,6 @@ a:focus-visible {
   z-index: 2;
   width: min(440px, 100%);
 }
-
-.approach__intro > * {
-  opacity: 0;
-  transform: translateY(18px);
-  transition:
-    opacity 720ms cubic-bezier(0.2, 0.75, 0.18, 1),
-    transform 720ms cubic-bezier(0.2, 0.75, 0.18, 1);
-}
-
-.approach.is-visible .approach__intro > * {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.approach.is-visible .approach__intro > *:nth-child(1) { transition-delay: 80ms; }
-.approach.is-visible .approach__intro > *:nth-child(2) { transition-delay: 180ms; }
-.approach.is-visible .approach__intro > *:nth-child(3) { transition-delay: 280ms; }
-.approach.is-visible .approach__intro > *:nth-child(4) { transition-delay: 360ms; }
 
 .section-kicker {
   margin: 0 0 36px;
@@ -527,6 +470,8 @@ a:focus-visible {
   line-height: 1.52;
 }
 
+/* Carousel container */
+
 .approach__cards {
   --card-ease: cubic-bezier(0.22, 0.61, 0.24, 1);
   --card-duration: 680ms;
@@ -562,18 +507,10 @@ a:focus-visible {
   cursor: grabbing;
 }
 
-.approach__card-viewport.is-dragging .approach__card-track {
-  transition: none;
-}
-
 .approach__card-track {
-  --card-offset: 0px;
-  --drag-offset: 0px;
   display: flex;
   align-items: center;
   gap: 28px;
-  transform: translate3d(calc(var(--card-offset) + var(--drag-offset)), 0, 0);
-  transition: transform var(--card-duration) var(--card-ease);
   transform-style: preserve-3d;
   will-change: transform;
 }
@@ -595,61 +532,11 @@ a:focus-visible {
     inset 0 1px 0 rgba(255, 255, 255, 0.78),
     0 24px 80px rgba(30, 28, 24, 0.04);
   backdrop-filter: blur(18px);
-  opacity: 0.62;
-  transform:
-    translate3d(0, 4px, calc(var(--depth) * -1px))
-    rotateY(var(--tilt))
-    scale(0.94);
   transform-origin: 50% 60%;
-  filter: blur(0.4px) saturate(0.98);
-  transition:
-    transform var(--card-duration) var(--card-ease),
-    opacity var(--card-duration) var(--card-ease),
-    filter var(--card-duration) var(--card-ease),
-    box-shadow var(--card-duration) var(--card-ease),
-    background-color var(--card-duration) var(--card-ease),
-    color var(--card-duration) var(--card-ease),
-    border-color var(--card-duration) var(--card-ease);
   will-change: transform, opacity, filter;
 }
 
-.method-card[data-position="-2"] {
-  --depth: 60;
-  --tilt: 12deg;
-  opacity: 0.32;
-}
-
-.method-card[data-position="-1"] {
-  --depth: 28;
-  --tilt: 8deg;
-  opacity: 0.62;
-  transform:
-    translate3d(0, 4px, calc(var(--depth) * -1px))
-    rotateY(var(--tilt))
-    scale(0.94);
-}
-
-.method-card[data-position="1"] {
-  --depth: 28;
-  --tilt: -8deg;
-  opacity: 0.62;
-  transform:
-    translate3d(0, 4px, calc(var(--depth) * -1px))
-    rotateY(var(--tilt))
-    scale(0.94);
-}
-
-.method-card[data-position="2"] {
-  --depth: 60;
-  --tilt: -12deg;
-  opacity: 0.32;
-}
-
 .method-card--active {
-  flex-basis: clamp(258px, 19vw, 318px);
-  width: clamp(258px, 19vw, 318px);
-  min-height: clamp(396px, 28.5vw, 460px);
-  padding: 40px 40px 36px;
   color: var(--ink);
   background: rgba(255, 255, 255, 0.62);
   border-color: rgba(255, 255, 255, 0.86);
@@ -657,16 +544,6 @@ a:focus-visible {
     inset 0 1px 0 rgba(255, 255, 255, 0.94),
     0 38px 96px rgba(35, 31, 26, 0.1),
     0 6px 18px rgba(35, 31, 26, 0.04);
-  opacity: 1;
-  filter: blur(0) saturate(1);
-  transform:
-    translate3d(0, -20px, 0)
-    rotateY(0deg)
-    scale(1);
-}
-
-.method-card--soft {
-  opacity: 0.62;
 }
 
 .method-card__num {
@@ -813,12 +690,6 @@ a:focus-visible {
   transform: translateX(3px);
 }
 
-.approach__arrow[aria-disabled="true"] {
-  opacity: 0.42;
-  cursor: default;
-  pointer-events: none;
-}
-
 .approach__controls {
   position: relative;
   z-index: 3;
@@ -852,12 +723,6 @@ a:focus-visible {
 
 .approach__counter [data-current] {
   color: var(--ink);
-  transition: opacity 200ms ease, transform 200ms cubic-bezier(0.2, 0.75, 0.18, 1);
-}
-
-.approach__counter [data-current].is-swapping {
-  opacity: 0;
-  transform: translateY(-4px);
 }
 
 .approach__counter-sep {
@@ -916,6 +781,8 @@ a:focus-visible {
   background: rgba(8, 13, 13, 0.86);
 }
 
+/* ---------- Process ---------- */
+
 .process {
   position: relative;
   z-index: 1;
@@ -927,100 +794,41 @@ a:focus-visible {
   width: min(1290px, 100%);
 }
 
-.process__line {
+.process__svg {
   position: absolute;
-  top: 10px;
+  top: 0;
   left: 0;
   width: 100%;
-  height: 178px;
+  height: 200px;
   overflow: visible;
   pointer-events: none;
 }
 
-.process__trace {
+.process__trace-base {
   fill: none;
-  stroke-linecap: round;
-  stroke-width: 1.1;
-}
-
-.process__trace--base {
   stroke: rgba(8, 13, 13, 0.12);
+  stroke-width: 1.1;
+  stroke-linecap: round;
 }
 
-.process__trace--active {
-  stroke: rgba(137, 105, 79, 0.62);
-  stroke-dasharray: 1180;
-  stroke-dashoffset: 1180;
+.process__trace-active {
+  fill: none;
+  stroke: rgba(137, 105, 79, 0.66);
+  stroke-width: 1.2;
+  stroke-linecap: round;
   filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.9));
 }
 
-.approach.is-visible .process__trace--active {
-  animation: processDraw 3400ms 420ms cubic-bezier(0.5, 0, 0.18, 1) forwards;
-}
-
-.process__orb,
-.process__runner {
-  position: absolute;
-  z-index: 2;
-  pointer-events: none;
-  border-radius: 50%;
+.process__growth-trace {
+  fill: none;
+  stroke: rgba(8, 13, 13, 0.48);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 12px rgba(255, 240, 220, 0.7));
 }
 
 .process__orb {
-  width: 22px;
-  height: 22px;
-  background: rgba(255, 255, 255, 0.92);
-  box-shadow:
-    0 0 20px rgba(255, 255, 255, 0.95),
-    0 0 54px rgba(172, 126, 82, 0.24);
-  opacity: 0;
-  transform: scale(0.72);
-}
-
-.process__orb--one {
-  top: 76px;
-  left: 22.7%;
-}
-
-.process__orb--two {
-  top: 86px;
-  left: 58.4%;
-}
-
-.process__orb--three {
-  top: 84px;
-  left: 88.5%;
-}
-
-.approach.is-visible .process__orb--one {
-  animation: orbIn 620ms 820ms ease-out forwards, orbPulse 1800ms 1500ms ease-in-out infinite;
-}
-
-.approach.is-visible .process__orb--two {
-  animation: orbIn 620ms 1750ms ease-out forwards, orbPulse 1800ms 2350ms ease-in-out infinite;
-}
-
-.approach.is-visible .process__orb--three {
-  animation: orbIn 620ms 2850ms ease-out forwards, orbPulse 1800ms 3300ms ease-in-out infinite;
-}
-
-.process__runner {
-  top: 10px;
-  left: 0;
-  width: 12px;
-  height: 12px;
-  background: #ffffff;
-  box-shadow:
-    0 0 18px #ffffff,
-    0 0 34px rgba(172, 126, 82, 0.42);
-  opacity: 0;
-  offset-path: path("M40 76 C190 62 260 82 362 76 C480 68 560 24 704 72 C830 112 878 58 1002 78 C1088 92 1128 48 1152 12");
-  offset-distance: 0%;
-  offset-rotate: 0deg;
-}
-
-.approach.is-visible .process__runner {
-  animation: runnerPath 3400ms 440ms cubic-bezier(0.5, 0, 0.18, 1) forwards;
+  filter: drop-shadow(0 0 22px rgba(255, 240, 220, 0.95));
 }
 
 .process-step {
@@ -1052,76 +860,7 @@ a:focus-visible {
   line-height: 1.7;
 }
 
-@keyframes processDraw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes orbIn {
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes orbPulse {
-  0%,
-  100% {
-    box-shadow:
-      0 0 20px rgba(255, 255, 255, 0.95),
-      0 0 54px rgba(172, 126, 82, 0.24);
-  }
-
-  50% {
-    box-shadow:
-      0 0 26px rgba(255, 255, 255, 1),
-      0 0 78px rgba(172, 126, 82, 0.36);
-  }
-}
-
-@keyframes runnerPath {
-  0% {
-    opacity: 0;
-    offset-distance: 0%;
-    transform: scale(0.75);
-  }
-
-  8%,
-  92% {
-    opacity: 1;
-  }
-
-  50% {
-    transform: scale(1.15);
-  }
-
-  100% {
-    opacity: 0;
-    offset-distance: 100%;
-    transform: scale(0.85);
-  }
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes fadeDown {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes drawLine {
-  to {
-    transform: scaleX(1);
-  }
-}
+/* ---------- Reduced motion ---------- */
 
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -1133,6 +872,8 @@ a:focus-visible {
     transition-duration: 1ms !important;
   }
 }
+
+/* ---------- Mobile ---------- */
 
 @media (max-width: 900px) {
   .hero {
@@ -1206,10 +947,6 @@ a:focus-visible {
     gap: 18px;
   }
 
-  .approach__cards::-webkit-scrollbar {
-    display: none;
-  }
-
   .approach__arrow {
     display: none;
   }
@@ -1219,22 +956,7 @@ a:focus-visible {
     flex: 0 0 275px;
     width: 275px;
     min-height: 376px;
-    transform: none;
-    opacity: 1;
-    filter: none;
     scroll-snap-align: center;
-  }
-
-  .method-card[data-position],
-  .method-card--soft {
-    transform: none;
-    opacity: 1;
-  }
-
-  .method-card--active {
-    box-shadow:
-      inset 0 1px 0 rgba(255, 255, 255, 0.9),
-      0 28px 70px rgba(35, 31, 26, 0.08);
   }
 
   .approach__controls {
@@ -1263,9 +985,7 @@ a:focus-visible {
     background: linear-gradient(rgba(8, 13, 13, 0.1), rgba(137, 105, 79, 0.46), rgba(8, 13, 13, 0.08));
   }
 
-  .process__line,
-  .process__orb,
-  .process__runner {
+  .process__svg {
     display: none;
   }
 

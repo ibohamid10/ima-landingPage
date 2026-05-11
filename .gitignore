@@ -1,6 +1,25 @@
+# dependencies
 node_modules/
+.pnp
+.pnp.*
+
+# next.js
+.next/
+out/
+
+# build outputs
 dist/
+build/
+
+# misc
 .wrangler/
 .env
 .env.local
+.env.*.local
 *.log
+.DS_Store
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+.claude/
