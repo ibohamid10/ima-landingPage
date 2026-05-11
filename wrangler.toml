@@ -1,0 +1,6 @@
+name = "ima-landingpage"
+compatibility_date = "2025-05-01"
+
+[assets]
+directory = "./out"
+not_found_handling = "404-page"
