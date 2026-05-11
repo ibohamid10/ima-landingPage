@@ -1001,7 +1001,7 @@ a:focus-visible {
   fill: none;
   stroke: #ffffff;
   stroke-width: 1.4;
-  stroke-linecap: round;
+  stroke-linecap: butt;
   stroke-linejoin: round;
   filter: drop-shadow(0 0 6px rgba(255, 232, 196, 0.35));
 }

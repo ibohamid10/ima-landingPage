@@ -2,13 +2,11 @@
 
 import { useEffect } from "react";
 
-type PlausibleOptions = {
-  props?: Record<string, string>;
-};
-
 declare global {
   interface Window {
-    plausible?: (eventName: string, options?: PlausibleOptions) => void;
+    umami?: {
+      track?: (eventName: string, data?: Record<string, string>) => void;
+    };
   }
 }
 
@@ -19,7 +17,7 @@ const SECTION_EVENTS = [
 ];
 
 function track(eventName: string, props?: Record<string, string>) {
-  window.plausible?.(eventName, props ? { props } : undefined);
+  window.umami?.track?.(eventName, props);
 }
 
 export default function AnalyticsEvents() {

@@ -9,26 +9,21 @@ export const metadata: Metadata = {
     "AJIONE connects ambitious brands with high-fit creators through curated, data-informed partnerships.",
 };
 
-const plausibleDomain = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN ?? "ajione.com";
+const umamiSrc = process.env.NEXT_PUBLIC_UMAMI_SRC;
+const umamiWebsiteId = process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID;
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="de">
       <body>
-        <Script
-          id="plausible-init"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{
-            __html:
-              "window.plausible=window.plausible||function(){(window.plausible.q=window.plausible.q||[]).push(arguments)}",
-          }}
-        />
-        <Script
-          defer
-          src="https://plausible.io/js/script.js"
-          data-domain={plausibleDomain}
-          strategy="afterInteractive"
-        />
+        {umamiSrc && umamiWebsiteId ? (
+          <Script
+            defer
+            src={umamiSrc}
+            data-website-id={umamiWebsiteId}
+            strategy="afterInteractive"
+          />
+        ) : null}
         <AnalyticsEvents />
         <a className="skip-link" href="#main">
           Skip to content

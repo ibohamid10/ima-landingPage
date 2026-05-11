@@ -328,10 +328,11 @@ export default function Process() {
               </text>
             ))}
 
-            {/* Base traces (faint) */}
-            <path d={PATH_A} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="round" />
-            <path d={PATH_B} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="round" />
-            <path d={PATH_GROWTH} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.3" strokeLinecap="round" />
+            {/* Base traces (faint) — butt caps so endpoints don't render
+                as phantom dots against the dark background. */}
+            <path d={PATH_A} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="butt" />
+            <path d={PATH_B} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.1" strokeLinecap="butt" />
+            <path d={PATH_GROWTH} fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="1.3" strokeLinecap="butt" />
 
             {/* Active traces (drawn by the scroll-scrubbed timeline) */}
             <path className="process-trace-a process-trace-active" d={PATH_A} />
