@@ -30,9 +30,9 @@
   --muted-ink: rgba(10, 13, 16, 0.58);
   --line: rgba(10, 13, 16, 0.58);
   --veil: rgba(244, 245, 243, 0.18);
-  --white: #f4f5f3;
-  --paper: #eef0ed;
-  --paper-soft: #f1f2ef;
+  --white: #f6f7f5;
+  --paper: #f4f6f3;
+  --paper-soft: #fbfcfa;
   --mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -1077,50 +1077,37 @@ a:focus-visible {
 .stats {
   position: relative;
   width: 100%;
-  padding: clamp(120px, 14vw, 196px) clamp(24px, 5.7vw, 88px) clamp(96px, 12vw, 168px);
+  padding: clamp(88px, 11vw, 152px) clamp(24px, 5.7vw, 88px) clamp(96px, 12vw, 168px);
   background:
-    radial-gradient(circle at 14% 22%, rgba(220, 230, 238, 0.55), transparent 40%),
-    radial-gradient(circle at 88% 78%, rgba(196, 212, 222, 0.32), transparent 42%),
+    radial-gradient(circle at 14% 22%, rgba(220, 230, 238, 0.45), transparent 40%),
+    radial-gradient(circle at 88% 78%, rgba(196, 212, 222, 0.26), transparent 42%),
     var(--paper-soft);
   color: var(--ink);
   isolation: isolate;
   overflow: hidden;
 }
 
-/* The "curtain" — fades down out of the black Process section into the
-   light Stats so the edge feels deliberate, not a slam-cut. */
-.stats__curtain {
-  position: absolute;
-  top: -1px;
-  left: 0;
-  right: 0;
-  height: clamp(160px, 18vh, 240px);
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(180deg, #0a0a0a 0%, rgba(10, 10, 10, 0.62) 30%, rgba(10, 10, 10, 0.18) 64%, transparent 100%);
-}
-
-/* Mono section-ruler at the top — sits inside the curtain, light on dark. */
+/* Mono section-ruler at the top — dark-on-light, hairline trailing right. */
 .stats__top-rule {
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
   gap: 18px;
-  margin: 0 0 clamp(72px, 9vw, 124px);
+  margin: 0 0 clamp(56px, 7vw, 96px);
   font-family: var(--mono);
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.32em;
   text-transform: uppercase;
-  color: rgba(244, 245, 243, 0.62);
+  color: rgba(10, 13, 16, 0.5);
 }
 
 .stats__top-rule::after {
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, rgba(244, 245, 243, 0.36) 0%, rgba(244, 245, 243, 0.06) 70%, transparent 100%);
+  background: linear-gradient(90deg, rgba(10, 13, 16, 0.24) 0%, rgba(10, 13, 16, 0.06) 70%, transparent 100%);
 }
 
 .stats__inner {
@@ -1286,10 +1273,6 @@ a:focus-visible {
   animation: chartBreath 5.2s cubic-bezier(0.45, 0, 0.2, 1) 1.8s infinite;
 }
 
-.stat__chart-svg--target {
-  animation: chartBreath 6s cubic-bezier(0.45, 0, 0.2, 1) 2.4s infinite;
-}
-
 @keyframes chartBreath {
   0%, 100% {
     transform: scale(1);
@@ -1302,8 +1285,7 @@ a:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stat__chart-svg--wedge,
-  .stat__chart-svg--target {
+  .stat__chart-svg--wedge {
     animation: none;
   }
 }
@@ -1822,8 +1804,9 @@ a:focus-visible {
 }
 
 .footer__bottom {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 24px;
   padding-top: 22px;
   border-top: 1px solid rgba(244, 245, 243, 0.1);
@@ -1832,7 +1815,6 @@ a:focus-visible {
   font-weight: 500;
   letter-spacing: 0.04em;
   color: rgba(244, 245, 243, 0.5);
-  align-items: center;
 }
 
 .footer__legal {
@@ -1848,25 +1830,7 @@ a:focus-visible {
   color: #ffffff;
 }
 
-.footer__status {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  justify-self: center;
-}
-
-.footer__status-dot {
-  position: relative;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #4ea874;
-  box-shadow: 0 0 0 0 rgba(78, 168, 116, 0.55);
-  animation: ctaPulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
 .footer__clock {
-  justify-self: end;
   font-variant-numeric: tabular-nums;
   color: rgba(244, 245, 243, 0.68);
 }
@@ -2253,15 +2217,9 @@ a:focus-visible {
   }
 
   .footer__bottom {
-    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: flex-start;
     gap: 14px;
-    justify-items: start;
-    text-align: left;
-  }
-
-  .footer__status,
-  .footer__clock {
-    justify-self: start;
   }
 
   .legal-grid {

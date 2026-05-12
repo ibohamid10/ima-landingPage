@@ -163,30 +163,29 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
       </svg>
     );
   }
-  // ring-full / 100% — bullseye: three concentric rings draw outside→in.
-  const rings = [40, 26, 14];
+  // 100% — the same wedge primitive as 81%, filled all the way. Pairs
+  // the two stats visually: one incomplete, one complete.
+  const fullR = 20;
+  const fullCirc = 2 * Math.PI * fullR;
   return (
-    <svg viewBox="0 0 96 96" aria-hidden className="stat__chart-svg stat__chart-svg--target">
-      {rings.map((r, i) => {
-        const c = 2 * Math.PI * r;
-        return (
-          <circle
-            key={r}
-            cx="48"
-            cy="48"
-            r={r}
-            className="stat__chart-stroke"
-            strokeDasharray={c}
-            strokeDashoffset={inView ? 0 : c}
-            style={{
-              transition: `stroke-dashoffset 0.9s cubic-bezier(0.2,0.75,0.18,1) ${0.1 + i * 0.32}s`,
-              transform: "rotate(-90deg)",
-              transformOrigin: "center",
-              opacity: 0.88 - i * 0.12,
-            }}
-          />
-        );
-      })}
+    <svg viewBox="0 0 96 96" aria-hidden className="stat__chart-svg stat__chart-svg--wedge">
+      <circle cx="48" cy="48" r="40" className="stat__chart-track" />
+      <circle
+        cx="48"
+        cy="48"
+        r={fullR}
+        fill="none"
+        stroke="rgba(10, 13, 16, 0.88)"
+        strokeWidth={2 * fullR}
+        strokeDasharray={fullCirc}
+        strokeDashoffset={inView ? 0 : fullCirc}
+        style={{
+          transition: "stroke-dashoffset 1.4s cubic-bezier(0.2,0.75,0.18,1) 0.15s",
+          transform: "rotate(-90deg)",
+          transformOrigin: "center",
+        }}
+      />
+      <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(10, 13, 16, 0.78)" strokeWidth="1" />
     </svg>
   );
 }
@@ -218,8 +217,6 @@ function StatBlock({ stat, delay }: { stat: Stat; delay: number }) {
 export default function Stats() {
   return (
     <section className="stats" aria-label="The opportunity and our commitment">
-      <div className="stats__curtain" aria-hidden />
-
       <div className="stats__inner">
         <motion.p
           className="stats__top-rule"

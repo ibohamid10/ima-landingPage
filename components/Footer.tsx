@@ -97,11 +97,6 @@ export default function Footer() {
             <a href="/datenschutz">Datenschutz</a>
           </div>
 
-          <div className="footer__status">
-            <span className="footer__status-dot" aria-hidden />
-            <span>Currently booking — Q3 2026</span>
-          </div>
-
           <div className="footer__clock" aria-live="polite">
             <span>Vienna</span>
             <span className="footer__clock-sep">·</span>
