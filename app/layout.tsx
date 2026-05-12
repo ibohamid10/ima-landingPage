@@ -1,8 +1,17 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Instrument_Serif } from "next/font/google";
 import AnalyticsEvents from "@/components/AnalyticsEvents";
 import SmoothScroll from "@/components/SmoothScroll";
 import "./globals.css";
+
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
+  style: "italic",
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-serif",
+});
 
 export const metadata: Metadata = {
   title: "AJIONE | Creator Partnerships",
@@ -51,7 +60,7 @@ const INTRO_DISMISS_SCRIPT = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de">
+    <html lang="de" className={instrumentSerif.variable}>
       <head>
         <script
           // Runs before first paint so the .ajione-intro-* class is on

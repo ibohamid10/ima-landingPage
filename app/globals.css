@@ -35,6 +35,7 @@
   --paper-soft: #fbfcfa;
   --mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --serif: var(--font-serif), "Iowan Old Style", "Apple Garamond", "Baskerville", Georgia, serif;
 }
 
 html {
@@ -325,12 +326,13 @@ a:focus-visible {
 .hero h1 em {
   display: inline-block;
   margin-right: 0.08em;
-  font-family: var(--mono);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.68em;
-  line-height: 0.9;
-  letter-spacing: -0.04em;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1em;
+  line-height: 0.86;
+  letter-spacing: -0.025em;
+  color: var(--ink);
 }
 
 .hero__mixed-line {
@@ -507,13 +509,13 @@ a:focus-visible {
 }
 
 .approach h2 em {
-  color: rgba(8, 13, 13, 0.64);
-  font-family: var(--mono);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.66em;
-  line-height: 0.98;
-  letter-spacing: -0.04em;
+  color: var(--ink);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 0.95em;
+  line-height: 0.92;
+  letter-spacing: -0.025em;
 }
 
 .approach__rule {
@@ -970,10 +972,12 @@ a:focus-visible {
 }
 
 .process-section__title em {
-  font-family: var(--mono);
-  font-style: normal;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.55);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.08em;
+  letter-spacing: -0.015em;
+  color: #ffffff;
 }
 
 .process-section__title-word {
@@ -1150,10 +1154,12 @@ a:focus-visible {
 }
 
 .stats__title em {
-  font-family: var(--mono);
-  font-style: normal;
-  font-weight: 500;
-  color: rgba(10, 13, 16, 0.55);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05em;
+  letter-spacing: -0.02em;
+  color: var(--ink);
 }
 
 .stats__grid {
@@ -1394,14 +1400,14 @@ a:focus-visible {
 }
 
 .cta__word--accent {
-  font-family: var(--mono);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.68em;
-  letter-spacing: -0.04em;
-  color: rgba(8, 13, 13, 0.6);
-  align-self: end;
-  padding-bottom: 0.12em;
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1em;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  align-self: baseline;
+  padding-bottom: 0;
 }
 
 .cta__copy {
@@ -1694,11 +1700,12 @@ a:focus-visible {
 }
 
 .footer__lede em {
-  font-family: var(--mono);
-  font-style: normal;
-  font-weight: 500;
-  font-size: 0.72em;
-  color: rgba(244, 245, 243, 0.6);
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.05em;
+  letter-spacing: -0.01em;
+  color: #ffffff;
 }
 
 .footer__email {
