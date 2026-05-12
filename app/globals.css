@@ -571,11 +571,11 @@ a:focus-visible {
 }
 
 .approach__card-track {
-  display: flex;
+  position: relative;
+  display: block;
   align-items: center;
-  gap: 28px;
+  min-height: clamp(420px, 31vw, 500px);
   transform-style: preserve-3d;
-  will-change: transform;
 }
 
 .method-card {
@@ -596,6 +596,12 @@ a:focus-visible {
     0 1px 2px rgba(8, 13, 13, 0.025),
     0 18px 44px rgba(8, 13, 13, 0.04);
   transform-origin: 50% 60%;
+  will-change: transform, opacity, filter;
+}
+
+.approach__card-track .method-card {
+  position: absolute;
+  top: 24px;
   will-change: transform, opacity, filter;
 }
 
@@ -2096,8 +2102,18 @@ a:focus-visible {
   }
 
   .approach__card-track {
+    display: flex;
+    position: relative;
     transform: none !important;
     gap: 18px;
+    min-height: auto;
+  }
+
+  .approach__card-track .method-card {
+    position: relative;
+    top: auto;
+    left: auto !important;
+    transform: none !important;
   }
 
   .approach__arrow {
