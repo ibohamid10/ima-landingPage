@@ -5,6 +5,7 @@ import {
   PointerEvent as ReactPointerEvent,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useState,
 } from "react";
@@ -45,8 +46,8 @@ const CARDS: CardData[] = [
 ];
 
 const cardTransition = { duration: 0.68, ease: [0.22, 0.61, 0.24, 1] as const };
+const trackTransition = { duration: 0.68, ease: [0.22, 0.61, 0.24, 1] as const };
 const introEase = [0.2, 0.75, 0.18, 1] as const;
-const CARD_SPREAD = 314;
 
 function cardVariants(prefersReduced: boolean) {
   return {
@@ -79,27 +80,21 @@ function cardVariants(prefersReduced: boolean) {
 
 function getVariant(index: number, active: number): { name: "active" | "near" | "far"; dir: number } {
   if (index === active) return { name: "active", dir: 0 };
-  const rel = getCircularOffset(index, active);
+  const rel = index - active;
   if (Math.abs(rel) === 1) return { name: "near", dir: rel };
   return { name: "far", dir: rel };
-}
-
-function getCircularOffset(index: number, active: number) {
-  const total = CARDS.length;
-  let offset = index - active;
-  if (offset > total / 2) offset -= total;
-  if (offset < -total / 2) offset += total;
-  return offset;
 }
 
 export default function Approach() {
   const prefersReduced = useReducedMotion() ?? false;
 
   const [activeIndex, setActiveIndex] = useState(0);
+  const [offset, setOffset] = useState(0);
   const [dragOffset, setDragOffset] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
 
   const viewportRef = useRef<HTMLDivElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const cardRefs = useRef<Array<HTMLElement | null>>([]);
   const dragState = useRef<{
     id: number;
@@ -112,6 +107,28 @@ export default function Approach() {
 
   const isMobile = useMobile();
   const variants = cardVariants(prefersReduced);
+
+  const recomputeOffset = useCallback(() => {
+    const viewport = viewportRef.current;
+    const card = cardRefs.current[activeIndex];
+    if (!viewport || !card) return;
+    if (isMobile) {
+      setOffset(0);
+      return;
+    }
+    const target = viewport.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
+    setOffset(target);
+  }, [activeIndex, isMobile]);
+
+  useLayoutEffect(() => {
+    recomputeOffset();
+  }, [recomputeOffset]);
+
+  useEffect(() => {
+    const onResize = () => recomputeOffset();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [recomputeOffset]);
 
   useEffect(() => {
     if (!isMobile) return;
@@ -256,14 +273,15 @@ export default function Approach() {
           onClickCapture={onViewportClickCapture}
         >
           <motion.div
+            ref={trackRef}
             className="approach__card-track"
+            animate={{ x: offset + dragOffset }}
+            transition={isDragging ? { duration: 0 } : trackTransition}
             style={{ transformStyle: "preserve-3d" }}
           >
             {CARDS.map((card, index) => {
-              const circularOffset = getCircularOffset(index, activeIndex);
               const { name, dir } = getVariant(index, activeIndex);
               const isActive = index === activeIndex;
-              const desktopX = `calc(-50% + ${circularOffset * CARD_SPREAD + dragOffset}px)`;
               return (
                 <motion.article
                   key={card.num}
@@ -276,16 +294,8 @@ export default function Approach() {
                   custom={dir}
                   variants={variants}
                   animate={name}
-                  transition={isDragging ? { duration: 0 } : cardTransition}
-                  style={
-                    isMobile
-                      ? { transformStyle: "preserve-3d" }
-                      : {
-                          left: "50%",
-                          x: desktopX,
-                          transformStyle: "preserve-3d",
-                        }
-                  }
+                  transition={cardTransition}
+                  style={{ transformStyle: "preserve-3d" }}
                 >
                   <span className="method-card__num">{card.num}</span>
                   <h3>{card.title}</h3>
