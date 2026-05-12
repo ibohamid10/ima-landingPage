@@ -157,13 +157,6 @@ export default function CTA() {
               →
             </span>
           </a>
-
-          <div className="cta__live" aria-live="polite">
-            <span className="cta__pulse" aria-hidden />
-            <span className="cta__live-text">
-              Next kickoff slot — <strong>June 2026</strong>
-            </span>
-          </div>
         </motion.div>
       </div>
     </section>
