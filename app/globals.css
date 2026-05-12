@@ -25,12 +25,14 @@
 }
 
 :root {
-  --ink: #080d0d;
-  --soft-ink: rgba(8, 13, 13, 0.86);
-  --muted-ink: rgba(8, 13, 13, 0.58);
-  --line: rgba(8, 13, 13, 0.58);
-  --veil: rgba(246, 244, 239, 0.18);
-  --white: #f8f5ef;
+  --ink: #0a0d10;
+  --soft-ink: rgba(10, 13, 16, 0.86);
+  --muted-ink: rgba(10, 13, 16, 0.58);
+  --line: rgba(10, 13, 16, 0.58);
+  --veil: rgba(244, 245, 243, 0.18);
+  --white: #f4f5f3;
+  --paper: #eef0ed;
+  --paper-soft: #f1f2ef;
   --mono: "Geist Mono", "SFMono-Regular", Consolas, "Liberation Mono", monospace;
   --sans: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
@@ -71,7 +73,7 @@ body {
   overflow-x: hidden;
   font-family: var(--sans);
   color: var(--ink);
-  background: #fafaf7;
+  background: var(--paper-soft);
 }
 
 a {
@@ -112,7 +114,7 @@ a:focus-visible {
   min-height: 100svh;
   overflow: hidden;
   isolation: isolate;
-  background: #f5f4f0;
+  background: var(--paper);
 }
 
 .hero__backdrop {
@@ -138,10 +140,10 @@ a:focus-visible {
   z-index: -1;
   pointer-events: none;
   background:
-    radial-gradient(circle at 76% 22%, rgba(255, 218, 172, 0.2), transparent 30%),
-    linear-gradient(90deg, rgba(241, 238, 231, 0.56) 0%, rgba(241, 238, 231, 0.28) 36%, rgba(241, 238, 231, 0.05) 64%, rgba(241, 238, 231, 0) 82%),
+    radial-gradient(circle at 76% 22%, rgba(210, 222, 230, 0.22), transparent 30%),
+    linear-gradient(90deg, rgba(238, 240, 237, 0.62) 0%, rgba(238, 240, 237, 0.3) 36%, rgba(238, 240, 237, 0.05) 64%, rgba(238, 240, 237, 0) 82%),
     linear-gradient(180deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0) 25%),
-    linear-gradient(180deg, rgba(8, 13, 13, 0) 63%, rgba(8, 13, 13, 0.1) 100%);
+    linear-gradient(180deg, rgba(10, 13, 16, 0) 63%, rgba(10, 13, 16, 0.1) 100%);
 }
 
 .hero__grain {
@@ -418,10 +420,10 @@ a:focus-visible {
   padding: clamp(112px, 12.5vw, 192px) clamp(24px, 5.7vw, 88px) clamp(80px, 8.5vw, 132px);
   color: var(--ink);
   background:
-    radial-gradient(circle at 16% 18%, rgba(236, 242, 250, 0.55), transparent 42%),
-    radial-gradient(circle at 86% 78%, rgba(252, 244, 234, 0.5), transparent 44%),
-    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.38), transparent 60%),
-    #fafaf7;
+    radial-gradient(circle at 16% 18%, rgba(224, 232, 238, 0.6), transparent 42%),
+    radial-gradient(circle at 86% 78%, rgba(220, 228, 232, 0.5), transparent 44%),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4), transparent 60%),
+    var(--paper-soft);
   isolation: isolate;
 }
 
@@ -433,14 +435,14 @@ a:focus-visible {
   height: clamp(120px, 14vh, 200px);
   z-index: -1;
   pointer-events: none;
-  background: linear-gradient(180deg, #f5f4f0 0%, rgba(245, 244, 240, 0.6) 36%, rgba(250, 250, 247, 0.2) 76%, transparent 100%);
+  background: linear-gradient(180deg, var(--paper) 0%, rgba(238, 240, 237, 0.6) 36%, rgba(241, 242, 239, 0.2) 76%, transparent 100%);
 }
 
 .approach__blend::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(232, 178, 120, 0.08), transparent 70%);
+  background: radial-gradient(ellipse 70% 100% at 50% 0%, rgba(190, 206, 216, 0.1), transparent 70%);
 }
 
 .approach__wash {
@@ -1075,13 +1077,55 @@ a:focus-visible {
 .stats {
   position: relative;
   width: 100%;
-  padding: clamp(96px, 12vw, 168px) clamp(24px, 5.7vw, 88px);
-  background: #fafaf7;
+  padding: clamp(120px, 14vw, 196px) clamp(24px, 5.7vw, 88px) clamp(96px, 12vw, 168px);
+  background:
+    radial-gradient(circle at 14% 22%, rgba(220, 230, 238, 0.55), transparent 40%),
+    radial-gradient(circle at 88% 78%, rgba(196, 212, 222, 0.32), transparent 42%),
+    var(--paper-soft);
   color: var(--ink);
   isolation: isolate;
+  overflow: hidden;
+}
+
+/* The "curtain" — fades down out of the black Process section into the
+   light Stats so the edge feels deliberate, not a slam-cut. */
+.stats__curtain {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  right: 0;
+  height: clamp(160px, 18vh, 240px);
+  z-index: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, #0a0a0a 0%, rgba(10, 10, 10, 0.62) 30%, rgba(10, 10, 10, 0.18) 64%, transparent 100%);
+}
+
+/* Mono section-ruler at the top — sits inside the curtain, light on dark. */
+.stats__top-rule {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 clamp(72px, 9vw, 124px);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: rgba(244, 245, 243, 0.62);
+}
+
+.stats__top-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(244, 245, 243, 0.36) 0%, rgba(244, 245, 243, 0.06) 70%, transparent 100%);
 }
 
 .stats__inner {
+  position: relative;
+  z-index: 2;
   width: min(1240px, 100%);
   margin: 0 auto;
   display: flex;
@@ -1094,7 +1138,7 @@ a:focus-visible {
   flex-direction: column;
   align-items: flex-start;
   gap: 20px;
-  max-width: 720px;
+  max-width: 760px;
 }
 
 .stats__kicker {
@@ -1104,7 +1148,7 @@ a:focus-visible {
   letter-spacing: 0.34em;
   line-height: 1;
   text-transform: uppercase;
-  color: rgba(8, 13, 13, 0.55);
+  color: rgba(10, 13, 16, 0.55);
 }
 
 .stats__title {
@@ -1122,7 +1166,7 @@ a:focus-visible {
   font-family: var(--mono);
   font-style: normal;
   font-weight: 500;
-  color: rgba(8, 13, 13, 0.55);
+  color: rgba(10, 13, 16, 0.55);
 }
 
 .stats__grid {
@@ -1132,13 +1176,22 @@ a:focus-visible {
   align-items: start;
 }
 
+/* Asymmetry — push the right column ("Our promise") down a touch so the
+   spread doesn't read as a static two-column report. */
 .stats__column {
   display: flex;
   flex-direction: column;
-  gap: clamp(40px, 4.5vw, 72px);
+  gap: clamp(48px, 5.5vw, 88px);
+}
+
+.stats__column--offset {
+  padding-top: clamp(40px, 6vw, 96px);
 }
 
 .stats__column-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   margin: 0;
   font-family: var(--mono);
   font-size: 11px;
@@ -1146,7 +1199,14 @@ a:focus-visible {
   letter-spacing: 0.34em;
   line-height: 1;
   text-transform: uppercase;
-  color: rgba(8, 13, 13, 0.4);
+  color: rgba(10, 13, 16, 0.5);
+}
+
+.stats__column-label::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: rgba(10, 13, 16, 0.4);
 }
 
 .stats__divider {
@@ -1155,33 +1215,80 @@ a:focus-visible {
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(8, 13, 13, 0.12) 20%,
-    rgba(8, 13, 13, 0.12) 80%,
+    rgba(10, 13, 16, 0.14) 20%,
+    rgba(10, 13, 16, 0.14) 80%,
     transparent 100%
   );
 }
 
 .stat {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  max-width: 380px;
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 96px;
+  align-items: end;
+  gap: 22px 24px;
+  max-width: 440px;
 }
 
 .stat__number {
+  grid-column: 1 / 2;
   font-family: var(--sans);
-  font-size: clamp(56px, 6.4vw, 96px);
+  font-size: clamp(60px, 6.8vw, 104px);
   font-weight: 700;
-  line-height: 0.92;
+  line-height: 0.9;
   letter-spacing: -0.055em;
   color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.stat__chart {
+  grid-column: 2 / 3;
+  width: 96px;
+  height: 96px;
+  align-self: end;
+  justify-self: end;
+  opacity: 0.92;
+}
+
+.stat__chart svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.stat__chart-stroke {
+  fill: none;
+  stroke: rgba(10, 13, 16, 0.78);
+  stroke-width: 1.4;
+  stroke-linecap: round;
+}
+
+.stat__chart-track {
+  fill: none;
+  stroke: rgba(10, 13, 16, 0.12);
+  stroke-width: 1.4;
+}
+
+.stat__chart-fill {
+  fill: rgba(10, 13, 16, 0.86);
+}
+
+.stat__body {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-top: 6px;
+  border-top: 1px solid rgba(10, 13, 16, 0.1);
 }
 
 .stat__label {
   margin: 0;
   font-size: clamp(15px, 1.1vw, 17px);
   line-height: 1.5;
-  color: rgba(8, 13, 13, 0.78);
+  color: rgba(10, 13, 16, 0.82);
   text-wrap: pretty;
 }
 
@@ -1191,7 +1298,7 @@ a:focus-visible {
   font-size: 11px;
   font-weight: 500;
   letter-spacing: 0.04em;
-  color: rgba(8, 13, 13, 0.4);
+  color: rgba(10, 13, 16, 0.42);
 }
 
 /* ---------- CTA ---------- */
@@ -1200,7 +1307,7 @@ a:focus-visible {
   position: relative;
   width: 100%;
   padding: clamp(120px, 16vw, 220px) clamp(24px, 5.7vw, 88px);
-  background: #fafaf7;
+  background: var(--paper-soft);
   color: var(--ink);
   overflow: hidden;
   isolation: isolate;
@@ -1212,9 +1319,9 @@ a:focus-visible {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(circle at 18% 24%, rgba(236, 242, 250, 0.6), transparent 38%),
-    radial-gradient(circle at 84% 76%, rgba(252, 240, 224, 0.55), transparent 40%),
-    radial-gradient(circle at 60% 18%, rgba(255, 255, 255, 0.4), transparent 50%);
+    radial-gradient(circle at 18% 24%, rgba(220, 230, 238, 0.6), transparent 38%),
+    radial-gradient(circle at 84% 76%, rgba(210, 222, 230, 0.55), transparent 40%),
+    radial-gradient(circle at 60% 18%, rgba(255, 255, 255, 0.42), transparent 50%);
   animation: ctaMeshDrift 22s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -1408,7 +1515,7 @@ a:focus-visible {
   align-items: center;
   justify-content: center;
   gap: 28px;
-  background: #fafaf7;
+  background: var(--paper-soft);
   pointer-events: all;
   opacity: 1;
   transition: opacity 0.55s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1467,43 +1574,273 @@ a:focus-visible {
 /* ---------- Footer ---------- */
 
 .footer {
+  position: relative;
+  width: 100%;
+  padding: clamp(72px, 8vw, 124px) clamp(24px, 5.7vw, 88px) clamp(28px, 3vw, 44px);
+  color: rgba(244, 245, 243, 0.78);
+  background:
+    radial-gradient(ellipse 50% 60% at 20% 0%, rgba(36, 44, 52, 0.55), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 90% 100%, rgba(28, 34, 40, 0.4), transparent 70%),
+    #0a0d10;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Background art — a slow-drifting dot-grid + two thin diagonal rules.
+   Pure SVG via data-uri keeps it crisp on any DPR and avoids an extra
+   network request. */
+.footer__art {
+  position: absolute;
+  inset: -20%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(244, 245, 243, 0.18) 1px, transparent 1.6px),
+    linear-gradient(112deg, transparent 0 60%, rgba(244, 245, 243, 0.05) 60.3% 60.55%, transparent 60.85%),
+    linear-gradient(66deg, transparent 0 74%, rgba(244, 245, 243, 0.04) 74.3% 74.55%, transparent 74.85%);
+  background-size: 28px 28px, 100% 100%, 100% 100%;
+  animation: footerArtDrift 36s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+.footer__grain {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.18;
+  mix-blend-mode: overlay;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.12) 0 1px, transparent 1px),
+    radial-gradient(circle at 70% 80%, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px);
+  background-size: 4px 4px, 7px 7px;
+}
+
+@keyframes footerArtDrift {
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-1%, 0.6%, 0); }
+}
+
+.footer__inner {
+  position: relative;
+  z-index: 2;
+  width: min(1320px, 100%);
+  margin: 0 auto;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 32px;
-  padding: 34px clamp(24px, 5.7vw, 88px);
-  color: rgba(8, 13, 13, 0.72);
-  background: #fafaf7;
-  border-top: 1px solid rgba(8, 13, 13, 0.08);
+  flex-direction: column;
+  gap: clamp(56px, 7vw, 96px);
 }
 
-.footer__brand {
+.footer__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(40px, 6vw, 88px);
+  align-items: start;
+}
+
+.footer__manifesto {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  max-width: 520px;
+}
+
+.footer__kicker {
   display: inline-flex;
-  width: 128px;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.34em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgba(244, 245, 243, 0.5);
 }
 
-.footer__brand img {
+.footer__kicker::before {
+  content: "";
+  width: 22px;
+  height: 1px;
+  background: rgba(244, 245, 243, 0.36);
+}
+
+.footer__lede {
+  margin: 0;
+  font-family: var(--sans);
+  font-size: clamp(24px, 2.6vw, 36px);
+  font-weight: 600;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  color: #ffffff;
+  text-wrap: balance;
+}
+
+.footer__lede em {
+  font-family: var(--mono);
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.72em;
+  color: rgba(244, 245, 243, 0.6);
+}
+
+.footer__email {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-top: 10px;
+  padding-bottom: 8px;
+  font-family: var(--sans);
+  font-size: clamp(20px, 2vw, 28px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #ffffff;
+  border-bottom: 1px solid rgba(244, 245, 243, 0.28);
+  transition: border-color 220ms ease, color 220ms ease;
+  width: fit-content;
+}
+
+.footer__email::after {
+  content: "→";
+  font-size: 0.78em;
+  transform: translateY(-2px);
+  transition: transform 240ms cubic-bezier(0.2, 0.75, 0.18, 1);
+}
+
+.footer__email:hover {
+  border-color: rgba(244, 245, 243, 0.85);
+}
+
+.footer__email:hover::after {
+  transform: translate(4px, -2px);
+}
+
+.footer__sitemap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 2.6vw, 36px);
+  padding-top: 6px;
+}
+
+.footer__col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer__col-label {
+  margin: 0 0 6px;
+  font-family: var(--mono);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.32em;
+  line-height: 1;
+  text-transform: uppercase;
+  color: rgba(244, 245, 243, 0.42);
+}
+
+.footer__col a,
+.footer__col span {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: rgba(244, 245, 243, 0.82);
+  transition: color 180ms ease, transform 180ms ease;
+  display: inline-block;
+}
+
+.footer__col a:hover {
+  color: #ffffff;
+  transform: translateX(2px);
+}
+
+/* The huge outline wordmark — the SOTA closer. */
+.footer__wordmark {
+  position: relative;
+  display: block;
+  width: 100%;
+  line-height: 0.86;
+  text-align: center;
+  user-select: none;
+}
+
+.footer__wordmark svg {
   display: block;
   width: 100%;
   height: auto;
+  overflow: visible;
 }
 
-.footer__links {
-  display: flex;
-  align-items: center;
+.footer__wordmark-letter {
+  fill: transparent;
+  stroke: rgba(244, 245, 243, 0.42);
+  stroke-width: 1.2;
+  paint-order: stroke;
+  font-family: var(--sans);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  transition: stroke 360ms ease;
+}
+
+.footer__wordmark:hover .footer__wordmark-letter {
+  stroke: rgba(244, 245, 243, 0.72);
+}
+
+.footer__bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   gap: 24px;
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  padding-top: 22px;
+  border-top: 1px solid rgba(244, 245, 243, 0.1);
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(244, 245, 243, 0.5);
+  align-items: center;
 }
 
-.footer__links a {
-  transition: opacity 180ms ease;
+.footer__legal {
+  display: flex;
+  gap: 22px;
 }
 
-.footer__links a:hover {
-  opacity: 0.62;
+.footer__legal a {
+  transition: color 180ms ease;
+}
+
+.footer__legal a:hover {
+  color: #ffffff;
+}
+
+.footer__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: center;
+}
+
+.footer__status-dot {
+  position: relative;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #4ea874;
+  box-shadow: 0 0 0 0 rgba(78, 168, 116, 0.55);
+  animation: ctaPulse 2.2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.footer__clock {
+  justify-self: end;
+  font-variant-numeric: tabular-nums;
+  color: rgba(244, 245, 243, 0.68);
+}
+
+.footer__clock-sep {
+  margin: 0 6px;
+  opacity: 0.4;
 }
 
 /* ---------- Legal ---------- */
@@ -1514,8 +1851,8 @@ a:focus-visible {
   color: var(--ink);
   background:
     radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.82), transparent 32%),
-    radial-gradient(circle at 12% 76%, rgba(227, 220, 211, 0.46), transparent 34%),
-    #f6f3ee;
+    radial-gradient(circle at 12% 76%, rgba(210, 220, 226, 0.42), transparent 34%),
+    var(--paper);
 }
 
 .legal-page__brand {
@@ -1600,8 +1937,8 @@ a:focus-visible {
   color: var(--ink);
   background:
     radial-gradient(circle at 72% 18%, rgba(255, 255, 255, 0.78), transparent 34%),
-    radial-gradient(circle at 18% 78%, rgba(232, 178, 120, 0.09), transparent 36%),
-    #fafaf7;
+    radial-gradient(circle at 18% 78%, rgba(196, 212, 222, 0.18), transparent 36%),
+    var(--paper-soft);
   isolation: isolate;
 }
 
@@ -1787,7 +2124,13 @@ a:focus-visible {
   }
 
   .stats {
-    padding: 72px 24px 88px;
+    padding: 100px 24px 88px;
+  }
+
+  .stats__top-rule {
+    margin-bottom: 56px;
+    font-size: 10px;
+    letter-spacing: 0.24em;
   }
 
   .stats__inner {
@@ -1805,18 +2148,32 @@ a:focus-visible {
     background: linear-gradient(
       90deg,
       transparent 0%,
-      rgba(8, 13, 13, 0.12) 20%,
-      rgba(8, 13, 13, 0.12) 80%,
+      rgba(10, 13, 16, 0.12) 20%,
+      rgba(10, 13, 16, 0.12) 80%,
       transparent 100%
     );
   }
 
   .stats__column {
-    gap: 36px;
+    gap: 44px;
+  }
+
+  .stats__column--offset {
+    padding-top: 0;
   }
 
   .stat {
     max-width: 100%;
+    grid-template-columns: 1fr 72px;
+  }
+
+  .stat__chart {
+    width: 72px;
+    height: 72px;
+  }
+
+  .stat__number {
+    font-size: clamp(48px, 13vw, 78px);
   }
 
   .cta {
@@ -1841,7 +2198,37 @@ a:focus-visible {
   }
 
   .footer {
-    padding: 30px 24px;
+    padding: 64px 24px 24px;
+  }
+
+  .footer__top {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .footer__sitemap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+  }
+
+  .footer__lede {
+    font-size: clamp(22px, 5.6vw, 30px);
+  }
+
+  .footer__email {
+    font-size: clamp(20px, 5.4vw, 26px);
+  }
+
+  .footer__bottom {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .footer__status,
+  .footer__clock {
+    justify-self: start;
   }
 
   .legal-grid {
@@ -2014,13 +2401,11 @@ a:focus-visible {
   }
 
   .footer {
-    align-items: flex-start;
-    flex-direction: column;
-    padding: 28px 20px;
+    padding: 56px 20px 22px;
   }
 
-  .footer__brand {
-    width: 112px;
+  .footer__sitemap {
+    grid-template-columns: 1fr 1fr;
   }
 
   .legal-page {
