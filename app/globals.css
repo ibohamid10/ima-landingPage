@@ -1275,6 +1275,39 @@ a:focus-visible {
   fill: rgba(10, 13, 16, 0.86);
 }
 
+.stat__chart-svg {
+  transform-origin: 50% 50%;
+}
+
+/* Once the reveal lands, give the ring/target glyphs a slow breath so
+   they don't read as static. Wedge breathes on the track outline,
+   bullseye breathes on the outermost ring only. */
+.stat__chart-svg--wedge {
+  animation: chartBreath 5.2s cubic-bezier(0.45, 0, 0.2, 1) 1.8s infinite;
+}
+
+.stat__chart-svg--target {
+  animation: chartBreath 6s cubic-bezier(0.45, 0, 0.2, 1) 2.4s infinite;
+}
+
+@keyframes chartBreath {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.92;
+  }
+  50% {
+    transform: scale(1.025);
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stat__chart-svg--wedge,
+  .stat__chart-svg--target {
+    animation: none;
+  }
+}
+
 .stat__body {
   grid-column: 1 / -1;
   display: flex;

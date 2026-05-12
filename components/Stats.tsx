@@ -107,25 +107,32 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
     );
   }
   if (chart === "ring") {
-    // 81% — progress ring filled to the value.
-    const circumference = 2 * Math.PI * 38;
-    const offset = circumference * (1 - value / 100);
+    // 81% — filled pie wedge that sweeps in from 12 o'clock clockwise.
+    // Built from a stroked circle with strokeWidth = 2 * r so the stroke
+    // fills the entire disc; stroke-dasharray then carves the wedge.
+    const wedgeR = 20;
+    const wedgeCirc = 2 * Math.PI * wedgeR;
+    const wedgeOffset = wedgeCirc * (1 - value / 100);
     return (
-      <svg viewBox="0 0 96 96" aria-hidden>
-        <circle cx="48" cy="48" r="38" className="stat__chart-track" />
+      <svg viewBox="0 0 96 96" aria-hidden className="stat__chart-svg stat__chart-svg--wedge">
+        <circle cx="48" cy="48" r="40" className="stat__chart-track" />
         <circle
           cx="48"
           cy="48"
-          r="38"
-          className="stat__chart-stroke"
-          strokeDasharray={circumference}
-          strokeDashoffset={inView ? offset : circumference}
+          r={wedgeR}
+          fill="none"
+          stroke="rgba(10, 13, 16, 0.88)"
+          strokeWidth={2 * wedgeR}
+          strokeDasharray={wedgeCirc}
+          strokeDashoffset={inView ? wedgeOffset : wedgeCirc}
           style={{
-            transition: "stroke-dashoffset 1.6s cubic-bezier(0.2,0.75,0.18,1) 0.1s",
+            transition: "stroke-dashoffset 1.4s cubic-bezier(0.2,0.75,0.18,1) 0.15s",
             transform: "rotate(-90deg)",
             transformOrigin: "center",
           }}
         />
+        {/* Hairline on top to keep the rim crisp against the track. */}
+        <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(10, 13, 16, 0.78)" strokeWidth="1" />
       </svg>
     );
   }
@@ -156,32 +163,30 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
       </svg>
     );
   }
-  // ring-full — concentric pulse: a closed ring with a subtle inner dot.
+  // ring-full / 100% — bullseye: three concentric rings draw outside→in.
+  const rings = [40, 26, 14];
   return (
-    <svg viewBox="0 0 96 96" aria-hidden>
-      <circle
-        cx="48"
-        cy="48"
-        r="38"
-        className="stat__chart-stroke"
-        strokeDasharray={2 * Math.PI * 38}
-        strokeDashoffset={inView ? 0 : 2 * Math.PI * 38}
-        style={{
-          transition: "stroke-dashoffset 1.4s cubic-bezier(0.2,0.75,0.18,1) 0.1s",
-          transform: "rotate(-90deg)",
-          transformOrigin: "center",
-        }}
-      />
-      <circle
-        cx="48"
-        cy="48"
-        r="6"
-        className="stat__chart-fill"
-        style={{
-          opacity: inView ? 1 : 0,
-          transition: "opacity 320ms ease 1.3s",
-        }}
-      />
+    <svg viewBox="0 0 96 96" aria-hidden className="stat__chart-svg stat__chart-svg--target">
+      {rings.map((r, i) => {
+        const c = 2 * Math.PI * r;
+        return (
+          <circle
+            key={r}
+            cx="48"
+            cy="48"
+            r={r}
+            className="stat__chart-stroke"
+            strokeDasharray={c}
+            strokeDashoffset={inView ? 0 : c}
+            style={{
+              transition: `stroke-dashoffset 0.9s cubic-bezier(0.2,0.75,0.18,1) ${0.1 + i * 0.32}s`,
+              transform: "rotate(-90deg)",
+              transformOrigin: "center",
+              opacity: 0.88 - i * 0.12,
+            }}
+          />
+        );
+      })}
     </svg>
   );
 }
