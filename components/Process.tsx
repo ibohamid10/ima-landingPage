@@ -129,13 +129,19 @@ export default function Process() {
       setupPath(".process-trace-growth");
 
       // Initial states
-      gsap.set(".process-light", { opacity: 0, scale: 0.4, transformOrigin: "50% 50%" });
-      gsap.set(".process-orb", { opacity: 0.35, scale: 0.7, transformOrigin: "50% 50%" });
+      // Pre-position the light at step 01 so it never flashes at SVG (0,0)
+      gsap.set(".process-light", { opacity: 0, scale: 0.4, transformOrigin: "50% 50%", x: POINTS.one.x, y: POINTS.one.y });
       gsap.set(".process-num", { opacity: 0.32 });
       gsap.set(".process-title", { opacity: 0.32 });
       gsap.set(".process-desc", { opacity: 0, y: 12 });
       gsap.set(".process-afterglow", { opacity: 0 });
-      gsap.set(".process-ripple", { opacity: 0, scale: 1 });
+      // Use svgOrigin (SVG user-unit space) so the scale origin tracks the dot
+      // position correctly at any SVG display size — CSS px values do not scale
+      // with the SVG viewport and cause the ripple/orb to appear to "move".
+      [POINTS.one, POINTS.two, POINTS.three].forEach((p, i) => {
+        gsap.set(`.process-orb[data-i="${i}"]`, { opacity: 0.35, scale: 0.7, svgOrigin: `${p.x} ${p.y}` });
+        gsap.set(`.process-ripple[data-i="${i}"]`, { opacity: 0, scale: 1, svgOrigin: `${p.x} ${p.y}` });
+      });
       // Arrowhead: opacity-based reveal instead of strokeDashoffset to avoid
       // a sub-pixel rendering artifact at the chevron tip when the path is
       // fully offset (strokeLinejoin: round leaves a tiny dot visible).
@@ -363,7 +369,6 @@ export default function Process() {
                 key={`ripple-${i}`}
                 className="process-ripple"
                 data-i={i}
-                style={{ transformOrigin: `${p.x}px ${p.y}px` } as React.CSSProperties}
               >
                 <circle
                   cx={p.x}
@@ -383,7 +388,6 @@ export default function Process() {
                 key={`orb-${i}`}
                 className="process-orb"
                 data-i={i}
-                style={{ transformOrigin: `${p.x}px ${p.y}px` } as React.CSSProperties}
               >
                 <circle cx={p.x} cy={p.y} r="16" fill="url(#processOrbGradient)" />
                 <circle cx={p.x} cy={p.y} r="4.5" fill="#fff" />
