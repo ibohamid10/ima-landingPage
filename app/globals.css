@@ -1046,10 +1046,6 @@ a:focus-visible {
   will-change: opacity;
 }
 
-.process-ripple {
-  will-change: transform, opacity;
-}
-
 /* Active step description — absolute-stacked, crossfading slot */
 .process-stage__desc {
   position: relative;

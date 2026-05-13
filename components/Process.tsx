@@ -103,7 +103,7 @@ export default function Process() {
         gsap.set([".process-num", ".process-title", ".process-orb"], { opacity: 1 });
         gsap.set(".process-desc", { opacity: 1 });
         gsap.set(".process-light", { opacity: 0 });
-        gsap.set(".process-ripple", { opacity: 0 });
+        gsap.set(".process-ripple", { opacity: 0, attr: { r: 8 } });
         gsap.set(".process-afterglow", { opacity: 0.5 });
         // On mobile / reduced motion, reveal title at final color immediately
         gsap.set('.process-section__title-word[data-word="0"]', { color: "rgba(255, 255, 255, 0.55)" });
@@ -135,7 +135,7 @@ export default function Process() {
       gsap.set(".process-title", { opacity: 0.32 });
       gsap.set(".process-desc", { opacity: 0, y: 12 });
       gsap.set(".process-afterglow", { opacity: 0 });
-      gsap.set(".process-ripple", { opacity: 0, scale: 1 });
+      gsap.set(".process-ripple", { opacity: 0, attr: { r: 8 } });
       // Arrowhead: opacity-based reveal instead of strokeDashoffset to avoid
       // a sub-pixel rendering artifact at the chevron tip when the path is
       // fully offset (strokeLinejoin: round leaves a tiny dot visible).
@@ -170,8 +170,8 @@ export default function Process() {
       tl.to(".process-desc[data-i='0']", { opacity: 1, y: 0, duration: 0.18, ease: "power2.out" }, 0.04);
 
       // 01 ignition ripple + persistent afterglow
-      tl.to('.process-ripple[data-i="0"]', { opacity: 0.45, duration: 0.04 }, 0.02);
-      tl.to('.process-ripple[data-i="0"]', { scale: 4, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.06);
+      tl.to('.process-ripple[data-i="0"]', { opacity: 0.45, attr: { r: 8 }, duration: 0.04 }, 0.02);
+      tl.to('.process-ripple[data-i="0"]', { attr: { r: 34 }, opacity: 0, duration: 0.45, ease: "power2.out" }, 0.06);
       tl.to('.process-afterglow[data-i="0"]', { opacity: 0.45, duration: 0.4, ease: "power2.out" }, 0.12);
 
       // Title word "insight" lights up as the light approaches 02
@@ -205,8 +205,8 @@ export default function Process() {
       tl.to(".process-desc[data-i='1']", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 1.05);
 
       // 02 arrival ripple + persistent afterglow
-      tl.to('.process-ripple[data-i="1"]', { opacity: 0.55, duration: 0.04 }, 1.04);
-      tl.to('.process-ripple[data-i="1"]', { scale: 4.5, opacity: 0, duration: 0.5, ease: "power2.out" }, 1.08);
+      tl.to('.process-ripple[data-i="1"]', { opacity: 0.55, attr: { r: 8 }, duration: 0.04 }, 1.04);
+      tl.to('.process-ripple[data-i="1"]', { attr: { r: 38 }, opacity: 0, duration: 0.5, ease: "power2.out" }, 1.08);
       tl.to('.process-afterglow[data-i="1"]', { opacity: 0.55, duration: 0.4, ease: "power2.out" }, 1.22);
 
       // ---- Phase B : 02 → 03 -----------------------------------------
@@ -238,8 +238,8 @@ export default function Process() {
       tl.to(".process-desc[data-i='2']", { opacity: 1, y: 0, duration: 0.2, ease: "power2.out" }, 2.34);
 
       // 03 arrival ripple — the biggest one, then persistent afterglow
-      tl.to('.process-ripple[data-i="2"]', { opacity: 0.6, duration: 0.04 }, 2.34);
-      tl.to('.process-ripple[data-i="2"]', { scale: 5, opacity: 0, duration: 0.55, ease: "power2.out" }, 2.38);
+      tl.to('.process-ripple[data-i="2"]', { opacity: 0.6, attr: { r: 8 }, duration: 0.04 }, 2.34);
+      tl.to('.process-ripple[data-i="2"]', { attr: { r: 42 }, opacity: 0, duration: 0.55, ease: "power2.out" }, 2.38);
       tl.to('.process-afterglow[data-i="2"]', { opacity: 0.6, duration: 0.4, ease: "power2.out" }, 2.52);
 
       // ---- Phase C : Growth -----------------------------------------
@@ -359,22 +359,17 @@ export default function Process() {
             {/* Sonar ripples — single ring per step that expands outward when the
                 light arrives, like an Apple Watch ping or a water droplet. */}
             {[POINTS.one, POINTS.two, POINTS.three].map((p, i) => (
-              <g
+              <circle
                 key={`ripple-${i}`}
                 className="process-ripple"
                 data-i={i}
-                style={{ transformOrigin: `${p.x}px ${p.y}px` } as React.CSSProperties}
-              >
-                <circle
-                  cx={p.x}
-                  cy={p.y}
-                  r="8"
-                  fill="none"
-                  stroke="rgba(255, 232, 196, 0.42)"
-                  strokeWidth="1"
-                  vectorEffect="non-scaling-stroke"
-                />
-              </g>
+                cx={p.x}
+                cy={p.y}
+                r="8"
+                fill="none"
+                stroke="rgba(255, 232, 196, 0.42)"
+                strokeWidth="1"
+              />
             ))}
 
             {/* Stationary orbs at each step */}
