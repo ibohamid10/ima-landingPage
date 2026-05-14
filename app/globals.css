@@ -336,10 +336,34 @@ a:focus-visible {
 }
 
 .hero__mixed-line {
-  display: flex;
-  align-items: baseline;
-  gap: 0.08em;
+  display: block;
   white-space: nowrap;
+}
+
+/* Char-split reveal: each char rises from below an overflow:hidden mask.
+   The clip box is expanded with padding (then pulled back with negative
+   margin) so italic-serif ascenders/descenders aren't clipped. */
+.hero__line {
+  display: block;
+}
+
+.hero__word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.hero__char {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: top;
+  line-height: inherit;
+  padding: 0.18em 0 0.22em;
+  margin: -0.18em 0 -0.22em;
+}
+
+.hero__char-inner {
+  display: inline-block;
+  will-change: transform;
 }
 
 .hero__rule {
@@ -2002,6 +2026,32 @@ a:focus-visible {
   font-size: clamp(16px, 1.18vw, 18px);
   line-height: 1.56;
   text-wrap: pretty;
+}
+
+/* ---------- View transitions ---------- */
+
+/* Cross-document fade between routes; chromium-based browsers honor
+   this natively. Unsupported browsers fall back to instant nav. */
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 360ms;
+  animation-timing-function: cubic-bezier(0.2, 0.75, 0.18, 1);
+}
+
+/* Logo is the shared anchor: morphs between its nav slot on the landing
+   and its top-left slot on legal pages. */
+.nav__brand,
+.legal-page__brand {
+  view-transition-name: ajione-logo;
+}
+
+::view-transition-group(ajione-logo) {
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(0.2, 0.75, 0.18, 1);
 }
 
 /* ---------- Reduced motion ---------- */

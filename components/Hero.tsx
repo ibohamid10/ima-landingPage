@@ -1,11 +1,58 @@
 "use client";
 
+import { Fragment } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
 
 const easeOut = [0.2, 0.75, 0.18, 1] as const;
 
+type SplitLineProps = {
+  text: string;
+  delay: number;
+  charDelay?: number;
+  reduced: boolean;
+};
+
+// Character-by-character reveal: each char rises from below an
+// overflow:hidden mask with stagger. Words stay non-breaking; line
+// breaks happen only at real spaces between words.
+function SplitLine({ text, delay, charDelay = 0.024, reduced }: SplitLineProps) {
+  const words = text.split(" ");
+  let charCount = 0;
+  return (
+    <>
+      {words.map((word, wi) => {
+        const startChar = charCount;
+        charCount += word.length;
+        return (
+          <Fragment key={wi}>
+            <span className="hero__word">
+              {Array.from(word).map((ch, ci) => (
+                <span key={ci} className="hero__char" aria-hidden>
+                  <motion.span
+                    className="hero__char-inner"
+                    initial={reduced ? false : { y: "110%" }}
+                    animate={reduced ? undefined : { y: "0%" }}
+                    transition={{
+                      duration: 0.74,
+                      delay: delay + (startChar + ci) * charDelay,
+                      ease: easeOut,
+                    }}
+                  >
+                    {ch}
+                  </motion.span>
+                </span>
+              ))}
+            </span>
+            {wi < words.length - 1 ? " " : null}
+          </Fragment>
+        );
+      })}
+    </>
+  );
+}
+
 export default function Hero() {
-  const prefersReduced = useReducedMotion();
+  const prefersReduced = useReducedMotion() ?? false;
 
   const { scrollY } = useScroll();
   const backdropY = useTransform(scrollY, [0, 800], [0, 176]);
@@ -51,25 +98,20 @@ export default function Hero() {
           Creator growth studio
         </motion.p>
 
-        <h1>
-          {["Creator", "partnerships."].map((line, i) => (
-            <motion.span
-              key={line}
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.88, delay: 0.33 + i * 0.1, ease: easeOut }}
-            >
-              {line}
-            </motion.span>
-          ))}
-          <motion.span
-            className="hero__mixed-line"
-            initial={{ opacity: 0, y: 22 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.88, delay: 0.53, ease: easeOut }}
-          >
-            <em>that drive</em> growth.
-          </motion.span>
+        <h1 aria-label="Creator partnerships. that drive growth.">
+          <span className="hero__line">
+            <SplitLine text="Creator" delay={0.32} reduced={prefersReduced} />
+          </span>
+          <span className="hero__line">
+            <SplitLine text="partnerships." delay={0.5} reduced={prefersReduced} />
+          </span>
+          <span className="hero__mixed-line">
+            <em>
+              <SplitLine text="that drive" delay={0.84} reduced={prefersReduced} />
+            </em>
+            {" "}
+            <SplitLine text="growth." delay={1.16} reduced={prefersReduced} />
+          </span>
         </h1>
 
         <motion.div
