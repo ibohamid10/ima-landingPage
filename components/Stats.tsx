@@ -218,16 +218,6 @@ export default function Stats() {
   return (
     <section className="stats" aria-label="The opportunity and our commitment">
       <div className="stats__inner">
-        <motion.p
-          className="stats__top-rule"
-          initial={{ opacity: 0, y: 8 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.6, ease: easeOut }}
-        >
-          <span>Section 04 — Facts · 2024</span>
-        </motion.p>
-
         <header className="stats__header">
           <motion.p
             className="stats__kicker"

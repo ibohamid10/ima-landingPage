@@ -32,57 +32,20 @@ export default function Footer() {
       <div className="footer__grain" aria-hidden />
 
       <div className="footer__inner">
-        <div className="footer__top">
-          <div className="footer__manifesto">
-            <p className="footer__kicker">Start a conversation</p>
-            <p className="footer__lede">
-              Tell us about the brand and the audience you want to reach.
-              <em> We answer within 24 hours.</em>
-            </p>
-            <a
-              className="footer__email"
-              href="mailto:partnership@ajione.com?subject=Partnership%20inquiry"
-              data-analytics-event="footer_email_click"
-              data-analytics-label="Footer email"
-            >
-              partnership@ajione.com
-            </a>
-          </div>
-
-          <nav className="footer__sitemap" aria-label="Site">
-            <div className="footer__col">
-              <p className="footer__col-label">Studio</p>
-              <a href="#about">About</a>
-              <a href="#services">Services</a>
-              <a href="#work">Our Work</a>
-            </div>
-            <div className="footer__col">
-              <p className="footer__col-label">Process</p>
-              <a href="#approach">Approach</a>
-              <a href="#process">Process</a>
-              <a href="#insights">Insights</a>
-            </div>
-            <div className="footer__col">
-              <p className="footer__col-label">Contact</p>
-              <a href="mailto:partnership@ajione.com">Email</a>
-              <a href="#partner">Partnership</a>
-              <a
-                href="https://www.linkedin.com/company/ajione/"
-                target="_blank"
-                rel="noopener noreferrer"
-                data-analytics-event="footer_linkedin_click"
-                data-analytics-label="Footer LinkedIn"
-              >
-                LinkedIn
-              </a>
-              <span>Vienna · AT</span>
-            </div>
-            <div className="footer__col">
-              <p className="footer__col-label">Legal</p>
-              <a href="/impressum">Impressum</a>
-              <a href="/datenschutz">Datenschutz</a>
-            </div>
-          </nav>
+        <div className="footer__manifesto">
+          <p className="footer__kicker">Start a conversation</p>
+          <p className="footer__lede">
+            Tell us about the brand and the audience you want to reach.
+            <em> We answer within 24 hours.</em>
+          </p>
+          <a
+            className="footer__email"
+            href="mailto:partnership@ajione.com?subject=Partnership%20inquiry"
+            data-analytics-event="footer_email_click"
+            data-analytics-label="Footer email"
+          >
+            partnership@ajione.com
+          </a>
         </div>
 
         <a className="footer__wordmark" href="/" aria-label="AJIONE — home">
@@ -105,6 +68,26 @@ export default function Footer() {
             <a href="/impressum">Impressum</a>
             <a href="/datenschutz">Datenschutz</a>
           </div>
+
+          <a
+            className="footer__social"
+            href="https://www.linkedin.com/company/ajione/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="AJIONE on LinkedIn"
+            data-analytics-event="footer_linkedin_click"
+            data-analytics-label="Footer LinkedIn"
+          >
+            <svg
+              viewBox="0 0 24 24"
+              width="16"
+              height="16"
+              fill="currentColor"
+              aria-hidden
+            >
+              <path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.07 2.07 0 1 1 0-4.14 2.07 2.07 0 0 1 0 4.14zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z" />
+            </svg>
+          </a>
 
           <div className="footer__clock" aria-live="polite">
             <span>Vienna</span>

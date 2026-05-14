@@ -1111,29 +1111,6 @@ a:focus-visible {
   overflow: hidden;
 }
 
-/* Mono section-ruler at the top — dark-on-light, hairline trailing right. */
-.stats__top-rule {
-  position: relative;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  gap: 18px;
-  margin: 0 0 clamp(56px, 7vw, 96px);
-  font-family: var(--mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  text-transform: uppercase;
-  color: rgba(10, 13, 16, 0.5);
-}
-
-.stats__top-rule::after {
-  content: "";
-  flex: 1;
-  height: 1px;
-  background: linear-gradient(90deg, rgba(10, 13, 16, 0.24) 0%, rgba(10, 13, 16, 0.06) 70%, transparent 100%);
-}
-
 .stats__inner {
   position: relative;
   z-index: 2;
@@ -1673,18 +1650,11 @@ a:focus-visible {
   gap: clamp(56px, 7vw, 96px);
 }
 
-.footer__top {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-  gap: clamp(40px, 6vw, 88px);
-  align-items: start;
-}
-
 .footer__manifesto {
   display: flex;
   flex-direction: column;
   gap: 22px;
-  max-width: 520px;
+  max-width: 620px;
 }
 
 .footer__kicker {
@@ -1759,45 +1729,6 @@ a:focus-visible {
   transform: translate(4px, -2px);
 }
 
-.footer__sitemap {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(20px, 2.6vw, 36px);
-  padding-top: 6px;
-}
-
-.footer__col {
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-}
-
-.footer__col-label {
-  margin: 0 0 6px;
-  font-family: var(--mono);
-  font-size: 10px;
-  font-weight: 500;
-  letter-spacing: 0.32em;
-  line-height: 1;
-  text-transform: uppercase;
-  color: rgba(244, 245, 243, 0.42);
-}
-
-.footer__col a,
-.footer__col span {
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.25;
-  color: rgba(244, 245, 243, 0.82);
-  transition: color 180ms ease, transform 180ms ease;
-  display: inline-block;
-}
-
-.footer__col a:hover {
-  color: #ffffff;
-  transform: translateX(2px);
-}
-
 /* The huge outline wordmark — the SOTA closer. */
 .footer__wordmark {
   position: relative;
@@ -1860,6 +1791,29 @@ a:focus-visible {
 .footer__clock {
   font-variant-numeric: tabular-nums;
   color: rgba(244, 245, 243, 0.68);
+}
+
+.footer__social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: rgba(244, 245, 243, 0.65);
+  border: 1px solid rgba(244, 245, 243, 0.18);
+  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.footer__social:hover {
+  color: #ffffff;
+  border-color: rgba(244, 245, 243, 0.6);
+  transform: translateY(-1px);
+}
+
+.footer__social:focus-visible {
+  outline: 1px solid rgba(244, 245, 243, 0.6);
+  outline-offset: 3px;
 }
 
 .footer__clock-sep {
@@ -2177,12 +2131,6 @@ a:focus-visible {
     padding: 100px 24px 88px;
   }
 
-  .stats__top-rule {
-    margin-bottom: 56px;
-    font-size: 10px;
-    letter-spacing: 0.24em;
-  }
-
   .stats__inner {
     gap: 48px;
   }
@@ -2249,16 +2197,6 @@ a:focus-visible {
 
   .footer {
     padding: 64px 24px 24px;
-  }
-
-  .footer__top {
-    grid-template-columns: 1fr;
-    gap: 48px;
-  }
-
-  .footer__sitemap {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 28px;
   }
 
   .footer__lede {
@@ -2446,10 +2384,6 @@ a:focus-visible {
 
   .footer {
     padding: 56px 20px 22px;
-  }
-
-  .footer__sitemap {
-    grid-template-columns: 1fr 1fr;
   }
 
   .legal-page {
