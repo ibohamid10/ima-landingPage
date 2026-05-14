@@ -1833,6 +1833,27 @@ a:focus-visible {
   color: #ffffff;
 }
 
+.footer__social {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border: 1px solid rgba(244, 245, 243, 0.16);
+  border-radius: 999px;
+  color: rgba(244, 245, 243, 0.7);
+  transition: color 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.footer__social svg {
+  display: block;
+}
+
+.footer__social:hover {
+  color: #ffffff;
+  border-color: rgba(244, 245, 243, 0.42);
+  background: rgba(244, 245, 243, 0.04);
+}
+
 .footer__clock {
   font-variant-numeric: tabular-nums;
   color: rgba(244, 245, 243, 0.68);
