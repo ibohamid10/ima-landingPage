@@ -17,6 +17,10 @@ export const metadata: Metadata = {
   title: "AJIONE | Creator Partnerships",
   description:
     "AJIONE connects ambitious brands with high-fit creators through curated, data-informed partnerships.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/apple-icon.png",
+  },
 };
 
 const umamiSrc = process.env.NEXT_PUBLIC_UMAMI_SRC;
