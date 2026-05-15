@@ -36,9 +36,11 @@ try {
 } catch (e) {}
 `;
 
-// After-paint script: when the intro is showing, wait for the full
-// animation and then dismiss it. Also stores the session flag so the
-// next page navigation skips the intro entirely.
+// After-paint script: dismiss the intro as fast as possible while still
+// covering hero-asset loading shimmer. Held time was 1300ms + 700ms fade
+// — that was a ~2s LCP penalty on cold paid traffic. Cut to 350ms hold +
+// 260ms fade (~70% reduction) so the brand flash stays but Core Web
+// Vitals do not eat it.
 const INTRO_DISMISS_SCRIPT = `
 (function () {
   try {
@@ -52,8 +54,8 @@ const INTRO_DISMISS_SCRIPT = `
       html.classList.remove('ajione-intro-locked');
       window.setTimeout(function () {
         el.parentNode && el.parentNode.removeChild(el);
-      }, 700);
-    }, 1300);
+      }, 260);
+    }, 350);
   } catch (e) {}
 })();
 `;

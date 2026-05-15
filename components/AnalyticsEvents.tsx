@@ -11,9 +11,12 @@ declare global {
 }
 
 const SECTION_EVENTS = [
-  { selector: "#about", eventName: "section_approach_view" },
-  { selector: ".process-section", eventName: "section_process_view" },
+  { selector: "#approach", eventName: "section_approach_view" },
+  { selector: "#process", eventName: "section_process_view" },
   { selector: ".stats", eventName: "section_stats_view" },
+  { selector: "#deal", eventName: "section_deal_view" },
+  { selector: "#partner", eventName: "section_cta_view" },
+  { selector: "#faq", eventName: "section_faq_view" },
 ];
 
 function track(eventName: string, props?: Record<string, string>) {
