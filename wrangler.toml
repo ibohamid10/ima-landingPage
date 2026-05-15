@@ -1,6 +1,8 @@
 name = "imalandingpage"
+main = "worker/index.ts"
 compatibility_date = "2025-05-01"
 
 [assets]
 directory = "./out"
+binding = "ASSETS"
 not_found_handling = "404-page"
