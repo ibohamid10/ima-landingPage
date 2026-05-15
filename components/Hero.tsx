@@ -30,7 +30,7 @@ function SplitLine({ text, delay, charDelay = 0.024, reduced }: SplitLineProps) 
                 <span key={ci} className="hero__char" aria-hidden>
                   <motion.span
                     className="hero__char-inner"
-                    initial={reduced ? false : { y: "110%" }}
+                    initial={reduced ? false : { y: "145%" }}
                     animate={reduced ? undefined : { y: "0%" }}
                     transition={{
                       duration: 0.74,
@@ -88,15 +88,6 @@ export default function Hero() {
       </motion.header>
 
       <div className="hero__content">
-        <motion.p
-          className="hero__kicker"
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.76, delay: 0.24, ease: easeOut }}
-        >
-          Creator growth studio
-        </motion.p>
-
         <h1 aria-label="Creator partnerships. that drive growth.">
           <span className="hero__line">
             <SplitLine text="Creator" delay={0.32} reduced={prefersReduced} />

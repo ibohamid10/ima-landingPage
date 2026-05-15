@@ -357,8 +357,8 @@ a:focus-visible {
   overflow: hidden;
   vertical-align: top;
   line-height: inherit;
-  padding: 0.18em 0 0.22em;
-  margin: -0.18em 0 -0.22em;
+  padding: 0.18em 0.045em 0.22em;
+  margin: -0.18em -0.045em -0.22em;
 }
 
 .hero__char-inner {
