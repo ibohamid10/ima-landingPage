@@ -2353,27 +2353,30 @@ a:focus-visible {
   color: rgba(244, 245, 243, 0.68);
 }
 
+/* LinkedIn lives inline with the legal row — same mono cadence, with a
+   small external-link glyph that nudges on hover. No ring-button. */
 .footer__social {
   display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  color: rgba(244, 245, 243, 0.65);
-  border: 1px solid rgba(244, 245, 243, 0.18);
-  transition: color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  align-items: baseline;
+  gap: 5px;
+  transition: color 180ms ease;
 }
 
-.footer__social:hover {
-  color: #ffffff;
-  border-color: rgba(244, 245, 243, 0.6);
-  transform: translateY(-1px);
+.footer__social-arrow {
+  display: inline-block;
+  font-size: 0.92em;
+  transform: translateY(-0.04em);
+  transition: transform 220ms cubic-bezier(0.2, 0.75, 0.18, 1);
+}
+
+.footer__social:hover .footer__social-arrow {
+  transform: translate(2px, calc(-0.04em - 2px));
 }
 
 .footer__social:focus-visible {
   outline: 1px solid rgba(244, 245, 243, 0.6);
-  outline-offset: 3px;
+  outline-offset: 4px;
+  border-radius: 2px;
 }
 
 .footer__clock-sep {
