@@ -14,14 +14,14 @@ type FieldErrors = {
   message?: string;
 };
 
-// Once Resend is wired, swap this stub for: POST /api/contact with the
-// JSON payload below. The component already expects a 200 for success
-// and a non-200 for the error state.
-async function submitStub(payload: { email: string; brand: string; message: string }) {
-  await new Promise((resolve) => setTimeout(resolve, 700));
-  if (typeof window !== "undefined") {
-    // eslint-disable-next-line no-console
-    console.log("[ContactForm stub] would POST /api/contact:", payload);
+async function submitContact(payload: { email: string; brand: string; message: string }) {
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(payload),
+  });
+  if (!res.ok) {
+    throw new Error(`Contact API returned ${res.status}`);
   }
 }
 
@@ -57,7 +57,7 @@ export default function ContactForm() {
 
     setStatus("sending");
     try {
-      await submitStub({ email: email.trim(), brand: brand.trim(), message: message.trim() });
+      await submitContact({ email: email.trim(), brand: brand.trim(), message: message.trim() });
       setStatus("success");
     } catch {
       setStatus("error");
