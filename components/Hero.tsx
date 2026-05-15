@@ -81,10 +81,9 @@ export default function Hero() {
         </a>
 
         <nav className="nav__links" aria-label="Primary">
-          <a href="#about">About</a>
-          <a href="#services">Services</a>
-          <a href="#work">Our Work</a>
-          <a href="#insights">Insights</a>
+          <a href="#approach">Approach</a>
+          <a href="#process">Process</a>
+          <a href="#partner">Partnership</a>
         </nav>
       </motion.header>
 
@@ -150,7 +149,7 @@ export default function Hero() {
 
       <motion.a
         className="hero__scroll-cue"
-        href="#about"
+        href="#approach"
         aria-label="Scroll to our approach"
         style={{
           x: "-50%",

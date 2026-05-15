@@ -228,7 +228,7 @@ export default function Approach() {
   };
 
   return (
-    <section className="approach" id="about" aria-label="Our approach">
+    <section className="approach" id="approach" aria-label="Our approach">
       <div className="approach__blend" aria-hidden />
       <div className="approach__wash" aria-hidden />
 

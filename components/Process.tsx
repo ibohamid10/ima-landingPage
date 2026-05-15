@@ -278,7 +278,7 @@ export default function Process() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="process-section" aria-label="Creator partnership process">
+    <section ref={sectionRef} className="process-section" id="process" aria-label="Creator partnership process">
       <div className="process-section__halo" aria-hidden />
 
       <div className="process-section__inner">
