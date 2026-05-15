@@ -2375,6 +2375,15 @@ a:focus-visible {
   color: rgba(244, 245, 243, 0.92);
 }
 
+.footer__social-icon {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  fill: currentColor;
+  transform: translateY(0.06em);
+}
+
 .footer__social-arrow {
   display: inline-block;
   font-size: 1em;

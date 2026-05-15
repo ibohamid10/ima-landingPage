@@ -76,7 +76,7 @@ export default function ContactForm() {
         <p className="contact-form__success-body">
           We&rsquo;ll respond within 24 hours.
         </p>
-        <p className="contact-form__success-sign">— Ibrahim</p>
+        <p className="contact-form__success-sign">— AJIONE</p>
       </motion.div>
     );
   }
