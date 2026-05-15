@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { Fragment, useState } from "react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 
 const easeOut = [0.2, 0.75, 0.18, 1] as const;
 
@@ -23,7 +24,36 @@ const FAQS = [
   },
 ] as const;
 
+function AnswerText({ text, reduced }: { text: string; reduced: boolean }) {
+  if (reduced) return <p className="faq__a-text">{text}</p>;
+  return (
+    <p className="faq__a-text">
+      {Array.from(text).map((ch, i) => {
+        if (ch === " ") return <Fragment key={i}> </Fragment>;
+        return (
+          <motion.span
+            key={i}
+            className="faq__a-char"
+            initial={{ opacity: 0, y: 4 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{
+              duration: 0.38,
+              delay: 0.12 + i * 0.012,
+              ease: easeOut,
+            }}
+          >
+            {ch}
+          </motion.span>
+        );
+      })}
+    </p>
+  );
+}
+
 export default function FAQ() {
+  const reduced = useReducedMotion() ?? false;
+  const [openIdx, setOpenIdx] = useState<number | null>(null);
+
   return (
     <section className="faq" id="faq" aria-label="Frequently asked questions">
       <div className="faq__inner">
@@ -47,21 +77,69 @@ export default function FAQ() {
           Before <em>the first intro.</em>
         </motion.h2>
 
-        <div className="faq__grid">
-          {FAQS.map((item, i) => (
-            <motion.div
-              key={item.q}
-              className="faq__item"
-              initial={{ opacity: 0, y: 18 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, amount: 0.4 }}
-              transition={{ duration: 0.6, delay: 0.18 + i * 0.06, ease: easeOut }}
-            >
-              <h3 className="faq__q">{item.q}</h3>
-              <p className="faq__a">{item.a}</p>
-            </motion.div>
-          ))}
-        </div>
+        <ul className="faq__list">
+          {FAQS.map((item, i) => {
+            const isOpen = openIdx === i;
+            const num = String(i + 1).padStart(2, "0");
+            const panelId = `faq-panel-${i}`;
+            const buttonId = `faq-q-${i}`;
+
+            return (
+              <motion.li
+                key={item.q}
+                className={`faq__item ${isOpen ? "is-open" : ""}`}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.4 }}
+                transition={{ duration: 0.5, delay: 0.18 + i * 0.06, ease: easeOut }}
+              >
+                <button
+                  id={buttonId}
+                  type="button"
+                  className="faq__row"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  onClick={() => setOpenIdx(isOpen ? null : i)}
+                  data-analytics-event={`faq_toggle_${num}`}
+                  data-analytics-label={item.q}
+                >
+                  <span className="faq__num" aria-hidden>
+                    {num}
+                  </span>
+                  <span className="faq__q">{item.q}</span>
+                  <span className="faq__icon" data-open={isOpen} aria-hidden>
+                    <span className="faq__icon-h" />
+                    <span className="faq__icon-v" />
+                  </span>
+                </button>
+
+                <AnimatePresence initial={false}>
+                  {isOpen ? (
+                    <motion.div
+                      key="panel"
+                      id={panelId}
+                      role="region"
+                      aria-labelledby={buttonId}
+                      className="faq__a-wrap"
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{
+                        height: { duration: reduced ? 0.001 : 0.4, ease: easeOut },
+                        opacity: { duration: reduced ? 0.001 : 0.3, ease: easeOut },
+                      }}
+                      style={{ overflow: "hidden" }}
+                    >
+                      <div className="faq__a">
+                        <AnswerText text={item.a} reduced={reduced} />
+                      </div>
+                    </motion.div>
+                  ) : null}
+                </AnimatePresence>
+              </motion.li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );
