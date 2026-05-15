@@ -145,6 +145,15 @@ export default function Hero() {
             -&gt;
           </span>
         </motion.a>
+
+        <motion.p
+          className="hero__trust"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.76, delay: 1.02, ease: easeOut }}
+        >
+          No upfront fees · Commission on signed deals only
+        </motion.p>
       </div>
 
       <motion.a

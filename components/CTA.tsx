@@ -85,7 +85,7 @@ export default function CTA() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, ease: [0.2, 0.75, 0.18, 1] }}
         >
-          Ready when you are
+          First deal batch — onboarding
         </motion.p>
 
         <h2 className="cta__headline">
@@ -134,8 +134,9 @@ export default function CTA() {
           viewport={{ once: true, amount: 0.3 }}
           transition={{ duration: 0.7, delay: 0.7, ease: [0.2, 0.75, 0.18, 1] }}
         >
-          Tell us about the brand and the audience you want to reach. We’ll come back with a
-          shortlist of creators and a draft partnership concept within seven days.
+          AJIONE is onboarding selected brands for its first deal batch. Tell us about the brand
+          and the audience you want to reach — we’ll come back within seven days with a shortlist
+          of creators and a draft partnership concept.
         </motion.p>
 
         <motion.div
@@ -148,11 +149,11 @@ export default function CTA() {
           <a
             ref={buttonRef}
             className="cta__button"
-            href="mailto:partnership@ajione.com?subject=Partnership%20inquiry"
+            href="mailto:partnership@ajione.com?subject=First%20deal%20batch%20inquiry"
             data-analytics-event="cta_partnership_click"
-            data-analytics-label="CTA section start partnership"
+            data-analytics-label="CTA section apply for first batch"
           >
-            <span>Start a partnership</span>
+            <span>Apply for the first batch</span>
             <span className="cta__button-arrow" aria-hidden>
               →
             </span>
