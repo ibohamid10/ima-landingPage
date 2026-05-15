@@ -48,16 +48,6 @@ export default function Footer() {
           </a>
 
           <a
-            className="footer__creators"
-            href="mailto:creators@ajione.com?subject=Creator%20pitch"
-            data-analytics-event="footer_creators_click"
-            data-analytics-label="Footer creators"
-          >
-            <span>Creators — pitch yourself</span>
-            <span className="footer__creators-mail">creators@ajione.com</span>
-          </a>
-
-          <a
             className="footer__social"
             href="https://www.linkedin.com/company/ajione/"
             target="_blank"
