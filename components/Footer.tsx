@@ -56,6 +56,21 @@ export default function Footer() {
             <span>Creators — pitch yourself</span>
             <span className="footer__creators-mail">creators@ajione.com</span>
           </a>
+
+          <a
+            className="footer__social"
+            href="https://www.linkedin.com/company/ajione/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="AJIONE on LinkedIn (opens in new tab)"
+            data-analytics-event="footer_linkedin_click"
+            data-analytics-label="Footer LinkedIn"
+          >
+            LinkedIn
+            <span className="footer__social-arrow" aria-hidden>
+              ↗
+            </span>
+          </a>
         </div>
 
         <a className="footer__wordmark" href="/" aria-label="AJIONE — home">
@@ -77,20 +92,6 @@ export default function Footer() {
             <span>© {year} AJIONE</span>
             <a href="/impressum">Impressum</a>
             <a href="/datenschutz">Datenschutz</a>
-            <a
-              className="footer__social"
-              href="https://www.linkedin.com/company/ajione/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="AJIONE on LinkedIn (opens in new tab)"
-              data-analytics-event="footer_linkedin_click"
-              data-analytics-label="Footer LinkedIn"
-            >
-              LinkedIn
-              <span className="footer__social-arrow" aria-hidden>
-                ↗
-              </span>
-            </a>
           </div>
 
           <div className="footer__clock" aria-live="polite">
