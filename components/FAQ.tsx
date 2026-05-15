@@ -37,8 +37,8 @@ function AnswerText({ text, reduced }: { text: string; reduced: boolean }) {
             initial={{ opacity: 0, y: 4 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{
-              duration: 0.38,
-              delay: 0.12 + i * 0.012,
+              duration: 0.26,
+              delay: 0.06 + i * 0.007,
               ease: easeOut,
             }}
           >
@@ -125,8 +125,8 @@ export default function FAQ() {
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{
-                        height: { duration: reduced ? 0.001 : 0.4, ease: easeOut },
-                        opacity: { duration: reduced ? 0.001 : 0.3, ease: easeOut },
+                        height: { duration: reduced ? 0.001 : 0.3, ease: easeOut },
+                        opacity: { duration: reduced ? 0.001 : 0.22, ease: easeOut },
                       }}
                       style={{ overflow: "hidden" }}
                     >
