@@ -97,7 +97,7 @@ export default function Process() {
       if (reduceMotion || mobile) {
         gsap.set(
           [".process-trace-a", ".process-trace-b", ".process-trace-growth"],
-          { strokeDasharray: "none", strokeDashoffset: 0 }
+          { strokeDasharray: "none", strokeDashoffset: 0, opacity: 1 }
         );
         gsap.set(".process-arrowhead", { opacity: 1 });
         gsap.set([".process-num", ".process-title", ".process-orb"], { opacity: 1 });
@@ -136,6 +136,7 @@ export default function Process() {
       gsap.set(".process-desc", { opacity: 0, y: 12 });
       gsap.set(".process-afterglow", { opacity: 0 });
       gsap.set(".process-ripple", { opacity: 0, attr: { r: 8 } });
+      gsap.set(".process-trace-growth", { opacity: 0 });
       // Arrowhead: opacity-based reveal instead of strokeDashoffset to avoid
       // a sub-pixel rendering artifact at the chevron tip when the path is
       // fully offset (strokeLinejoin: round leaves a tiny dot visible).
@@ -255,6 +256,7 @@ export default function Process() {
         },
         2.7
       );
+      tl.set(".process-trace-growth", { opacity: 1 }, 2.7);
       tl.to(".process-trace-growth", { strokeDashoffset: 0, duration: 1, ease: "none" }, 2.7);
 
       // Final title word "growth." lights up during the breakout

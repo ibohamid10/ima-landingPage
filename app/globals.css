@@ -1066,6 +1066,11 @@ a:focus-visible {
   stroke-linejoin: round;
 }
 
+.process-trace-growth,
+.process-arrowhead {
+  opacity: 0;
+}
+
 .process-light {
   filter: drop-shadow(0 0 14px rgba(255, 232, 196, 0.9));
   will-change: transform, opacity;
