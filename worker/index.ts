@@ -1,6 +1,17 @@
 /**
- * Cloudflare Worker — Routes /api/contact to the Resend integration
- * and passes everything else through to the static assets binding.
+ * Cloudflare Worker — Routes /api/contact to Resend and passes
+ * everything else through to the static assets binding.
+ *
+ * On a successful POST /api/contact we fire two emails in parallel:
+ *   1. Internal notification to partnership@ajione.com — scan-first
+ *      layout so the inbox owner can triage at a glance.
+ *   2. Branded auto-reply to the lead — confirms receipt, sets the
+ *      24h response expectation, lands the AJIONE tone before any
+ *      manual reply.
+ *
+ * If the auto-reply send fails we still return 200; the lead saw the
+ * site success-state and the notification reached the inbox, so the
+ * primary path is intact. Notification failure returns 502.
  *
  * Requires:
  *   - `[assets]` binding configured in wrangler.toml with `binding = "ASSETS"`
@@ -14,11 +25,22 @@ interface Env {
 
 const EMAIL_RX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const MAX_FIELD_LEN = 4000;
+const INBOX = "partnership@ajione.com";
+const SENDER = "AJIONE Partnership <partnership@ajione.com>";
 
 type ContactBody = {
   email?: unknown;
   brand?: unknown;
   message?: unknown;
+};
+
+type ResendPayload = {
+  from: string;
+  to: string[];
+  reply_to?: string;
+  subject: string;
+  text: string;
+  html: string;
 };
 
 function asString(v: unknown, max = MAX_FIELD_LEN): string {
@@ -40,6 +62,119 @@ function jsonResponse(status: number, payload: Record<string, unknown>): Respons
     status,
     headers: { "Content-Type": "application/json; charset=utf-8" },
   });
+}
+
+async function sendResend(payload: ResendPayload, env: Env): Promise<Response> {
+  return fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+}
+
+/** Internal notification — boring on purpose, fast to scan. */
+function buildNotification(brand: string, email: string, message: string): ResendPayload {
+  const subject = `New inquiry — ${brand}`;
+  const text = `NEW INQUIRY · AJIONE PARTNERSHIP
+
+Brand:    ${brand}
+Email:    ${email}
+
+${message}
+`;
+
+  const html = `
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #0a0d10; max-width: 560px; padding: 8px 0;">
+  <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #6b7178; margin-bottom: 24px;">
+    New inquiry · AJIONE partnership
+  </div>
+
+  <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
+    <tr>
+      <td style="padding: 0 16px 12px 0; font-size: 12px; color: #8a9099; width: 78px; vertical-align: top;">Brand</td>
+      <td style="padding: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #0a0d10;">${escapeHtml(brand)}</td>
+    </tr>
+    <tr>
+      <td style="padding: 0 16px 0 0; font-size: 12px; color: #8a9099; vertical-align: top;">Email</td>
+      <td style="padding: 0; font-size: 16px;">
+        <a href="mailto:${escapeHtml(email)}" style="color: #0a0d10; text-decoration: underline;">${escapeHtml(email)}</a>
+      </td>
+    </tr>
+  </table>
+
+  <div style="border-top: 1px solid #e1e3e0; padding-top: 20px; font-size: 15px; line-height: 1.6; white-space: pre-wrap; color: #0a0d10;">${escapeHtml(message)}</div>
+</div>
+`.trim();
+
+  return {
+    from: SENDER,
+    to: [INBOX],
+    reply_to: email,
+    subject,
+    text,
+    html,
+  };
+}
+
+/** Brand-facing auto-reply — first AJIONE touchpoint after submit. */
+function buildAutoReply(brand: string, email: string): ResendPayload {
+  const subject = "We got your message — AJIONE";
+  const text = `Hi ${brand},
+
+Thanks for reaching out. We'll come back within 24 hours with a first read on the fit and an initial direction we'd suggest.
+
+— AJIONE
+Vienna
+`;
+
+  const html = `
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fbfcfa; padding: 56px 24px; margin: 0;">
+  <tr>
+    <td align="center">
+      <table cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background: #fbfcfa;">
+        <tr>
+          <td style="padding-bottom: 44px;">
+            <span style="font-family: 'Iowan Old Style', 'Apple Garamond', Baskerville, Georgia, serif; font-style: italic; font-size: 28px; line-height: 1; color: #0a0d10; letter-spacing: -0.02em;">AJIONE</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.32em; line-height: 1; text-transform: uppercase; color: #6b7178; padding-bottom: 28px;">
+            Message received
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 30px; font-weight: 700; line-height: 1.12; letter-spacing: -0.03em; color: #0a0d10; padding-bottom: 32px;">
+            Hi ${escapeHtml(brand)}.<br/>
+            <span style="font-family: 'Iowan Old Style', 'Apple Garamond', Baskerville, Georgia, serif; font-style: italic; font-weight: 400;">We&rsquo;ve got you.</span>
+          </td>
+        </tr>
+        <tr>
+          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #2b3036; padding-bottom: 32px;">
+            Thanks for reaching out. We&rsquo;ll come back within 24 hours with a first read on the fit and an initial direction we&rsquo;d suggest.
+          </td>
+        </tr>
+        <tr>
+          <td style="border-top: 1px solid #d8dad6; padding-top: 22px; font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; line-height: 1.4; text-transform: uppercase; color: #6b7178;">
+            AJIONE · Vienna
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+`.trim();
+
+  return {
+    from: SENDER,
+    to: [email],
+    reply_to: INBOX,
+    subject,
+    text,
+    html,
+  };
 }
 
 async function handleContact(request: Request, env: Env): Promise<Response> {
@@ -70,55 +205,32 @@ async function handleContact(request: Request, env: Env): Promise<Response> {
     return jsonResponse(400, { ok: false, error: "Invalid email" });
   }
 
-  const subject = `New partnership inquiry — ${brand}`;
-  const textBody = `From: ${brand} <${email}>\n\n${message}`;
-  const htmlBody = `
-    <table cellpadding="0" cellspacing="0" border="0" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #0a0d10; max-width: 560px;">
-      <tr>
-        <td style="font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(10,13,16,0.55); padding-bottom: 12px;">
-          New partnership inquiry
-        </td>
-      </tr>
-      <tr>
-        <td style="font-size: 15px; line-height: 1.5; padding-bottom: 20px;">
-          <strong>${escapeHtml(brand)}</strong><br/>
-          <a href="mailto:${escapeHtml(email)}" style="color: #0a0d10;">${escapeHtml(email)}</a>
-        </td>
-      </tr>
-      <tr>
-        <td style="font-size: 15px; line-height: 1.6; white-space: pre-wrap; border-top: 1px solid rgba(10,13,16,0.12); padding-top: 20px;">
-          ${escapeHtml(message)}
-        </td>
-      </tr>
-    </table>
-  `.trim();
+  const notification = buildNotification(brand, email, message);
+  const autoReply = buildAutoReply(brand, email);
 
-  let resendRes: Response;
-  try {
-    resendRes = await fetch("https://api.resend.com/emails", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${env.RESEND_API_KEY}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        from: "AJIONE Partnership <partnership@ajione.com>",
-        to: ["partnership@ajione.com"],
-        reply_to: email,
-        subject,
-        text: textBody,
-        html: htmlBody,
-      }),
-    });
-  } catch (err) {
-    console.error("[contact] fetch to Resend failed:", err);
+  // Fire both in parallel. Notification failure is fatal, auto-reply
+  // failure is logged but does not bubble to the user — they already
+  // got the on-page success state.
+  const [notifyResult, replyResult] = await Promise.allSettled([
+    sendResend(notification, env),
+    sendResend(autoReply, env),
+  ]);
+
+  if (notifyResult.status === "rejected") {
+    console.error("[contact] Notification fetch threw:", notifyResult.reason);
     return jsonResponse(502, { ok: false, error: "Upstream unreachable" });
   }
-
-  if (!resendRes.ok) {
-    const detail = await resendRes.text().catch(() => "");
-    console.error("[contact] Resend non-OK", resendRes.status, detail);
+  if (!notifyResult.value.ok) {
+    const detail = await notifyResult.value.text().catch(() => "");
+    console.error("[contact] Notification Resend non-OK", notifyResult.value.status, detail);
     return jsonResponse(502, { ok: false, error: "Send failed" });
+  }
+
+  if (replyResult.status === "rejected") {
+    console.error("[contact] Auto-reply fetch threw (non-blocking):", replyResult.reason);
+  } else if (!replyResult.value.ok) {
+    const detail = await replyResult.value.text().catch(() => "");
+    console.error("[contact] Auto-reply Resend non-OK (non-blocking)", replyResult.value.status, detail);
   }
 
   return jsonResponse(200, { ok: true });
