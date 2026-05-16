@@ -83,6 +83,7 @@ export default function Hero() {
         <nav className="nav__links" aria-label="Primary">
           <a href="#approach">Approach</a>
           <a href="#process">Process</a>
+          <a href="#deal">The Deal</a>
           <a href="#partner">Partnership</a>
         </nav>
       </motion.header>
