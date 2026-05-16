@@ -753,25 +753,44 @@ a:focus-visible {
   50% { transform: scale(1.6); }
 }
 
-/* --- signal: sine wave with traveling dot --- */
-.pdiag--signal .pdiag__wave {
-  stroke-width: 1.1;
-  stroke-linecap: round;
-}
-.pdiag--signal .pdiag__dot {
+/* --- signal: noise dots with a clean signal line cutting through --- */
+.pdiag--signal .pdiag__noise {
   fill: currentColor;
   stroke: none;
-  offset-path: path("M6 50 Q26 26, 46 50 T86 50 T126 50");
-  offset-distance: 0%;
+  opacity: 0.36;
 }
-.pdiag--signal.is-active .pdiag__dot {
-  animation: pdiagSignalTravel 3.8s cubic-bezier(0.55, 0.1, 0.45, 0.9) infinite;
+.pdiag--signal.is-active .pdiag__noise {
+  animation: pdiagNoiseFlicker 2.6s ease-in-out infinite;
 }
-@keyframes pdiagSignalTravel {
-  0% { offset-distance: 0%; opacity: 0; }
-  10% { opacity: 1; }
-  90% { opacity: 1; }
-  100% { offset-distance: 100%; opacity: 0; }
+@keyframes pdiagNoiseFlicker {
+  0%, 100% { opacity: 0.22; }
+  50% { opacity: 0.62; }
+}
+.pdiag--signal .pdiag__signal {
+  stroke-width: 1.3;
+  stroke-linecap: round;
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  transition: stroke-dashoffset 1100ms cubic-bezier(0.22, 0.61, 0.24, 1);
+}
+.pdiag--signal.is-active .pdiag__signal {
+  stroke-dashoffset: 0;
+}
+.pdiag--signal .pdiag__signal-tip {
+  fill: currentColor;
+  stroke: none;
+  opacity: 0;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: opacity 320ms ease 900ms;
+}
+.pdiag--signal.is-active .pdiag__signal-tip {
+  opacity: 1;
+  animation: pdiagSignalTipPulse 2.2s ease-in-out 1.2s infinite;
+}
+@keyframes pdiagSignalTipPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.5); }
 }
 
 /* --- thread connecting all pillars with traveling pulse --- */
