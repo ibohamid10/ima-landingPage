@@ -137,7 +137,7 @@ Vienna
       <table cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background: #fbfcfa;">
         <tr>
           <td style="padding-bottom: 44px;">
-            <span style="font-family: 'Iowan Old Style', 'Apple Garamond', Baskerville, Georgia, serif; font-style: italic; font-size: 28px; line-height: 1; color: #0a0d10; letter-spacing: -0.02em;">AJIONE</span>
+            <img src="https://ajione.com/ajione-logo.png" alt="AJIONE" width="148" style="display: block; width: 148px; height: auto; border: 0; outline: none; text-decoration: none;" />
           </td>
         </tr>
         <tr>
@@ -158,7 +158,7 @@ Vienna
         </tr>
         <tr>
           <td style="border-top: 1px solid #d8dad6; padding-top: 22px; font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; line-height: 1.4; text-transform: uppercase; color: #6b7178;">
-            AJIONE · Vienna
+            Vienna · AT
           </td>
         </tr>
       </table>
