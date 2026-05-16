@@ -180,42 +180,15 @@ function Diagram({ kind, active }: { kind: Diagram; active: boolean }) {
           <circle className="pdiag__node pdiag__node--3" cx="112" cy="64" r="3.2" />
         </svg>
       );
-    case "signal": {
-      const noise: Array<[number, number, number, number]> = [
-        [12, 20, 1.3, 0],
-        [26, 12, 1, 180],
-        [44, 26, 1.2, 360],
-        [60, 10, 1, 540],
-        [80, 22, 1.3, 720],
-        [100, 14, 1, 900],
-        [120, 24, 1.2, 1080],
-        [16, 56, 1, 240],
-        [38, 60, 1.3, 420],
-        [56, 76, 1.2, 600],
-        [78, 82, 1, 780],
-        [96, 72, 1.3, 960],
-        [114, 64, 1, 1140],
-        [128, 84, 1.2, 1320],
-      ];
+    case "signal":
       return (
         <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
-          {noise.map(([cx, cy, r, delay], i) => (
-            <circle
-              key={i}
-              className="pdiag__noise"
-              cx={cx}
-              cy={cy}
-              r={r}
-              style={{ animationDelay: `${delay}ms` }}
-            />
-          ))}
+          <line className="pdiag__baseline" x1="6" y1="50" x2="134" y2="50" />
           <path
-            className="pdiag__signal"
-            d="M6 68 C36 60, 56 48, 78 44 S118 30, 134 26"
+            className="pdiag__pulse"
+            d="M6 50 L48 50 L54 50 L58 42 L62 60 L66 22 L70 74 L74 42 L78 50 L134 50"
           />
-          <circle className="pdiag__signal-tip" cx="134" cy="26" r="2.6" />
         </svg>
       );
-    }
   }
 }
