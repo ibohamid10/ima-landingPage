@@ -452,9 +452,12 @@ a:focus-visible {
 
 .approach {
   position: relative;
-  min-height: 100svh;
+  display: grid;
+  grid-template-columns: minmax(320px, 0.85fr) 1.55fr;
+  align-items: center;
+  gap: clamp(48px, 6vw, 96px);
   overflow: hidden;
-  padding: clamp(80px, 8.8vw, 136px) clamp(24px, 5.7vw, 88px) clamp(56px, 6vw, 96px);
+  padding: clamp(96px, 9vw, 148px) clamp(24px, 5.7vw, 88px) clamp(96px, 8vw, 132px);
   color: var(--ink);
   background:
     radial-gradient(circle at 16% 18%, rgba(224, 232, 238, 0.6), transparent 42%),
@@ -509,7 +512,8 @@ a:focus-visible {
 .approach__intro {
   position: relative;
   z-index: 2;
-  width: min(440px, 100%);
+  width: 100%;
+  max-width: 440px;
 }
 
 .section-kicker {
@@ -568,22 +572,21 @@ a:focus-visible {
   line-height: 1.52;
 }
 
-/* Pillars container — grid of 4 with rotating active focus */
+/* Pillars container — single row of 4 with rotating active focus */
 
 .approach__pillars {
   --active: 0;
   --pillar-count: 4;
-  position: absolute;
-  top: clamp(110px, 12vw, 178px);
-  right: clamp(24px, 5.7vw, 88px);
-  left: min(34vw, 540px);
+  position: relative;
   z-index: 2;
+  width: 100%;
 }
 
 .approach__grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(14px, 1.2vw, 22px);
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(10px, 0.9vw, 16px);
+  align-items: stretch;
 }
 
 .pillar-card {
@@ -591,8 +594,8 @@ a:focus-visible {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-height: clamp(244px, 22.5vw, 320px);
-  padding: 26px 26px 22px;
+  min-height: clamp(280px, 24vw, 360px);
+  padding: clamp(20px, 1.6vw, 28px) clamp(18px, 1.4vw, 24px) clamp(18px, 1.4vw, 22px);
   border: 1px solid rgba(8, 13, 13, 0.06);
   border-radius: 18px;
   color: rgba(8, 13, 13, 0.62);
@@ -644,7 +647,7 @@ a:focus-visible {
 .pillar-card h3 {
   margin: 0;
   font-family: var(--sans);
-  font-size: clamp(20px, 1.55vw, 26px);
+  font-size: clamp(18px, 1.35vw, 23px);
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1.02;
@@ -666,17 +669,16 @@ a:focus-visible {
 
 .pillar-card p {
   margin: 0;
-  max-width: 240px;
-  font-size: 13px;
-  line-height: 1.62;
+  font-size: 12.5px;
+  line-height: 1.6;
 }
 
 .pillar-card__diagram {
   margin-top: auto;
-  padding-top: 18px;
+  padding-top: 16px;
   display: flex;
   align-items: flex-end;
-  height: 84px;
+  height: clamp(64px, 6vw, 84px);
 }
 
 .pdiag {
@@ -2502,6 +2504,29 @@ a:focus-visible {
   }
 }
 
+/* ---------- Tablet ---------- */
+
+@media (max-width: 1180px) {
+  .approach {
+    grid-template-columns: 1fr;
+    gap: clamp(40px, 5vw, 64px);
+    align-items: start;
+  }
+
+  .approach__intro {
+    max-width: 640px;
+  }
+
+  .approach__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(12px, 1.4vw, 18px);
+  }
+
+  .pillar-card {
+    min-height: clamp(240px, 30vw, 300px);
+  }
+}
+
 /* ---------- Mobile ---------- */
 
 @media (max-width: 900px) {
@@ -2552,17 +2577,7 @@ a:focus-visible {
   }
 
   .approach__pillars {
-    position: relative;
-    top: auto;
-    right: auto;
-    left: auto;
     width: 100%;
-    margin-top: 56px;
-  }
-
-  .approach__grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
   }
 
   .pillar-card {
@@ -2865,10 +2880,6 @@ a:focus-visible {
 
   .approach__rule {
     margin: 34px 0 28px;
-  }
-
-  .approach__pillars {
-    margin-top: 44px;
   }
 
   .approach__grid {
