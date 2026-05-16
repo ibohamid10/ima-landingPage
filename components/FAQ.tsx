@@ -7,10 +7,6 @@ const easeOut = [0.2, 0.75, 0.18, 1] as const;
 
 const FAQS = [
   {
-    q: "When does AJIONE earn?",
-    a: "Only after both sides agree to a paid collaboration. There is no upfront fee, no retainer, and no discovery bill.",
-  },
-  {
     q: "How long until the first introduction?",
     a: "Seven days from kickoff. We come back with a shortlist of fit-relevant creators and a draft partnership concept.",
   },
