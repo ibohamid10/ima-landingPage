@@ -1,21 +1,15 @@
 "use client";
 
-import {
-  KeyboardEvent,
-  PointerEvent as ReactPointerEvent,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { motion, useReducedMotion } from "framer-motion";
+
+type Diagram = "fit" | "context" | "relevance" | "signal";
 
 type CardData = {
   num: string;
   title: string;
   copy: string;
-  mark: "line" | "loop" | "arc";
+  diagram: Diagram;
 };
 
 const CARDS: CardData[] = [
@@ -23,209 +17,55 @@ const CARDS: CardData[] = [
     num: "01",
     title: "Brand Fit",
     copy: "We ensure alignment with your identity, values and long-term vision.",
-    mark: "line",
+    diagram: "fit",
   },
   {
     num: "02",
     title: "Audience Context",
     copy: "We deep-dive into audience insight to drive relevance and real impact.",
-    mark: "loop",
+    diagram: "context",
   },
   {
     num: "03",
     title: "Creator Relevance",
     copy: "We identify creators whose content, style and voice resonate authentically.",
-    mark: "arc",
+    diagram: "relevance",
   },
   {
     num: "04",
     title: "Cultural Signal",
     copy: "We build into relationships audiences already care about.",
-    mark: "loop",
+    diagram: "signal",
   },
 ];
 
-const cardTransition = { duration: 0.68, ease: [0.22, 0.61, 0.24, 1] as const };
-const trackTransition = { duration: 0.68, ease: [0.22, 0.61, 0.24, 1] as const };
+const ROTATE_INTERVAL = 3800;
 const introEase = [0.2, 0.75, 0.18, 1] as const;
-
-function cardVariants(prefersReduced: boolean) {
-  return {
-    active: {
-      opacity: 1,
-      y: -26,
-      z: 0,
-      rotateY: 0,
-      scale: 1,
-      filter: "blur(0px) saturate(1)",
-    },
-    near: (direction: number) => ({
-      opacity: 0.5,
-      y: 8,
-      z: -34,
-      rotateY: prefersReduced ? 0 : direction * -9,
-      scale: 0.92,
-      filter: "blur(0.9px) saturate(0.94)",
-    }),
-    far: (direction: number) => ({
-      opacity: 0.2,
-      y: 12,
-      z: -72,
-      rotateY: prefersReduced ? 0 : direction * -14,
-      scale: 0.86,
-      filter: "blur(1.8px) saturate(0.88)",
-    }),
-  };
-}
-
-function getVariant(index: number, active: number): { name: "active" | "near" | "far"; dir: number } {
-  if (index === active) return { name: "active", dir: 0 };
-  const rel = index - active;
-  if (Math.abs(rel) === 1) return { name: "near", dir: rel };
-  return { name: "far", dir: rel };
-}
 
 export default function Approach() {
   const prefersReduced = useReducedMotion() ?? false;
-
   const [activeIndex, setActiveIndex] = useState(0);
-  const [offset, setOffset] = useState(0);
-  const [dragOffset, setDragOffset] = useState(0);
-  const [isDragging, setIsDragging] = useState(false);
-
-  const viewportRef = useRef<HTMLDivElement>(null);
-  const trackRef = useRef<HTMLDivElement>(null);
-  const cardRefs = useRef<Array<HTMLElement | null>>([]);
-  const dragState = useRef<{
-    id: number;
-    startX: number;
-    startY: number;
-    moved: boolean;
-    decided: boolean;
-    horizontal: boolean;
-  } | null>(null);
-
-  const isMobile = useMobile();
-  const variants = cardVariants(prefersReduced);
-
-  const recomputeOffset = useCallback(() => {
-    const viewport = viewportRef.current;
-    const card = cardRefs.current[activeIndex];
-    if (!viewport || !card) return;
-    if (isMobile) {
-      setOffset(0);
-      return;
-    }
-    const target = viewport.clientWidth / 2 - (card.offsetLeft + card.offsetWidth / 2);
-    setOffset(target);
-  }, [activeIndex, isMobile]);
-
-  useLayoutEffect(() => {
-    recomputeOffset();
-  }, [recomputeOffset]);
+  const [paused, setPaused] = useState(false);
+  const userOverride = useRef(false);
 
   useEffect(() => {
-    const onResize = () => recomputeOffset();
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, [recomputeOffset]);
+    if (prefersReduced || paused) return;
+    const id = window.setInterval(() => {
+      setActiveIndex((i) => (i + 1) % CARDS.length);
+    }, ROTATE_INTERVAL);
+    return () => window.clearInterval(id);
+  }, [prefersReduced, paused]);
 
-  useEffect(() => {
-    if (!isMobile) return;
-    const card = cardRefs.current[activeIndex];
-    card?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
-  }, [activeIndex, isMobile]);
+  const handleEnter = useCallback((index: number) => {
+    userOverride.current = true;
+    setPaused(true);
+    setActiveIndex(index);
+  }, []);
 
-  const goTo = useCallback(
-    (next: number) => {
-      const wrapped = ((next % CARDS.length) + CARDS.length) % CARDS.length;
-      setActiveIndex(wrapped);
-    },
-    []
-  );
-
-  const onPointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
-    if (isMobile) return;
-    if (event.button !== 0) return;
-    dragState.current = {
-      id: event.pointerId,
-      startX: event.clientX,
-      startY: event.clientY,
-      moved: false,
-      decided: false,
-      horizontal: false,
-    };
-    event.currentTarget.setPointerCapture?.(event.pointerId);
-    setIsDragging(true);
-  };
-
-  const onPointerMove = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const state = dragState.current;
-    if (!state || event.pointerId !== state.id) return;
-    const dx = event.clientX - state.startX;
-    const dy = event.clientY - state.startY;
-    if (!state.decided) {
-      if (Math.abs(dx) < 6 && Math.abs(dy) < 6) return;
-      state.decided = true;
-      state.horizontal = Math.abs(dx) > Math.abs(dy);
-      if (!state.horizontal) {
-        cancelDrag();
-        return;
-      }
-    }
-    if (state.horizontal) {
-      state.moved = true;
-      setDragOffset(dx);
-      event.preventDefault();
-    }
-  };
-
-  const cancelDrag = () => {
-    const state = dragState.current;
-    if (!state) return;
-    try {
-      viewportRef.current?.releasePointerCapture?.(state.id);
-    } catch {
-      // ignore
-    }
-    dragState.current = null;
-    setDragOffset(0);
-    setIsDragging(false);
-  };
-
-  const onPointerUp = (event: ReactPointerEvent<HTMLDivElement>) => {
-    const state = dragState.current;
-    if (!state || event.pointerId !== state.id) return;
-    const dx = event.clientX - state.startX;
-    const viewport = viewportRef.current;
-    const threshold = Math.max(60, (viewport?.clientWidth ?? 0) * 0.06);
-    const wasHorizontal = state.horizontal && state.moved;
-    setDragOffset(0);
-    setIsDragging(false);
-    try {
-      viewport?.releasePointerCapture?.(state.id);
-    } catch {
-      // ignore
-    }
-    dragState.current = null;
-    if (!wasHorizontal) return;
-    if (dx <= -threshold) goTo(activeIndex + 1);
-    else if (dx >= threshold) goTo(activeIndex - 1);
-  };
-
-  const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === "ArrowLeft") {
-      event.preventDefault();
-      goTo(activeIndex - 1);
-    } else if (event.key === "ArrowRight") {
-      event.preventDefault();
-      goTo(activeIndex + 1);
-    }
-  };
-
-  const onViewportClickCapture = (event: React.MouseEvent<HTMLDivElement>) => {
-    if (dragState.current?.moved) event.preventDefault();
-  };
+  const handleLeave = useCallback(() => {
+    userOverride.current = false;
+    setPaused(false);
+  }, []);
 
   return (
     <section className="approach" id="approach" aria-label="Our approach">
@@ -258,120 +98,97 @@ export default function Approach() {
       </div>
 
       <div
-        className="approach__cards"
-        aria-label="Partnership method cards"
-        onKeyDown={onKeyDown}
+        className="approach__pillars"
+        aria-label="Partnership pillars"
+        onMouseLeave={handleLeave}
+        style={{ ["--active" as never]: activeIndex }}
       >
-        <div
-          ref={viewportRef}
-          className={`approach__card-viewport${isDragging ? " is-dragging" : ""}`}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onPointerCancel={cancelDrag}
-          onLostPointerCapture={cancelDrag}
-          onClickCapture={onViewportClickCapture}
-        >
-          <motion.div
-            ref={trackRef}
-            className="approach__card-track"
-            animate={{ x: offset + dragOffset }}
-            transition={isDragging ? { duration: 0 } : trackTransition}
-            style={{ transformStyle: "preserve-3d" }}
-          >
-            {CARDS.map((card, index) => {
-              const { name, dir } = getVariant(index, activeIndex);
-              const isActive = index === activeIndex;
-              return (
-                <motion.article
-                  key={card.num}
-                  ref={(node) => {
-                    cardRefs.current[index] = node;
-                  }}
-                  className={`method-card${isActive ? " method-card--active" : ""}`}
-                  data-card
-                  aria-hidden={!isActive}
-                  custom={dir}
-                  variants={variants}
-                  animate={name}
-                  transition={cardTransition}
-                  style={{ transformStyle: "preserve-3d" }}
-                >
-                  <span className="method-card__num">{card.num}</span>
-                  <h3>{card.title}</h3>
-                  <div className="method-card__rule" aria-hidden />
-                  <p>{card.copy}</p>
-                  <div
-                    className={`method-card__mark method-card__mark--${card.mark}`}
-                    aria-hidden
-                  />
-                </motion.article>
-              );
-            })}
-          </motion.div>
+        <div className="approach__grid">
+          {CARDS.map((card, index) => {
+            const isActive = index === activeIndex;
+            return (
+              <motion.article
+                key={card.num}
+                className={`pillar-card${isActive ? " pillar-card--active" : ""}`}
+                aria-current={isActive ? "true" : undefined}
+                onMouseEnter={() => handleEnter(index)}
+                onFocus={() => handleEnter(index)}
+                onClick={() => handleEnter(index)}
+                tabIndex={0}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.25 }}
+                transition={{
+                  duration: 0.72,
+                  delay: 0.18 + index * 0.08,
+                  ease: introEase,
+                }}
+              >
+                <span className="pillar-card__num">{card.num}</span>
+                <h3>{card.title}</h3>
+                <div className="pillar-card__rule" aria-hidden />
+                <p>{card.copy}</p>
+                <div className="pillar-card__diagram" aria-hidden>
+                  <Diagram kind={card.diagram} active={isActive && !prefersReduced} />
+                </div>
+              </motion.article>
+            );
+          })}
         </div>
 
-        <button
-          className="approach__arrow approach__arrow--left"
-          type="button"
-          aria-label="Previous approach card"
-          onClick={() => goTo(activeIndex - 1)}
-        >
-          <span aria-hidden>←</span>
-        </button>
-        <button
-          className="approach__arrow approach__arrow--right"
-          type="button"
-          aria-label="Next approach card"
-          onClick={() => goTo(activeIndex + 1)}
-        >
-          <span aria-hidden>→</span>
-        </button>
-
-        <div className="approach__controls">
-          <span className="approach__counter" aria-live="polite">
-            <AnimatePresence mode="popLayout" initial={false}>
-              <motion.span
-                key={activeIndex}
-                data-current
-                initial={{ opacity: 0, y: -4 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 4 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
-              >
-                {String(activeIndex + 1).padStart(2, "0")}
-              </motion.span>
-            </AnimatePresence>
-            <span className="approach__counter-sep">/</span>
-            <span data-total>{String(CARDS.length).padStart(2, "0")}</span>
-          </span>
-          <div className="approach__dots" aria-label="Choose approach card">
-            {CARDS.map((card, index) => (
-              <button
-                key={card.num}
-                type="button"
-                aria-label={`Show ${card.title}`}
-                aria-current={index === activeIndex ? "true" : "false"}
-                className={index === activeIndex ? "is-active" : undefined}
-                onClick={() => goTo(index)}
-              />
+        <div className="approach__thread" aria-hidden>
+          <div className="approach__thread-line" />
+          <div className="approach__thread-stations">
+            {CARDS.map((card) => (
+              <span key={card.num} />
             ))}
           </div>
+          <div className="approach__thread-pulse" />
         </div>
       </div>
-
     </section>
   );
 }
 
-function useMobile() {
-  const [isMobile, setIsMobile] = useState(false);
-  useEffect(() => {
-    const mq = window.matchMedia("(max-width: 900px)");
-    const update = () => setIsMobile(mq.matches);
-    update();
-    mq.addEventListener?.("change", update);
-    return () => mq.removeEventListener?.("change", update);
-  }, []);
-  return isMobile;
+function Diagram({ kind, active }: { kind: Diagram; active: boolean }) {
+  const cls = `pdiag pdiag--${kind}${active ? " is-active" : ""}`;
+  switch (kind) {
+    case "fit":
+      return (
+        <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
+          <circle className="pdiag__a" cx="56" cy="48" r="30" />
+          <circle className="pdiag__b" cx="84" cy="48" r="30" />
+        </svg>
+      );
+    case "context":
+      return (
+        <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
+          <circle className="pdiag__ring pdiag__ring--1" cx="70" cy="50" r="10" />
+          <circle className="pdiag__ring pdiag__ring--2" cx="70" cy="50" r="22" />
+          <circle className="pdiag__ring pdiag__ring--3" cx="70" cy="50" r="34" />
+          <circle className="pdiag__core" cx="70" cy="50" r="2.2" />
+        </svg>
+      );
+    case "relevance":
+      return (
+        <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
+          <line className="pdiag__edge pdiag__edge--1" x1="28" y1="68" x2="70" y2="32" />
+          <line className="pdiag__edge pdiag__edge--2" x1="70" y1="32" x2="112" y2="64" />
+          <line className="pdiag__edge pdiag__edge--3" x1="28" y1="68" x2="112" y2="64" />
+          <circle className="pdiag__node pdiag__node--1" cx="28" cy="68" r="3.2" />
+          <circle className="pdiag__node pdiag__node--2" cx="70" cy="32" r="3.6" />
+          <circle className="pdiag__node pdiag__node--3" cx="112" cy="64" r="3.2" />
+        </svg>
+      );
+    case "signal":
+      return (
+        <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
+          <path
+            className="pdiag__wave"
+            d="M6 50 Q26 26, 46 50 T86 50 T126 50"
+          />
+          <circle className="pdiag__dot" cx="6" cy="50" r="3" />
+        </svg>
+      );
+  }
 }
