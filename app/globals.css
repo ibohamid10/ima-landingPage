@@ -783,14 +783,14 @@ a:focus-visible {
   100% { transform: scale(1); opacity: 0; }
 }
 
-/* --- relevance: two waves converging into one --- */
+/* --- relevance: sine and cosine swinging into resonance --- */
 .pdiag--relevance .pdiag__wave {
   stroke-width: 1.3;
   stroke-linecap: round;
 }
 .pdiag--relevance .pdiag__wave--creator {
-  opacity: 0.5;
-  transform: translateY(0);
+  opacity: 0.55;
+  transform: translateX(-16px);
   transform-origin: center;
 }
 .pdiag--relevance.is-active .pdiag__wave--creator {
@@ -798,12 +798,12 @@ a:focus-visible {
 }
 @keyframes pdiagResonance {
   0%, 100% {
-    opacity: 0.5;
-    transform: translateY(0);
+    opacity: 0.55;
+    transform: translateX(-16px);
   }
   45%, 55% {
     opacity: 1;
-    transform: translateY(-24px);
+    transform: translateX(0);
   }
 }
 

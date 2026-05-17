@@ -195,11 +195,11 @@ function Diagram({ kind, active }: { kind: Diagram; active: boolean }) {
         <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
           <path
             className="pdiag__wave pdiag__wave--audience"
-            d="M 6 36 Q 22 28, 38 36 T 70 36 T 102 36 T 134 36"
+            d="M -10 48 Q 6 28, 22 48 T 54 48 T 86 48 T 118 48 T 150 48"
           />
           <path
             className="pdiag__wave pdiag__wave--creator"
-            d="M 6 60 Q 22 52, 38 60 T 70 60 T 102 60 T 134 60"
+            d="M -10 48 Q 6 28, 22 48 T 54 48 T 86 48 T 118 48 T 150 48"
           />
         </svg>
       );
