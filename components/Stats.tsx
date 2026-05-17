@@ -31,10 +31,10 @@ const LANDSCAPE: Stat[] = [
     chart: "arc",
   },
   {
-    value: 61,
+    value: 70,
     suffix: "%",
-    label: "Of Gen Z and Millennials trust social media influencers — up 10 points since 2019.",
-    source: "Morning Consult, 2024",
+    label: "Of global creator income comes from brand deals.",
+    source: "Goldman Sachs, 2023",
     chart: "ring",
   },
 ];
