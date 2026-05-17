@@ -197,10 +197,12 @@ function Diagram({ kind, active }: { kind: Diagram; active: boolean }) {
             className="pdiag__wave pdiag__wave--audience"
             d="M 6 48 Q 22 20, 38 48 T 70 48 T 102 48 T 134 48"
           />
-          <path
-            className="pdiag__wave pdiag__wave--creator"
-            d="M 6 48 Q 22 20, 38 48 T 70 48 T 102 48 T 134 48"
-          />
+          <g className="pdiag__wave-phase">
+            <path
+              className="pdiag__wave pdiag__wave--creator"
+              d="M 6 48 Q 22 20, 38 48 T 70 48 T 102 48 T 134 48"
+            />
+          </g>
         </svg>
       );
     case "signal":
