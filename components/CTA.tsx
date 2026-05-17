@@ -29,7 +29,7 @@ export default function CTA() {
             viewport={{ once: true, amount: 0.4 }}
             transition={{ duration: 0.6, ease: [0.2, 0.75, 0.18, 1] }}
           >
-            First deal batch &mdash; onboarding
+            Currently onboarding
           </motion.p>
 
           <h2 className="cta__headline">
@@ -78,9 +78,9 @@ export default function CTA() {
             viewport={{ once: true, amount: 0.3 }}
             transition={{ duration: 0.7, delay: 0.7, ease: [0.2, 0.75, 0.18, 1] }}
           >
-            AJIONE is onboarding selected brands for its first deal batch. Tell us about the
-            brand and the audience you want to reach &mdash; we&rsquo;ll come back within
-            seven days with a shortlist of creators and a draft partnership concept.
+            AJIONE is currently onboarding selected brands. Tell us about the brand and
+            the audience you want to reach &mdash; we read every message personally and
+            come back with our initial perspective on the fit.
           </motion.p>
         </div>
 
