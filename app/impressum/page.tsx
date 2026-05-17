@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function ImpressumPage() {
   return (
-    <main className="legal-page">
+    <main className="legal-page" lang="de">
       <a className="legal-page__brand" href="/" aria-label="AJIONE home">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src="/ajione-logo.png" alt="AJIONE" />

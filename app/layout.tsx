@@ -14,12 +14,32 @@ const instrumentSerif = Instrument_Serif({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ajione.com"),
   title: "AJIONE | Creator Partnerships",
   description:
     "AJIONE connects ambitious brands with high-fit creators through curated, data-informed partnerships.",
   icons: {
     icon: "/icon.png",
     apple: "/apple-icon.png",
+  },
+  openGraph: {
+    type: "website",
+    url: "https://ajione.com",
+    siteName: "AJIONE",
+    title: "AJIONE | Creator Partnerships",
+    description:
+      "AJIONE connects ambitious brands with high-fit creators through curated, data-informed partnerships.",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AJIONE | Creator Partnerships",
+    description:
+      "AJIONE connects ambitious brands with high-fit creators through curated, data-informed partnerships.",
+  },
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
@@ -66,7 +86,7 @@ const INTRO_DISMISS_SCRIPT = `
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="de" className={instrumentSerif.variable}>
+    <html lang="en" className={instrumentSerif.variable}>
       <head>
         <script
           // Runs before first paint so the .ajione-intro-* class is on
