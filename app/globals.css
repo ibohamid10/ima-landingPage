@@ -783,37 +783,39 @@ a:focus-visible {
   100% { transform: scale(1); opacity: 0; }
 }
 
-/* --- relevance: sine and cosine swinging into resonance --- */
+/* --- relevance: two waves swing, cross twice, then resonate as one --- */
 .pdiag--relevance .pdiag__wave {
   stroke-width: 1.3;
   stroke-linecap: round;
 }
+.pdiag--relevance .pdiag__wave--audience {
+  transform: translateY(-10px);
+}
 .pdiag--relevance .pdiag__wave--creator {
   opacity: 0.55;
+  transform: translateY(10px);
 }
-.pdiag--relevance .pdiag__wave-phase {
-  transform: translateX(-16px);
-}
-.pdiag--relevance.is-active .pdiag__wave-flow {
-  animation: pdiagWaveFlow 3.2s linear infinite;
-}
-.pdiag--relevance.is-active .pdiag__wave-phase {
-  animation: pdiagWavePhase 3.8s ease-in-out infinite;
+.pdiag--relevance.is-active .pdiag__wave--audience {
+  animation: pdiagWaveAudience 3.8s ease-in-out infinite;
 }
 .pdiag--relevance.is-active .pdiag__wave--creator {
-  animation: pdiagWaveOpacity 3.8s ease-in-out infinite;
+  animation: pdiagWaveCreator 3.8s ease-in-out infinite;
 }
-@keyframes pdiagWaveFlow {
-  from { transform: translateX(0); }
-  to { transform: translateX(-32px); }
+@keyframes pdiagWaveAudience {
+  0%, 100% { transform: translateY(-10px); }
+  12.5%   { transform: translateY(0); }
+  25%     { transform: translateY(10px); }
+  37.5%   { transform: translateY(0); }
+  50%     { transform: translateY(-10px); }
+  62.5%, 82.5% { transform: translateY(0); }
 }
-@keyframes pdiagWavePhase {
-  0%, 100% { transform: translateX(-16px); }
-  45%, 55% { transform: translateX(0); }
-}
-@keyframes pdiagWaveOpacity {
-  0%, 100% { opacity: 0.55; }
-  45%, 55% { opacity: 1; }
+@keyframes pdiagWaveCreator {
+  0%, 100% { transform: translateY(10px); opacity: 0.55; }
+  12.5%   { transform: translateY(0); opacity: 0.7; }
+  25%     { transform: translateY(-10px); opacity: 0.55; }
+  37.5%   { transform: translateY(0); opacity: 0.7; }
+  50%     { transform: translateY(10px); opacity: 0.55; }
+  62.5%, 82.5% { transform: translateY(0); opacity: 1; }
 }
 
 /* --- signal: ECG-style pulse with one heartbeat spike --- */
