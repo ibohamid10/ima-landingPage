@@ -144,7 +144,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.76, delay: 1.02, ease: easeOut }}
         >
-          No upfront fees · Commission on signed deals only
+          No retainers. Paid on outcomes, not pitches.
         </motion.p>
       </div>
 
