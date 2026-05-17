@@ -46,15 +46,36 @@ export default function Approach() {
   const prefersReduced = useReducedMotion() ?? false;
   const [activeIndex, setActiveIndex] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(false);
   const userOverride = useRef(false);
+  const hasEnteredRef = useRef(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    if (prefersReduced || paused) return;
+    const node = sectionRef.current;
+    if (!node) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.isIntersecting;
+        setInView(visible);
+        if (visible && !hasEnteredRef.current) {
+          hasEnteredRef.current = true;
+          setActiveIndex(0);
+        }
+      },
+      { threshold: 0.3 }
+    );
+    obs.observe(node);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (prefersReduced || paused || !inView) return;
     const id = window.setInterval(() => {
       setActiveIndex((i) => (i + 1) % CARDS.length);
     }, ROTATE_INTERVAL);
     return () => window.clearInterval(id);
-  }, [prefersReduced, paused]);
+  }, [prefersReduced, paused, inView]);
 
   const handleEnter = useCallback((index: number) => {
     userOverride.current = true;
@@ -68,7 +89,7 @@ export default function Approach() {
   }, []);
 
   return (
-    <section className="approach" id="approach" aria-label="Our approach">
+    <section ref={sectionRef} className="approach" id="approach" aria-label="Our approach">
       <div className="approach__blend" aria-hidden />
       <div className="approach__wash" aria-hidden />
 
