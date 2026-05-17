@@ -193,12 +193,14 @@ function Diagram({ kind, active }: { kind: Diagram; active: boolean }) {
     case "relevance":
       return (
         <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
-          <line className="pdiag__edge pdiag__edge--1" x1="28" y1="68" x2="70" y2="32" />
-          <line className="pdiag__edge pdiag__edge--2" x1="70" y1="32" x2="112" y2="64" />
-          <line className="pdiag__edge pdiag__edge--3" x1="28" y1="68" x2="112" y2="64" />
-          <circle className="pdiag__node pdiag__node--1" cx="28" cy="68" r="3.2" />
-          <circle className="pdiag__node pdiag__node--2" cx="70" cy="32" r="3.6" />
-          <circle className="pdiag__node pdiag__node--3" cx="112" cy="64" r="3.2" />
+          <path
+            className="pdiag__wave pdiag__wave--audience"
+            d="M 6 36 Q 22 28, 38 36 T 70 36 T 102 36 T 134 36"
+          />
+          <path
+            className="pdiag__wave pdiag__wave--creator"
+            d="M 6 60 Q 22 52, 38 60 T 70 60 T 102 60 T 134 60"
+          />
         </svg>
       );
     case "signal":

@@ -783,28 +783,28 @@ a:focus-visible {
   100% { transform: scale(1); opacity: 0; }
 }
 
-/* --- relevance: node graph --- */
-.pdiag--relevance .pdiag__edge {
-  stroke-width: 1;
-  stroke-dasharray: 180;
-  stroke-dashoffset: 180;
-  transition: stroke-dashoffset 900ms var(--ease);
+/* --- relevance: two waves seeking resonance --- */
+.pdiag--relevance .pdiag__wave {
+  stroke-width: 1.3;
+  stroke-linecap: round;
 }
-.pdiag--relevance .pdiag__node {
-  fill: currentColor;
-  stroke: none;
-  transform-box: fill-box;
+.pdiag--relevance .pdiag__wave--creator {
+  opacity: 0.45;
+  transform: translateX(16px);
   transform-origin: center;
-  transition: transform 520ms var(--ease);
 }
-.pdiag--relevance.is-active .pdiag__edge { stroke-dashoffset: 0; }
-.pdiag--relevance.is-active .pdiag__edge--1 { transition-delay: 0ms; }
-.pdiag--relevance.is-active .pdiag__edge--2 { transition-delay: 240ms; }
-.pdiag--relevance.is-active .pdiag__edge--3 { transition-delay: 480ms; }
-.pdiag--relevance.is-active .pdiag__node--2 { animation: pdiagNodePulse 2.4s ease-in-out infinite 0.9s; }
-@keyframes pdiagNodePulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.6); }
+.pdiag--relevance.is-active .pdiag__wave--creator {
+  animation: pdiagResonance 3.8s ease-in-out infinite;
+}
+@keyframes pdiagResonance {
+  0%, 100% {
+    opacity: 0.45;
+    transform: translateX(16px);
+  }
+  40%, 60% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 /* --- signal: ECG-style pulse with one heartbeat spike --- */
