@@ -798,22 +798,22 @@ a:focus-visible {
   animation: pdiagWaveFlow 1.9s linear infinite;
 }
 .pdiag--relevance.is-active .pdiag__wave-phase {
-  animation: pdiagPhaseMerge 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: pdiagPhaseMerge 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 .pdiag--relevance.is-active .pdiag__wave--creator {
-  animation: pdiagCreatorOpacity 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  animation: pdiagCreatorOpacity 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }
 @keyframes pdiagWaveFlow {
   from { transform: translateX(0); }
   to { transform: translateX(-32px); }
 }
 @keyframes pdiagPhaseMerge {
-  0%, 18% { transform: translateX(-16px); }
-  100% { transform: translateX(0); }
+  0%, 12% { transform: translateX(-16px); }
+  55%, 100% { transform: translateX(0); }
 }
 @keyframes pdiagCreatorOpacity {
-  0%, 18% { opacity: 0.55; }
-  100% { opacity: 1; }
+  0%, 12% { opacity: 0.55; }
+  55%, 100% { opacity: 1; }
 }
 
 /* --- signal: ECG-style pulse with one heartbeat spike --- */
