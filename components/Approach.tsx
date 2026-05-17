@@ -193,15 +193,19 @@ function Diagram({ kind, active }: { kind: Diagram; active: boolean }) {
     case "relevance":
       return (
         <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
-          <path
-            className="pdiag__wave pdiag__wave--audience"
-            d="M 6 48 Q 22 20, 38 48 T 70 48 T 102 48 T 134 48"
-          />
-          <g className="pdiag__wave-phase">
+          <g className="pdiag__wave-flow">
             <path
-              className="pdiag__wave pdiag__wave--creator"
-              d="M 6 48 Q 22 20, 38 48 T 70 48 T 102 48 T 134 48"
+              className="pdiag__wave pdiag__wave--audience"
+              d="M -32 48 Q -16 18, 0 48 T 32 48 T 64 48 T 96 48 T 128 48 T 160 48 T 192 48"
             />
+          </g>
+          <g className="pdiag__wave-phase">
+            <g className="pdiag__wave-flow">
+              <path
+                className="pdiag__wave pdiag__wave--creator"
+                d="M -32 48 Q -16 18, 0 48 T 32 48 T 64 48 T 96 48 T 128 48 T 160 48 T 192 48"
+              />
+            </g>
           </g>
         </svg>
       );
