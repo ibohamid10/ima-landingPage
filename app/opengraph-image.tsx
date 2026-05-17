@@ -92,37 +92,22 @@ export default async function OpenGraphImage() {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
-            alignItems: "flex-end",
+            alignItems: "center",
+            gap: "18px",
           }}
         >
           <div
             style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: "16px",
-            }}
-          >
-            <div
-              style={{
-                width: "44px",
-                height: "1px",
-                background: "#0f0d0a",
-                opacity: 0.32,
-              }}
-            />
-            <span style={{ fontSize: 28, opacity: 0.72 }}>
-              No retainers. Paid on outcomes.
-            </span>
-          </div>
-          <div
-            style={{
-              width: "14px",
-              height: "14px",
+              width: "12px",
+              height: "12px",
               borderRadius: "50%",
               background: "#c14a2a",
+              flexShrink: 0,
             }}
           />
+          <span style={{ fontSize: 28, opacity: 0.78 }}>
+            No retainers. Paid on outcomes.
+          </span>
         </div>
       </div>
     ),
