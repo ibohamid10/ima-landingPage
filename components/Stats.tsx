@@ -10,7 +10,7 @@ import {
   useTransform,
 } from "framer-motion";
 
-type Chart = "arc" | "ring" | "ticks" | "ring-full";
+type Chart = "arc" | "ring" | "strike" | "ring-full";
 
 type Stat = {
   value: number;
@@ -41,10 +41,10 @@ const LANDSCAPE: Stat[] = [
 
 const PROMISE: Stat[] = [
   {
-    value: 7,
-    suffix: " days",
-    label: "From kickoff to your first creator shortlist — never longer.",
-    chart: "ticks",
+    value: 0,
+    suffix: " retainers",
+    label: "Paid only when a deal closes. No lock-in, no pitch invoices.",
+    chart: "strike",
   },
   {
     value: 100,
@@ -136,27 +136,34 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
       </svg>
     );
   }
-  if (chart === "ticks") {
-    // 7 days — seven vertical ticks revealing left to right, one per day.
+  if (chart === "strike") {
+    // 0 — a horizontal baseline drawn in first, then a diagonal slash
+    // crossing it. Reads as "negation / nothing here", visually distinct
+    // from the curves and rings used by the other three stats.
     return (
       <svg viewBox="0 0 96 96" aria-hidden>
-        {Array.from({ length: 7 }).map((_, i) => {
-          const x = 12 + i * 12;
-          return (
-            <line
-              key={i}
-              x1={x}
-              y1={36}
-              x2={x}
-              y2={60}
-              className="stat__chart-stroke"
-              style={{
-                opacity: inView ? 0.84 : 0,
-                transition: `opacity 280ms ease ${0.1 + i * 0.12}s`,
-              }}
-            />
-          );
-        })}
+        <line
+          x1="14"
+          y1="48"
+          x2="82"
+          y2="48"
+          className="stat__chart-stroke"
+          pathLength={1}
+          strokeDasharray={1}
+          strokeDashoffset={inView ? 0 : 1}
+          style={{ transition: "stroke-dashoffset 0.9s cubic-bezier(0.2,0.75,0.18,1) 0.15s" }}
+        />
+        <line
+          x1="28"
+          y1="62"
+          x2="68"
+          y2="34"
+          className="stat__chart-stroke"
+          pathLength={1}
+          strokeDasharray={1}
+          strokeDashoffset={inView ? 0 : 1}
+          style={{ transition: "stroke-dashoffset 0.7s cubic-bezier(0.2,0.75,0.18,1) 0.9s" }}
+        />
       </svg>
     );
   }
