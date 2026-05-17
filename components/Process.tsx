@@ -1,9 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
 
 const STEPS = [
   {
@@ -85,15 +82,29 @@ export default function Process() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
-
     const section = sectionRef.current;
     if (!section) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const mobile = window.matchMedia("(max-width: 900px)").matches;
+    let mounted = true;
+    let cleanup: (() => void) | undefined;
 
-    const ctx = gsap.context(() => {
+    (async () => {
+      const [gsapMod, scrollTriggerMod, motionPathMod] = await Promise.all([
+        import("gsap"),
+        import("gsap/ScrollTrigger"),
+        import("gsap/MotionPathPlugin"),
+      ]);
+      if (!mounted) return;
+
+      const gsap = gsapMod.default;
+      const { ScrollTrigger } = scrollTriggerMod;
+      const { MotionPathPlugin } = motionPathMod;
+      gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+
+      const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const mobile = window.matchMedia("(max-width: 900px)").matches;
+
+      const ctx = gsap.context(() => {
       if (reduceMotion || mobile) {
         gsap.set(
           [".process-trace-a", ".process-trace-b", ".process-trace-growth"],
@@ -274,9 +285,15 @@ export default function Process() {
 
       // Subtle after-glow halo across the section as everything settles
       tl.to(".process-section__halo", { opacity: 0.7, duration: 0.4 }, 3.55);
-    }, section);
+      }, section);
 
-    return () => ctx.revert();
+      cleanup = () => ctx.revert();
+    })();
+
+    return () => {
+      mounted = false;
+      cleanup?.();
+    };
   }, []);
 
   return (
