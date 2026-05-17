@@ -824,7 +824,7 @@ a:focus-visible {
 }
 .pdiag--signal.is-active .pdiag__pulse {
   opacity: 1;
-  animation: pdiagPulseSweep 3.8s cubic-bezier(0.55, 0.1, 0.45, 0.9) infinite;
+  animation: pdiagPulseSweep 1.9s cubic-bezier(0.55, 0.1, 0.45, 0.9) infinite;
 }
 @keyframes pdiagPulseSweep {
   0% { stroke-dashoffset: 220; }
