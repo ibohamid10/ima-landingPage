@@ -7,8 +7,8 @@ const easeOut = [0.2, 0.75, 0.18, 1] as const;
 
 const FAQS = [
   {
-    q: "How long until the first introduction?",
-    a: "Seven days from kickoff. We come back with a shortlist of fit-relevant creators and a draft partnership concept.",
+    q: "How does AJIONE work?",
+    a: "We source creators ourselves brief by brief, handle outreach and deal facilitation, and only earn once a paid collaboration is agreed on both sides.",
   },
   {
     q: "Which markets do you cover?",
