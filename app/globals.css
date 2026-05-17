@@ -783,7 +783,7 @@ a:focus-visible {
   100% { transform: scale(1); opacity: 0; }
 }
 
-/* --- relevance: sine and cosine flow horizontally, then phase-lock into one --- */
+/* --- relevance: sine and cosine flow, then smoothly lock into one wave --- */
 .pdiag--relevance .pdiag__wave {
   stroke-width: 1.3;
   stroke-linecap: round;
@@ -798,24 +798,22 @@ a:focus-visible {
   animation: pdiagWaveFlow 1.9s linear infinite;
 }
 .pdiag--relevance.is-active .pdiag__wave-phase {
-  animation: pdiagPhaseMerge 3.8s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+  animation: pdiagPhaseMerge 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 .pdiag--relevance.is-active .pdiag__wave--creator {
-  animation: pdiagCreatorOpacity 3.8s ease-in-out infinite;
+  animation: pdiagCreatorOpacity 2.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 @keyframes pdiagWaveFlow {
   from { transform: translateX(0); }
   to { transform: translateX(-32px); }
 }
 @keyframes pdiagPhaseMerge {
-  0%, 50% { transform: translateX(-16px); }
-  65%, 85% { transform: translateX(0); }
-  100% { transform: translateX(-16px); }
+  0%, 18% { transform: translateX(-16px); }
+  100% { transform: translateX(0); }
 }
 @keyframes pdiagCreatorOpacity {
-  0%, 50% { opacity: 0.55; }
-  65%, 85% { opacity: 1; }
-  100% { opacity: 0.55; }
+  0%, 18% { opacity: 0.55; }
+  100% { opacity: 1; }
 }
 
 /* --- signal: ECG-style pulse with one heartbeat spike --- */
