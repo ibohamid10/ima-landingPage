@@ -77,19 +77,19 @@ export default function DatenschutzPage() {
         <div className="legal-block">
           <h2>Cookies und Tracking</h2>
           <p>
-            Diese Website ist für eine datenschutzfreundliche, cookieless
-            Reichweitenmessung mit selbst gehostetem Umami vorbereitet. Das Tracking
-            wird erst aktiviert, sobald die entsprechende Analytics-Instanz
-            eingerichtet und im Deployment konfiguriert ist.
+            Diese Website nutzt selbst gehostetes Umami für eine cookielose,
+            datenschutzfreundliche Reichweitenmessung. Es werden keine
+            Tracking-Cookies gesetzt, keine seitenübergreifenden Nutzerprofile
+            erstellt und IP-Adressen werden umgehend anonymisiert (Hashing mit
+            täglich rotierendem Salt).
           </p>
           <p>
-            Nach Aktivierung können insbesondere Seitenaufrufe, Referrer,
-            Kampagnenparameter sowie ausgewählte Interaktionen wie Klicks auf Kontakt-
-            oder Call-to-Action-Elemente verarbeitet werden. Die Verarbeitung erfolgt
-            zur Verbesserung der Website und zur Auswertung der Wirksamkeit von
-            Outreach-Kampagnen auf Grundlage berechtigter Interessen gemäß Art. 6 Abs.
-            1 lit. f DSGVO. Es werden keine Tracking-Cookies gesetzt und keine
-            seitenübergreifenden Nutzerprofile erstellt.
+            Verarbeitet werden insbesondere Seitenaufrufe, Referrer,
+            Kampagnenparameter sowie ausgewählte Interaktionen wie Klicks auf
+            Kontakt- oder Call-to-Action-Elemente. Die Verarbeitung erfolgt zur
+            Verbesserung der Website und zur Auswertung der Wirksamkeit von
+            Outreach-Kampagnen auf Grundlage berechtigter Interessen gemäß
+            Art. 6 Abs. 1 lit. f DSGVO.
           </p>
         </div>
 
