@@ -22,24 +22,34 @@ const FAQS = [
 
 function AnswerText({ text, reduced }: { text: string; reduced: boolean }) {
   if (reduced) return <p className="faq__a-text">{text}</p>;
+  const words = text.split(" ");
+  let charIndex = 0;
   return (
     <p className="faq__a-text">
-      {Array.from(text).map((ch, i) => {
-        if (ch === " ") return <Fragment key={i}> </Fragment>;
+      {words.map((word, wi) => {
+        const startChar = charIndex;
+        charIndex += word.length;
         return (
-          <motion.span
-            key={i}
-            className="faq__a-char"
-            initial={{ opacity: 0, y: 4 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{
-              duration: 0.26,
-              delay: 0.06 + i * 0.007,
-              ease: easeOut,
-            }}
-          >
-            {ch}
-          </motion.span>
+          <Fragment key={wi}>
+            <span className="faq__a-word">
+              {Array.from(word).map((ch, ci) => (
+                <motion.span
+                  key={ci}
+                  className="faq__a-char"
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{
+                    duration: 0.26,
+                    delay: 0.06 + (startChar + ci) * 0.007,
+                    ease: easeOut,
+                  }}
+                >
+                  {ch}
+                </motion.span>
+              ))}
+            </span>
+            {wi < words.length - 1 ? " " : null}
+          </Fragment>
         );
       })}
     </p>

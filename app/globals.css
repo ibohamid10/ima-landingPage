@@ -2019,6 +2019,11 @@ a:focus-visible {
   text-wrap: pretty;
 }
 
+.faq__a-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
 .faq__a-char {
   display: inline-block;
   will-change: transform, opacity;
