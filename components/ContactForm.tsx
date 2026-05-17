@@ -140,7 +140,7 @@ export default function ContactForm() {
 
       <div className="contact-form__field">
         <label htmlFor="cf-message" className="contact-form__label">
-          What you want to test
+          What you&rsquo;d like to explore
         </label>
         <textarea
           id="cf-message"
@@ -170,6 +170,7 @@ export default function ContactForm() {
           type="text"
           tabIndex={-1}
           autoComplete="off"
+          aria-hidden
           value={hp}
           onChange={(e) => setHp(e.target.value)}
         />
@@ -182,7 +183,7 @@ export default function ContactForm() {
         data-analytics-event="contact_form_submit"
         data-analytics-label="CTA contact form"
       >
-        <span>{status === "sending" ? "Sending…" : "Apply for the first batch"}</span>
+        <span>{status === "sending" ? "Sending…" : "Start the conversation"}</span>
         <span className="cta__button-arrow" aria-hidden>
           →
         </span>
