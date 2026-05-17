@@ -124,7 +124,7 @@ function buildAutoReply(brand: string, email: string): ResendPayload {
   const subject = "We got your message — AJIONE";
   const text = `Hi ${brand},
 
-Thanks for reaching out. We'll come back within 24 hours with a first read on the fit and an initial direction we'd suggest.
+Thanks for reaching out. We read every message personally — you'll hear back, usually within 24 hours.
 
 — AJIONE
 Vienna
@@ -153,7 +153,7 @@ Vienna
         </tr>
         <tr>
           <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #2b3036; padding-bottom: 32px;">
-            Thanks for reaching out. We&rsquo;ll come back within 24 hours with a first read on the fit and an initial direction we&rsquo;d suggest.
+            Thanks for reaching out. We read every message personally &mdash; you&rsquo;ll hear back, usually within 24 hours.
           </td>
         </tr>
         <tr>

@@ -36,7 +36,7 @@ export default function Footer() {
           <p className="footer__kicker">Start a conversation</p>
           <p className="footer__lede">
             Tell us about the brand and the audience you want to reach.
-            <em> We answer within 24 hours.</em>
+            <em> We typically answer within 24 hours.</em>
           </p>
           <a
             className="footer__email"

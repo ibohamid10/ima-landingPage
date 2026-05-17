@@ -74,7 +74,7 @@ export default function ContactForm() {
       >
         <p className="contact-form__success-title">Thanks.</p>
         <p className="contact-form__success-body">
-          We&rsquo;ll respond within 24 hours.
+          We&rsquo;ll typically respond within 24 hours.
         </p>
         <p className="contact-form__success-sign">— AJIONE</p>
       </motion.div>
@@ -188,7 +188,7 @@ export default function ContactForm() {
         </span>
       </button>
 
-      <p className="contact-form__trust">We respond within 24 hours</p>
+      <p className="contact-form__trust">We typically respond within 24 hours</p>
 
       {status === "error" ? (
         <p className="contact-form__form-error" role="alert">
