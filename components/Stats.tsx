@@ -41,9 +41,9 @@ const LANDSCAPE: Stat[] = [
 
 const PROMISE: Stat[] = [
   {
-    value: 30,
+    value: 7,
     suffix: " days",
-    label: "From kickoff to your first creator launch — never longer.",
+    label: "From kickoff to your first creator shortlist — never longer.",
     chart: "ticks",
   },
   {
@@ -121,7 +121,7 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
           cy="48"
           r={wedgeR}
           fill="none"
-          stroke="rgba(10, 13, 16, 0.88)"
+          stroke="rgba(15, 13, 10, 0.88)"
           strokeWidth={2 * wedgeR}
           strokeDasharray={wedgeCirc}
           strokeDashoffset={inView ? wedgeOffset : wedgeCirc}
@@ -132,30 +132,27 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
           }}
         />
         {/* Hairline on top to keep the rim crisp against the track. */}
-        <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(10, 13, 16, 0.78)" strokeWidth="1" />
+        <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(15, 13, 10, 0.78)" strokeWidth="1" />
       </svg>
     );
   }
   if (chart === "ticks") {
-    // 30 days — thirty short vertical ticks that reveal in sequence.
+    // 7 days — seven vertical ticks revealing left to right, one per day.
     return (
       <svg viewBox="0 0 96 96" aria-hidden>
-        {Array.from({ length: 30 }).map((_, i) => {
-          const col = i % 10;
-          const row = Math.floor(i / 10);
-          const x = 6 + col * 9;
-          const y = 28 + row * 18;
+        {Array.from({ length: 7 }).map((_, i) => {
+          const x = 12 + i * 12;
           return (
             <line
               key={i}
               x1={x}
-              y1={y}
+              y1={36}
               x2={x}
-              y2={y + 10}
+              y2={60}
               className="stat__chart-stroke"
               style={{
                 opacity: inView ? 0.84 : 0,
-                transition: `opacity 240ms ease ${0.1 + i * 0.035}s`,
+                transition: `opacity 280ms ease ${0.1 + i * 0.12}s`,
               }}
             />
           );
@@ -175,7 +172,7 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
         cy="48"
         r={fullR}
         fill="none"
-        stroke="rgba(10, 13, 16, 0.88)"
+        stroke="rgba(15, 13, 10, 0.88)"
         strokeWidth={2 * fullR}
         strokeDasharray={fullCirc}
         strokeDashoffset={inView ? 0 : fullCirc}
@@ -185,7 +182,7 @@ function ChartGlyph({ chart, value, inView }: { chart: Chart; value: number; inV
           transformOrigin: "center",
         }}
       />
-      <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(10, 13, 16, 0.78)" strokeWidth="1" />
+      <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(15, 13, 10, 0.78)" strokeWidth="1" />
     </svg>
   );
 }

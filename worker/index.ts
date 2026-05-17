@@ -87,25 +87,25 @@ ${message}
 `;
 
   const html = `
-<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #0a0d10; max-width: 560px; padding: 8px 0;">
-  <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #6b7178; margin-bottom: 24px;">
+<div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; color: #0f0d0a; max-width: 560px; padding: 8px 0;">
+  <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.22em; text-transform: uppercase; color: #79736a; margin-bottom: 24px;">
     New inquiry · AJIONE partnership
   </div>
 
   <table cellpadding="0" cellspacing="0" border="0" style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
     <tr>
-      <td style="padding: 0 16px 12px 0; font-size: 12px; color: #8a9099; width: 78px; vertical-align: top;">Brand</td>
-      <td style="padding: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #0a0d10;">${escapeHtml(brand)}</td>
+      <td style="padding: 0 16px 12px 0; font-size: 12px; color: #8e887e; width: 78px; vertical-align: top;">Brand</td>
+      <td style="padding: 0 0 12px 0; font-size: 16px; font-weight: 600; color: #0f0d0a;">${escapeHtml(brand)}</td>
     </tr>
     <tr>
-      <td style="padding: 0 16px 0 0; font-size: 12px; color: #8a9099; vertical-align: top;">Email</td>
+      <td style="padding: 0 16px 0 0; font-size: 12px; color: #8e887e; vertical-align: top;">Email</td>
       <td style="padding: 0; font-size: 16px;">
-        <a href="mailto:${escapeHtml(email)}" style="color: #0a0d10; text-decoration: underline;">${escapeHtml(email)}</a>
+        <a href="mailto:${escapeHtml(email)}" style="color: #0f0d0a; text-decoration: underline;">${escapeHtml(email)}</a>
       </td>
     </tr>
   </table>
 
-  <div style="border-top: 1px solid #e1e3e0; padding-top: 20px; font-size: 15px; line-height: 1.6; white-space: pre-wrap; color: #0a0d10;">${escapeHtml(message)}</div>
+  <div style="border-top: 1px solid #e3ddd2; padding-top: 20px; font-size: 15px; line-height: 1.6; white-space: pre-wrap; color: #0f0d0a;">${escapeHtml(message)}</div>
 </div>
 `.trim();
 
@@ -131,33 +131,33 @@ Vienna
 `;
 
   const html = `
-<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #fbfcfa; padding: 56px 24px; margin: 0;">
+<table cellpadding="0" cellspacing="0" border="0" width="100%" style="background: #f6f1e8; padding: 56px 24px; margin: 0;">
   <tr>
     <td align="center">
-      <table cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background: #fbfcfa;">
+      <table cellpadding="0" cellspacing="0" border="0" width="560" style="max-width: 560px; background: #f6f1e8;">
         <tr>
           <td style="padding-bottom: 44px;">
             <img src="https://ajione.com/ajione-logo.png" alt="AJIONE" width="148" style="display: block; width: 148px; height: auto; border: 0; outline: none; text-decoration: none;" />
           </td>
         </tr>
         <tr>
-          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.32em; line-height: 1; text-transform: uppercase; color: #6b7178; padding-bottom: 28px;">
+          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 11px; font-weight: 600; letter-spacing: 0.32em; line-height: 1; text-transform: uppercase; color: #79736a; padding-bottom: 28px;">
             Message received
           </td>
         </tr>
         <tr>
-          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 30px; font-weight: 700; line-height: 1.12; letter-spacing: -0.03em; color: #0a0d10; padding-bottom: 32px;">
+          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 30px; font-weight: 700; line-height: 1.12; letter-spacing: -0.03em; color: #0f0d0a; padding-bottom: 32px;">
             Hi ${escapeHtml(brand)}.<br/>
             <span style="font-family: 'Iowan Old Style', 'Apple Garamond', Baskerville, Georgia, serif; font-style: italic; font-weight: 400;">We&rsquo;ve got you.</span>
           </td>
         </tr>
         <tr>
-          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #2b3036; padding-bottom: 32px;">
+          <td style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 1.6; color: #33302c; padding-bottom: 32px;">
             Thanks for reaching out. We read every message personally &mdash; you&rsquo;ll hear back, usually within 24 hours.
           </td>
         </tr>
         <tr>
-          <td style="border-top: 1px solid #d8dad6; padding-top: 22px; font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; line-height: 1.4; text-transform: uppercase; color: #6b7178;">
+          <td style="border-top: 1px solid #dad4c8; padding-top: 22px; font-family: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.18em; line-height: 1.4; text-transform: uppercase; color: #79736a;">
             Vienna · AT
           </td>
         </tr>
