@@ -790,21 +790,30 @@ a:focus-visible {
 }
 .pdiag--relevance .pdiag__wave--creator {
   opacity: 0.55;
+}
+.pdiag--relevance .pdiag__wave-phase {
   transform: translateX(-16px);
-  transform-origin: center;
+}
+.pdiag--relevance.is-active .pdiag__wave-flow {
+  animation: pdiagWaveFlow 3.2s linear infinite;
+}
+.pdiag--relevance.is-active .pdiag__wave-phase {
+  animation: pdiagWavePhase 3.8s ease-in-out infinite;
 }
 .pdiag--relevance.is-active .pdiag__wave--creator {
-  animation: pdiagResonance 3.8s ease-in-out infinite;
+  animation: pdiagWaveOpacity 3.8s ease-in-out infinite;
 }
-@keyframes pdiagResonance {
-  0%, 100% {
-    opacity: 0.55;
-    transform: translateX(-16px);
-  }
-  45%, 55% {
-    opacity: 1;
-    transform: translateX(0);
-  }
+@keyframes pdiagWaveFlow {
+  from { transform: translateX(0); }
+  to { transform: translateX(-32px); }
+}
+@keyframes pdiagWavePhase {
+  0%, 100% { transform: translateX(-16px); }
+  45%, 55% { transform: translateX(0); }
+}
+@keyframes pdiagWaveOpacity {
+  0%, 100% { opacity: 0.55; }
+  45%, 55% { opacity: 1; }
 }
 
 /* --- signal: ECG-style pulse with one heartbeat spike --- */
