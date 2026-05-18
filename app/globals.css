@@ -808,12 +808,12 @@ a:focus-visible {
   to { transform: translateX(-32px); }
 }
 @keyframes pdiagPhaseMerge {
-  0%, 12% { transform: translateX(-16px); }
-  55%, 100% { transform: translateX(0); }
+  0%, 100% { transform: translateX(-16px); }
+  35%, 65% { transform: translateX(0); }
 }
 @keyframes pdiagCreatorOpacity {
-  0%, 12% { opacity: 0.55; }
-  55%, 100% { opacity: 1; }
+  0%, 100% { opacity: 0.55; }
+  35%, 65% { opacity: 1; }
 }
 
 /* --- signal: ECG-style pulse with one heartbeat spike --- */
