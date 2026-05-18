@@ -783,37 +783,34 @@ a:focus-visible {
   100% { transform: scale(1); opacity: 0; }
 }
 
-/* --- relevance: sine and cosine flow, then smoothly lock into one wave --- */
+/* --- relevance: phase drifts continuously through a full wavelength --- */
 .pdiag--relevance .pdiag__wave {
   stroke-width: 1.3;
   stroke-linecap: round;
 }
 .pdiag--relevance .pdiag__wave--creator {
-  opacity: 0.55;
-}
-.pdiag--relevance .pdiag__wave-phase {
-  transform: translateX(-16px);
+  opacity: 1;
 }
 .pdiag--relevance.is-active .pdiag__wave-flow {
   animation: pdiagWaveFlow 1.9s linear infinite;
 }
 .pdiag--relevance.is-active .pdiag__wave-phase {
-  animation: pdiagPhaseMerge 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: pdiagPhaseDrift 3.8s linear infinite;
 }
 .pdiag--relevance.is-active .pdiag__wave--creator {
-  animation: pdiagCreatorOpacity 3.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  animation: pdiagCreatorOpacity 3.8s ease-in-out infinite;
 }
 @keyframes pdiagWaveFlow {
   from { transform: translateX(0); }
   to { transform: translateX(-32px); }
 }
-@keyframes pdiagPhaseMerge {
-  0%, 100% { transform: translateX(-16px); }
-  35%, 65% { transform: translateX(0); }
+@keyframes pdiagPhaseDrift {
+  from { transform: translateX(0); }
+  to { transform: translateX(-32px); }
 }
 @keyframes pdiagCreatorOpacity {
-  0%, 100% { opacity: 0.55; }
-  35%, 65% { opacity: 1; }
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.55; }
 }
 
 /* --- signal: ECG-style pulse with one heartbeat spike --- */
