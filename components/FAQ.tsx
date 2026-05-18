@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: "Which markets do you cover?",
-    a: "Cross-market. The first deal batch focuses on selected brands and creator niches where the fit is clear from day one.",
+    a: "Cross-market. We focus on selected brands and creator niches where the fit is clear from day one.",
   },
   {
     q: "What is expected from the brand?",
