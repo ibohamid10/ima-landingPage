@@ -128,7 +128,7 @@ export default function DatenschutzPage() {
             1030 Wien
             <br />
             Website:{" "}
-            <a href="https://www.dsb.gv.at" rel="noreferrer" target="_blank">
+            <a href="https://www.dsb.gv.at" rel="noopener noreferrer" target="_blank">
               www.dsb.gv.at
             </a>
           </p>

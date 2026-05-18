@@ -89,7 +89,7 @@ export default function Hero() {
       </motion.header>
 
       <div className="hero__content">
-        <h1 aria-label="Creator partnerships. that drive growth.">
+        <h1 aria-label="Creator partnerships that drive growth.">
           <span className="hero__line">
             <SplitLine text="Creator" delay={0.32} reduced={prefersReduced} />
           </span>
