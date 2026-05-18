@@ -2649,7 +2649,8 @@ a:focus-visible {
   }
 
   .pillar-card__diagram {
-    height: 72px;
+    justify-content: center;
+    height: 104px;
   }
 
   .process-section {
@@ -2956,7 +2957,12 @@ a:focus-visible {
   }
 
   .pillar-card__diagram {
-    height: 64px;
+    justify-content: center;
+    height: 112px;
+  }
+
+  .pillar-card__diagram .pdiag {
+    max-width: 160px;
   }
 
   .approach__thread {
