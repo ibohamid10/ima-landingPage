@@ -2114,7 +2114,7 @@ a:focus-visible {
 .footer {
   position: relative;
   width: 100%;
-  padding: clamp(72px, 8vw, 124px) clamp(24px, 5.7vw, 88px) clamp(28px, 3vw, 44px);
+  padding: clamp(48px, 5vw, 72px) clamp(24px, 5.7vw, 88px) clamp(22px, 2.2vw, 32px);
   color: rgba(241, 235, 224, 0.78);
   background:
     radial-gradient(ellipse 50% 60% at 20% 0%, rgba(52, 44, 36, 0.55), transparent 70%),
@@ -2167,7 +2167,7 @@ a:focus-visible {
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: clamp(56px, 7vw, 96px);
+  gap: clamp(32px, 3.8vw, 52px);
 }
 
 .footer__manifesto {
@@ -2262,7 +2262,9 @@ a:focus-visible {
 .footer__wordmark svg {
   display: block;
   width: 100%;
+  max-width: clamp(320px, 36vw, 460px);
   height: auto;
+  margin: 0 auto;
   overflow: visible;
 }
 
