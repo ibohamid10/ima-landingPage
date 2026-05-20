@@ -144,7 +144,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.76, delay: 1.02, ease: easeOut }}
         >
-          No retainers. Paid on outcomes, not pitches.
+          No retainers. Paid only when a deal closes.
         </motion.p>
       </div>
 

@@ -106,7 +106,7 @@ export default async function OpenGraphImage() {
             }}
           />
           <span style={{ fontSize: 28, opacity: 0.78 }}>
-            No retainers. Paid on outcomes.
+            No retainers. Paid when a deal closes.
           </span>
         </div>
       </div>
