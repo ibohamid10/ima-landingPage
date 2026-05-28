@@ -128,6 +128,8 @@ body {
   font-family: var(--sans);
   color: var(--ink);
   background: var(--paper-soft);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
@@ -183,7 +185,6 @@ a:focus-visible {
   );
   background-position: center;
   background-size: cover;
-  transform: scale(1.045);
   will-change: transform;
 }
 
@@ -248,9 +249,16 @@ a:focus-visible {
 }
 
 .nav__links a {
+  position: relative;
   transition:
     opacity 180ms ease,
     transform 180ms ease;
+}
+
+.nav__links a::before {
+  content: "";
+  position: absolute;
+  inset: -14px -10px;
 }
 
 .nav__links a::after {
@@ -301,7 +309,7 @@ a:focus-visible {
 }
 
 .button:active {
-  transform: translateY(0) scale(0.985);
+  transform: translateY(0) scale(0.96);
 }
 
 .button--primary {
@@ -369,7 +377,6 @@ a:focus-visible {
   font-size: clamp(62px, 7.25vw, 112px);
   line-height: 0.84;
   letter-spacing: -0.045em;
-  text-wrap: balance;
 }
 
 .hero h1 > span {
@@ -682,6 +689,14 @@ a:focus-visible {
     0 12px 28px rgba(15, 13, 10, 0.06);
 }
 
+.pillar-card:active {
+  transform: translateY(-4px) scale(0.985);
+}
+
+.pillar-card--active:active {
+  transform: translateY(-4px) scale(0.985);
+}
+
 .pillar-card__num {
   display: block;
   margin-bottom: 22px;
@@ -768,10 +783,13 @@ a:focus-visible {
   50% { transform: translateX(-3px); }
 }
 
-/* --- context: radar rings emanating --- */
+/* --- context: radar rings emanating ---
+   transform-box: view-box keeps the scale anchored to the ring centre
+   in SVG user units instead of drifting with the rendered box size. */
 .pdiag--context .pdiag__ring {
   stroke-width: 1;
-  transform-origin: 70px 50px;
+  transform-box: view-box;
+  transform-origin: 70px 48px;
 }
 .pdiag--context .pdiag__core { fill: currentColor; stroke: none; opacity: 0.9; }
 .pdiag--context.is-active .pdiag__ring--1 { animation: pdiagRing 3.2s ease-out infinite; animation-delay: 0s; }
@@ -1570,7 +1588,9 @@ a:focus-visible {
     inset 0 1px 0 rgba(255, 255, 255, 0.12),
     0 22px 60px rgba(15, 13, 10, 0.22),
     0 6px 14px rgba(15, 13, 10, 0.1);
-  transition: background-color 200ms ease, box-shadow 240ms ease;
+  transition-property: scale, transform, background-color, box-shadow;
+  transition-duration: 200ms;
+  transition-timing-function: ease;
   cursor: pointer;
   will-change: transform;
 }
@@ -1581,6 +1601,10 @@ a:focus-visible {
     inset 0 1px 0 rgba(255, 255, 255, 0.16),
     0 28px 72px rgba(15, 13, 10, 0.28),
     0 8px 18px rgba(15, 13, 10, 0.14);
+}
+
+.cta__button:active {
+  transform: scale(0.96);
 }
 
 .cta__button:focus-visible {
@@ -1924,6 +1948,7 @@ a:focus-visible {
   line-height: 1;
   text-transform: uppercase;
   color: rgba(15, 13, 10, 0.42);
+  font-variant-numeric: tabular-nums;
   transition: color 220ms ease;
 }
 
@@ -1996,7 +2021,7 @@ a:focus-visible {
 /* Answer panel — height animates from 0 → auto via framer; inner padding
    gives breathing room without affecting the closed state. */
 .faq__a-wrap {
-  will-change: height, opacity;
+  will-change: opacity;
 }
 
 .faq__a {
@@ -2303,7 +2328,14 @@ a:focus-visible {
 }
 
 .footer__legal a {
+  position: relative;
   transition: color 180ms ease;
+}
+
+.footer__legal a::before {
+  content: "";
+  position: absolute;
+  inset: -14px -10px;
 }
 
 .footer__legal a:hover {

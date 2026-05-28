@@ -184,10 +184,10 @@ function Diagram({ kind, active }: { kind: Diagram; active: boolean }) {
     case "context":
       return (
         <svg className={cls} viewBox="0 0 140 96" fill="none" aria-hidden>
-          <circle className="pdiag__ring pdiag__ring--1" cx="70" cy="50" r="10" />
-          <circle className="pdiag__ring pdiag__ring--2" cx="70" cy="50" r="22" />
-          <circle className="pdiag__ring pdiag__ring--3" cx="70" cy="50" r="34" />
-          <circle className="pdiag__core" cx="70" cy="50" r="2.2" />
+          <circle className="pdiag__ring pdiag__ring--1" cx="70" cy="48" r="10" />
+          <circle className="pdiag__ring pdiag__ring--2" cx="70" cy="48" r="22" />
+          <circle className="pdiag__ring pdiag__ring--3" cx="70" cy="48" r="34" />
+          <circle className="pdiag__core" cx="70" cy="48" r="2.2" />
         </svg>
       );
     case "relevance":

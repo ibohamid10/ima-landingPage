@@ -64,7 +64,7 @@ export default function Hero() {
       <motion.div
         className="hero__backdrop"
         aria-hidden
-        style={{ y: prefersReduced ? 0 : backdropY }}
+        style={{ scale: 1.045, y: prefersReduced ? 0 : backdropY }}
       />
       <div className="hero__grain" aria-hidden />
 
