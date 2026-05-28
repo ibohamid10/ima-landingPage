@@ -88,8 +88,8 @@ export default function Footer() {
         <div className="footer__bottom">
           <div className="footer__legal">
             <span>© {year} AJIONE</span>
-            <a href="/impressum">Impressum</a>
-            <a href="/datenschutz">Datenschutz</a>
+            <a href="/impressum">Legal Notice</a>
+            <a href="/datenschutz">Privacy</a>
           </div>
 
           <div className="footer__clock" aria-live="polite">
