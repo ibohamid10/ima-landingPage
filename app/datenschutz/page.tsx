@@ -24,7 +24,7 @@ export default function DatenschutzPage() {
             <br />
             Sole proprietorship
             <br />
-            Business address: to be added
+            Vienna, Austria
             <br />
             Email:{" "}
             <a href="mailto:partnership@ajione.com">partnership@ajione.com</a>
@@ -132,11 +132,6 @@ export default function DatenschutzPage() {
           </p>
         </div>
 
-        <p className="legal-page__note">
-          Note: The business address will be added as soon as a publishable
-          business address or corresponding ECG link is available.
-        </p>
-
         <div lang="de" className="legal-page__locale">
           <p className="section-kicker">Rechtlicher Originaltext</p>
           <h2 className="legal-page__locale-title">Datenschutz (Deutsch)</h2>
@@ -152,7 +147,7 @@ export default function DatenschutzPage() {
               <br />
               Einzelunternehmen
               <br />
-              Geschäftsanschrift: noch zu ergänzen
+              Wien, Österreich
               <br />
               E-Mail:{" "}
               <a href="mailto:partnership@ajione.com">partnership@ajione.com</a>
@@ -262,10 +257,6 @@ export default function DatenschutzPage() {
             </p>
           </div>
 
-          <p className="legal-page__note">
-            Hinweis: Die Geschäftsanschrift wird ergänzt, sobald eine veröffentlichbare
-            Geschäftsadresse oder ein entsprechender ECG-Link vorliegt.
-          </p>
         </div>
       </section>
     </main>
